@@ -9,8 +9,8 @@ vim.opt.hlsearch = true                         -- hightlight all matches on pre
 vim.opt.ignorecase = true                       -- ignore case in search pattern
 vim.opt.mouse = "a"                             -- allow mouse to be used in neovim
 vim.opt.pumheight = 20                          -- pop up menu height
-vim.opt.showmode = true                         -- show/hide the current used mode e.g. -- INSERT -- 
-vim.opt.showtabline = 2                         -- always show tabs 
+vim.opt.showmode = true                         -- show/hide the current used mode e.g. -- INSERT --
+vim.opt.showtabline = 2                         -- always show tabs
 vim.opt.smartcase = true                        -- enables case sensitive search smartly (when an uppercase character is used)
 vim.opt.smartindent = true                      -- enables automatic smart indentation
 vim.opt.splitbelow = true                       -- force all horizontal splits to go below the current window
@@ -32,12 +32,11 @@ vim.opt.signcolumn = "yes"                      -- always show the sign column, 
 vim.opt.wrap = false                            -- DON'T wrap if lines get too long
 vim.opt.scrolloff = 8                           -- always keep 8 lines above and below the cursor (unless at the beginning/end of file)
 vim.opt.guifont = "monospace:h17"               -- set font
-
-vim.opt.shortmess:append "c"                    -- shorten messages 
+vim.opt.shortmess:append "c"                    -- shorten messages
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those
-vim.cmd [[set iskeyword+=-]]                    -- add - to be grouped as word  
+vim.cmd [[set iskeyword+=-]]                    -- add - to be grouped as word
 --vim.cmd [[set formatoptions-=c formatoptions-=r formatoptions-=o]]              -- edits the format options (no automatic comment character is inserted on ENTER) (Note: that using :set formatoptions-=cro won't work as expected (since it's a string))
 vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 

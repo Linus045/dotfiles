@@ -56,8 +56,10 @@ module-margin-left  = 0
 module-margin-right = 0
 
 ; Font
-font-0 = Iosevka:size=10;3
+; last number behind the semicolon is y offset from top
+font-0 = Iosevka:size=12;3
 font-1 = Font Awesome:style=Regular:size=12;3i
+font-2 = :size=12;3
 
 
 

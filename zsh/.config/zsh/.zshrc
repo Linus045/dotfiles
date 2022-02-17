@@ -75,7 +75,6 @@ bindkey -r "^u"
 bindkey -r "^d"
 
 # FZF 
-# TODO update for mac
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
@@ -93,13 +92,9 @@ autoload edit-command-line; zle -N edit-command-line
 setxkbmap -option caps:escape
 xset r rate 210 40
 
-# Speedy keys
-# xset r rate 210 40
 
 # Environment variables set everywhere
 export EDITOR="nvim"
-#export TERMINAL="alacritty"
-#export BROWSER="brave"
 
 # For QT Themes
 #export QT_QPA_PLATFORMTHEME=qt5ct

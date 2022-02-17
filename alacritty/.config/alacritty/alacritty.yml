@@ -26,3 +26,6 @@ colors:
     magenta: '#d3b987'
     cyan:    '#73cef4'
     white:   '#feffff'
+
+  #  font:
+    #  normal:
