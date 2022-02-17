@@ -73,8 +73,10 @@ keymap("n", "<leader>x", ":bw<cr>", opts)
 keymap("n", "<leader>X", ":bw!<cr>", opts)
 
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>G", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>b", ":Telescope buffers<cr>", opts)
+keymap("n", "<leader>g", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 
 -- lazygit
 --keymap("n", "<leader>k", ":LazyGit<CR>", opts)
