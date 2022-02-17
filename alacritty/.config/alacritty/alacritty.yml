@@ -27,5 +27,8 @@ colors:
     cyan:    '#73cef4'
     white:   '#feffff'
 
+  selection:
+    save_to_clipboard: false
+
   #  font:
     #  normal:
