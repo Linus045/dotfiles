@@ -44,6 +44,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
+# take screenshots and copy them into the clipboard
+# for more options see xfce4-screenshooter --help
+bindsym Print exec xfce4-screenshooter -c -r
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
