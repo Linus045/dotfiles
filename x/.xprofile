@@ -1,4 +1,6 @@
 export TERMINAL="alacritty"
+export TERM="alacritty"
 export MYNERDFONT="3270SemiNarrow Nerd Font Mono"
- #zsh config dir
+
+#zsh config dir
 export ZDOTDIR=$HOME/.config/zsh
