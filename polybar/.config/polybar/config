@@ -397,7 +397,7 @@ content            = 
 content-padding    = 2
 
 ; Mouse click
-click-left = i3lock -i ~/.i3lock_image.png -t "Enter Password to Unlock"
+click-left = ~/.config/polybar/scripts/lock_screen.sh
 
 
 

@@ -1,0 +1,12 @@
+# Autostart firefox and alacritty
+# no exec_always because it should only happen on inital start
+# load workspace layout and then start application
+exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/linus/.config/i3/workspace-1.json'"
+exec --no-startup-id "i3-msg 'workspace 2; append_layout /home/linus/.config/i3/workspace-2.json'"
+exec --no-startup-id "i3-msg 'workspace 5; append_layout /home/linus/.config/i3/workspace-5.json'"
+
+exec /usr/bin/alacritty
+exec /usr/bin/firefox
+exec /usr/bin/spotify
+
+exec --no-startup-id /usr/bin/safeeyes
