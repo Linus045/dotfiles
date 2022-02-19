@@ -72,6 +72,11 @@ return packer.startup(function(use)
 
   use "kdheepak/lazygit.nvim"
 
+  use {
+      'AckslD/nvim-whichkey-setup.lua',
+      requires = {'liuchengxu/vim-which-key'},
+  }
+
   use "ms-jpq/coq_nvim"
   use "ms-jpq/coq.artifacts"
   use "ms-jpq/coq.thirdparty"
