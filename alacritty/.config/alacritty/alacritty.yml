@@ -1,34 +1,51 @@
-# Colors (Tender)
-colors:
-  # Default colors
-  primary:
-    background: '#282828'
-    foreground: '#eeeeee'
+selection:
+  save_to_clipboard: false
 
-  # Normal colors
+font:
+  size: 12
   normal:
-    black:   '#282828'
-    red:     '#f43753'
-    green:   '#c9d05c'
-    yellow:  '#ffc24b'
-    blue:    '#b3deef'
-    magenta: '#d3b987'
-    cyan:    '#73cef4'
-    white:   '#eeeeee'
+    # family: Iosevka 
+    family: DaddyTimeMono Nerd Font
+    style: Regular
 
-  # Bright colors
-  bright:
-    black:   '#4c4c4c'
-    red:     '#f43753'
-    green:   '#c9d05c'
-    yellow:  '#ffc24b'
-    blue:    '#b3deef'
-    magenta: '#d3b987'
-    cyan:    '#73cef4'
-    white:   '#feffff'
+  bold:
+    family: DaddyTimeMono Nerd Font
+    style: Bold
 
-  selection:
-    save_to_clipboard: false
+  italic:
+    family: DaddyTimeMono Nerd Font
+    style: Italic
 
-  #  font:
-    #  normal:
+  bold_italic:
+    family: DaddyTimeMono Nerd Font
+    style: Bold Italic
+
+# # Colors (Tender)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '#282828'
+#     foreground: '#eeeeee'
+
+#   # Normal colors
+#   normal:
+#     black:   '#282828'
+#     red:     '#f43753'
+#     green:   '#c9d05c'
+#     yellow:  '#ffc24b'
+#     blue:    '#b3deef'
+#     magenta: '#d3b987'
+#     cyan:    '#73cef4'
+#     white:   '#eeeeee'
+
+#   # Bright colors
+#   bright:
+#     black:   '#4c4c4c'
+#     red:     '#f43753'
+#     green:   '#c9d05c'
+#     yellow:  '#ffc24b'
+#     blue:    '#b3deef'
+#     magenta: '#d3b987'
+#     cyan:    '#73cef4'
+#     white:   '#feffff'
+
