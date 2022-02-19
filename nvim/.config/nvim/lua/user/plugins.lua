@@ -50,10 +50,13 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "kyazdani42/nvim-web-devicons" -- Icons needed by a few plugins (lualine, etc.)
 
-  use "jacoborus/tender.vim" -- Color scheme
-  use "folke/tokyonight.nvim" -- Color scheme
-  use "joshdick/onedark.vim" -- Color scheme
--- TODO: figure out how to use fancy theme
+  -- Color scheme
+  use "jacoborus/tender.vim"
+  use "folke/tokyonight.nvim"
+  use "joshdick/onedark.vim"
+  use "sainnhe/gruvbox-material"
+
+  -- TODO: figure out how to use fancy theme
 --  use {
 --    "catppuccin/nvim", -- Color scheme
 --    as = "catppuccin",
