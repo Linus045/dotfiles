@@ -5,6 +5,7 @@ This file is mainly for me to learn/keep track of useful stuff in case I someday
 neofetch : Shows basic system information
 fd : better file search
 df : Display storage space
+lsof : Lists all currently opened files 
 
 # zsh
 Esc : Enter Vim Mode
