@@ -292,12 +292,8 @@ label-foreground = ${colors.foreground}
 exec = ~/.config/polybar/scripts/pulseaudio-control.sh --icons-volume "奔,墳" --icon-muted "ﱝ" --format '$VOL_ICON $VOL_LEVEL %' listen
 ; get device.description via `pacmd list-sinks | grep name:`
 
-; name: <alsa_output.pci-0000_01_00.1.hdmi-stereo-extra1>
-;	name: <alsa_output.pci-0000_00_1b.0.iec958-stereo>
-
-exec = ~/.config/polybar/scripts/pulseaudio-control.sh --icons-volume " , " --icon-muted " " --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra1:Speaker" --sink-nickname "alsa_output.pci-0000_00_1b.0.iec958-stereo:Some other device" listen
 click-right = exec pavucontrol &
-; click-left = ~/.config/polybar/scripts/pulseaudio-control.sh togmute
+click-middle = ~/.config/polybar/scripts/pulseaudio-control.sh togmute
 click-left = playerctl play-pause 
 ; click-middle = ~/.config/polybar/scripts/pulseaudio-control.sh --sink-blacklist "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2" next-sink
 
