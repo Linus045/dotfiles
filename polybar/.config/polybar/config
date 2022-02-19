@@ -57,10 +57,11 @@ module-margin-right = 0
 
 ; Font
 ; last number behind the semicolon is y offset from top
-font-0 = Iosevka:size=12;3
-font-1 = Font Awesome:style=Regular:size=12;3i
+; font0 = Iosevka:size=12;3
+font-0 = FiraCode Nerd Font Mono:size=12;3
+font-1 = FiraCode Nerd Font Mono:style=Regular:size=12;3i
 font-2 = :size=12;3
-font-3 = Iosevka:size=22:style=Bold;5
+font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 
 
 ; Modules
@@ -609,7 +610,7 @@ interval = 3
 ;   <ramp-swap-used>
 ;   <ramp-swap-free>
 format = <label> 
-;<bar-used> 
+; <bar-used> 
 
 ; Available tokens:
 ;   %percentage_used% (default)
