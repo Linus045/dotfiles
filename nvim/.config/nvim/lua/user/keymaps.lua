@@ -85,3 +85,11 @@ keymap("n", "<leader>g", "<cmd>lua require'telescope.builtin'.current_buffer_fuz
 keymap("n", "<leader>h", ":lua _HTOP_TOGGLE()<cr>", opts)
 keymap("n", "<leader>l", ":lua _LAZYGIT_TOGGLE()<cr>", opts)
 
+-- Open links on gx (remap needed because nvim-tree overrides it)
+-- xgd-open needs to be replaced with whatever you want to topen the link
+keymap("n","<leader>gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
+
+-- WhichKey
+keymap("n", "<leader>", ":WhichKey '<Space>'<CR>", opts)
+keymap("v", "<leader>", "<c-u> :WhichKeyVisual '<Space>'<CR>", opts)
+

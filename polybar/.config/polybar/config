@@ -57,10 +57,11 @@ module-margin-right = 0
 
 ; Font
 ; last number behind the semicolon is y offset from top
-font-0 = Iosevka:size=12;3
-font-1 = Font Awesome:style=Regular:size=12;3i
+; font0 = Iosevka:size=12;3
+font-0 = FiraCode Nerd Font Mono:size=12;3
+font-1 = FiraCode Nerd Font Mono:style=Regular:size=12;3i
 font-2 = :size=12;3
-
+font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 
 
 ; Modules
@@ -184,16 +185,16 @@ fuzzy-match = true
 ; ws-icon-[0-9]+ = <label>;<icon>
 ; NOTE: The <label> needs to match the name of the i3 workspace
 ; Neither <label> nor <icon> can contain a semicolon (;)
-;ws-icon-0 = "2;<insert-icon-here>"
-;ws-icon-1 = "1;<insert-icon-here>"
-
-
-
-ws-icon-0 = 1;♚
-ws-icon-1 = 2;♛
-ws-icon-2 = 3;♜
-ws-icon-3 = 4;♝
-ws-icon-4 = 5;♞
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;4
+ws-icon-4 = 5;5
+ws-icon-5 = 5;5
+ws-icon-6 = 6;6
+ws-icon-7 = 7;7
+ws-icon-8 = 8;8
+ws-icon-9 = 9;9
 ws-icon-default = ♟
 ; NOTE: You cannot skip icons, e.g. to get a ws-icon-6
 ; you must also define a ws-icon-5.
@@ -209,19 +210,7 @@ format = <label-state> <label-mode>
 ; Default: %mode%
 label-mode = %mode%
 label-mode-padding = 2
-label-mode-background = #e60053
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %output%
-; Default: %icon% %name%
-label-focused = %index%
-label-focused-foreground = #ffffff
-label-focused-background = #3f3f3f
-label-focused-underline = #fba922
-label-focused-padding = 4
+label-mode-background = #CC7361
 
 ; Available tokens:
 ;   %name%
@@ -230,7 +219,20 @@ label-focused-padding = 4
 ;   %output%
 ; Default: %icon% %name%
 label-unfocused = %index%
-label-unfocused-padding = 4
+label-unfocused-padding = 0
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon% %name%
+label-focused = %icon%
+label-focused-foreground = #ffffff
+label-focused-background = #4f264c
+label-focused-underline = #ad3d87
+label-focused-padding = 4
+label-focused-font = 4
 
 ; Available tokens:
 ;   %name%
@@ -240,7 +242,7 @@ label-unfocused-padding = 4
 ; Default: %icon% %name%
 label-visible = %index%
 label-visible-underline = #555555
-label-visible-padding = 4
+label-visible-padding = 2
 
 ; Available tokens:
 ;   %name%
@@ -250,15 +252,13 @@ label-visible-padding = 4
 ; Default: %icon% %name%
 label-urgent = %index%
 label-urgent-foreground = #000000
-label-urgent-background = #bd2c40
+label-urgent-background = #dd824b
 label-urgent-padding = 4
 
 ; Separator in between workspaces
 label-separator = |
 label-separator-padding = 2
-label-separator-foreground = #ffb52a
-
-
+label-separator-foreground = #e350b1
 
 
 
@@ -289,6 +289,7 @@ label-foreground = ${colors.foreground}
 ; You can copy-paste your options for each possible action, which is more
 ; trouble-free but repetitive, or apply only the relevant ones (for example
 ; --sink-blacklist is only needed for next-sink).
+exec = ~/.config/polybar/scripts/pulseaudio-control.sh --icons-volume "奔,墳" --icon-muted "ﱝ" --format '$VOL_ICON $VOL_LEVEL %' listen
 ; get device.description via `pacmd list-sinks | grep name:`
 
 ; name: <alsa_output.pci-0000_01_00.1.hdmi-stereo-extra1>
@@ -548,7 +549,7 @@ content = " "
 ; "content" has the same properties as "format-NAME"
 ; content-background = #000
 ; content-foreground = #fff
-content-padding = 4
+content-padding = 1
 
 [module/spacerSmall]
 type = custom/text
@@ -613,7 +614,8 @@ interval = 3
 ;   <bar-swap-free>
 ;   <ramp-swap-used>
 ;   <ramp-swap-free>
-format = <label> <bar-used> 
+format = <label> 
+; <bar-used> 
 
 ; Available tokens:
 ;   %percentage_used% (default)

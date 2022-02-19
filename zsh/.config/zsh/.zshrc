@@ -28,8 +28,26 @@ unsetopt BEEP
 
 # completions
 autoload -Uz compinit
+
+
+# Do menu-driven completion.
 zstyle ':completion:*' menu select
-# zstyle ':completion::complete:lsof:*' menu yes select
+
+# Color completion for some things.
+# http://linuxshellaccount.blogspot.com/2008/12/color-completion-using-zsh-modules-on.html
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion::complete:lsof:*' menu yes select
+
+# formatting and messages
+# http://www.masterzen.fr/2009/04/19/in-love-with-zsh-part-one/
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format "$fg[yellow]%B--- %d%b"
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
+zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+zstyle ':completion:*' group-name ''
+
+
 zmodload zsh/complist
 # compinit
 _comp_options+=(globdots)		# Include hidden files.
@@ -84,11 +102,14 @@ bindkey "^[[1;5D" backward-word
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f $ZDOTDIR/completion/_fnm ] && fpath+="$ZDOTDIR/completion/"
-# export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 compinit
 
 # Bind caps to escape
 setxkbmap -option caps:escape
+
+# faster keys see "man xset" 
+# r rate <delay> <rate>
 xset r rate 210 40
 
 

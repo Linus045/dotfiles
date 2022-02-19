@@ -1,3 +1,25 @@
+selection:
+  save_to_clipboard: false
+
+font:
+  size: 12
+  normal:
+    # family: Iosevka 
+    family: DaddyTimeMono Nerd Font
+    style: Regular
+
+  bold:
+    family: DaddyTimeMono Nerd Font
+    style: Bold
+
+  italic:
+    family: DaddyTimeMono Nerd Font
+    style: Italic
+
+  bold_italic:
+    family: DaddyTimeMono Nerd Font
+    style: Bold Italic
+
 # Colors (Tender)
 colors:
   # Default colors
@@ -19,16 +41,11 @@ colors:
   # Bright colors
   bright:
     black:   '#4c4c4c'
-    red:     '#f43753'
-    green:   '#c9d05c'
-    yellow:  '#ffc24b'
-    blue:    '#b3deef'
+    red:     '#ff6b82'
+    green:   '#c9d362'
+    yellow:  '#ffd966'
+    blue:    '#bfe9ff'
     magenta: '#d3b987'
-    cyan:    '#73cef4'
+    cyan:    '#3bd496'
     white:   '#feffff'
 
-  selection:
-    save_to_clipboard: false
-
-  #  font:
-    #  normal:
