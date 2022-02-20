@@ -18,7 +18,8 @@ exec_always --no-startup-id autotiling
 exec_always xrandr --output eDP --auto --left-of HDMI-A-0 &
 
 # this tells i3 which workspace to put on which screen
-workspace 1 output eDP
+workspace 1 output HDMI-A-0 
 workspace 2 output HDMI-A-0
+workspace 3 output HDMI-A-0
 
-
+workspace 6 output eDP
