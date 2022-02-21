@@ -33,6 +33,9 @@ alias psmem='ps auxf | sort -nr -k 4 | head -5'
 # get top process eating cpu ##
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 
+# force vt100 when using ssh
+alias ssh='TERM=vt100 ssh' 
+
 case "$(uname -s)" in
 
 Darwin)
