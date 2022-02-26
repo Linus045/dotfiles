@@ -56,7 +56,7 @@ return packer.startup(function(use)
   use "joshdick/onedark.vim"
   use "sainnhe/gruvbox-material"
 
-  -- TODO: figure out how to use fancy theme
+-- TODO: figure out how to use fancy theme
 --  use {
 --    "catppuccin/nvim", -- Color scheme
 --    as = "catppuccin",
@@ -86,6 +86,17 @@ return packer.startup(function(use)
 
   use "nvim-telescope/telescope.nvim"
   use "nvim-treesitter/nvim-treesitter"
+  use "nvim-telescope/telescope-fzf-native.nvim"
+
+  use {
+    'sudormrfbin/cheatsheet.nvim',
+
+    requires = {
+      {'nvim-telescope/telescope.nvim'},
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'},
+    }
+  }
 
   use 'kyazdani42/nvim-tree.lua'
 
@@ -102,6 +113,8 @@ return packer.startup(function(use)
 -- NOTE:
 -- WARNING:
   use "folke/todo-comments.nvim"
+  -- Colorize color codes
+  use "norcalli/nvim-colorizer.lua"
 
   -- git diff support
   use "sindrets/diffview.nvim"
@@ -113,6 +126,17 @@ return packer.startup(function(use)
     requires = {
       'nvim-lua/plenary.nvim'
     },
+  }
+
+  use 'ggandor/lightspeed.nvim'
+
+  --Start screen
+  use {
+    "startup-nvim/startup.nvim",
+    requires = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim"
+    }
   }
 
   -- Easily comment stuff

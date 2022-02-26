@@ -67,7 +67,7 @@ font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 ; Modules
 modules-left   = cpu spacerSmall temperature spacerBig memory
 modules-center = time i3 date
-modules-right  = pulseaudio-control battery network lock logout_i3 poweroff
+modules-right  = pulseaudio-control brightness battery network lock logout_i3 poweroff
 
 ; Cursor actions
 cursor-click  = pointer
@@ -206,7 +206,7 @@ ws-icon-default = ♟
 format = <label-state> <label-mode>
 
 ; Available tokens:
-;   %mode%
+;   %mode%%
 ; Default: %mode%
 label-mode = %mode%
 label-mode-padding = 2
@@ -275,13 +275,23 @@ label-separator-foreground = #e350b1
 ; label         = %output%
 ; label-padding = 4
 
+[module/brightness]
+type = custom/script
+label =  %output%%
+label-padding = 2
+interval = 2
+exec = current=$(brightnessctl -q get);max=$(brightnessctl -q max); printf %.0f "$(( 10**2 * 100 / $max * ($current+1) ))e-2"
+; (255 / (brightnessctl -q get) * 100)
+scroll-down = brightnessctl -q set 5%- 
+scroll-up = brightnessctl -q set +5%
 
-
+label-foreground = ${colors.foreground}
+format-underline = #ad3d87
 
 [module/pulseaudio-control]
 type = custom/script
 tail = true
-format-underline = ${colors.cyan}
+format-underline = #ad3d87
 label-padding = 2
 label-foreground = ${colors.foreground}
 

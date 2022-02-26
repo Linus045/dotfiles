@@ -39,16 +39,14 @@ nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = false,
-  ignore_ft_on_setup = {
-    "startify",
-    "dashboard",
-    "alpha",
-  },
+  ignore_ft_on_setup = {},
   auto_close = true,
+  auto_reload_on_write = true,
   open_on_tab = false,
   hijack_cursor = false,
   update_cwd = true,
-  update_to_buf_dir = {
+  hijack_unnamed_buffer_when_opening = false,
+    hijack_directories   = {
     enable = true,
     auto_open = true,
   },
@@ -87,8 +85,28 @@ nvim_tree.setup {
     },
     number = false,
     relativenumber = false,
+    signcolumn = "yes"
   },
-  quit_on_open = 0,
+  actions = {
+    change_dir = {
+      enable = true,
+      global = false,
+    },
+    open_file = {
+      quit_on_open = true,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = {
+            "notify",
+            "packer",
+            "qf"
+          }
+        }
+      }
+    }
+  },
   git_hl = 1,
   disable_window_picker = 0,
   root_folder_modifier = ":t",
