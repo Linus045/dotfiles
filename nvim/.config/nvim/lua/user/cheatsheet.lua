@@ -1,4 +1,9 @@
-require("cheatsheet").setup({
+local status_ok, cheatsheet = pcall(require, "cheatsheet")
+if not status_ok then
+  vim.notify("cheatsheet not found")
+  return
+end
+cheatsheet.setup({
     -- Whether to show bundled cheatsheets
 
     -- For generic cheatsheets like default, unicode, nerd-fonts, etc

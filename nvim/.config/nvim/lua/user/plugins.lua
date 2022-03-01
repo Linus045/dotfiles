@@ -56,20 +56,13 @@ return packer.startup(function(use)
   use "joshdick/onedark.vim"
   use "sainnhe/gruvbox-material"
 
--- TODO: figure out how to use fancy theme
---  use {
---    "catppuccin/nvim", -- Color scheme
---    as = "catppuccin",
---  }
+  use {
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true }
+  }
 
-   use {
-     "nvim-lualine/lualine.nvim",
-     requires = { "kyazdani42/nvim-web-devicons", opt = true }
-   }
   -- Buffer line above
   use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
-
-
   use "kdheepak/lazygit.nvim"
 
   use {
@@ -101,9 +94,6 @@ return packer.startup(function(use)
   use 'kyazdani42/nvim-tree.lua'
 
   use "akinsho/toggleterm.nvim"
---  use "vim-airline/vim-airline"
---  use "vim-airline/vim-airline-themes"
-
 -- hightlight keywods:
 -- TODO:
 -- BUG:
@@ -121,23 +111,12 @@ return packer.startup(function(use)
   use "TimUntersberger/neogit"
 
   -- git sings support
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-  }
+  use {'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }}
 
   use 'ggandor/lightspeed.nvim'
 
   --Start screen
-  use {
-    "startup-nvim/startup.nvim",
-    requires = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim"
-    }
-  }
+  use { "startup-nvim/startup.nvim", requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }}
 
   -- Easily comment stuff
   use "numToStr/Comment.nvim"

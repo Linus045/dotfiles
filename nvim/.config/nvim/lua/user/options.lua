@@ -33,6 +33,7 @@ vim.opt.wrap = false                            -- DON'T wrap if lines get too l
 vim.opt.scrolloff = 8                           -- always keep 8 lines above and below the cursor (unless at the beginning/end of file)
 vim.opt.guifont = "monospace:h17"               -- set font
 vim.opt.shortmess:append "c"                    -- shorten messages
+vim.opt.autochdir = false
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those
