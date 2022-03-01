@@ -1,11 +1,18 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #!/bin/sh
 
 # Use powerline
-USE_POWERLINE="true"
+#USE_POWERLINE="true"
 # Source manjaro-zsh-configuration
-#if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-#  source /usr/share/zsh/manjaro-zsh-config
-#fi
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
 # Use manjaro zsh prompt
 if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
@@ -14,12 +21,18 @@ fi
 
 export ZDOTDIR=$HOME/.config/zsh
 HISTFILE=~/.zsh_history
+HISTTIMEFORMAT="%d.%m.%y %T "
+HISTSIZE=200000
+HISTFILESIZE=200000
 setopt appendhistory
 
 # some useful options (man zshoptions)
 setopt autocd extendedglob nomatch menucomplete
 setopt interactive_comments
-stty stop undef		# Disable ctrl-s to freeze terminal.
+
+# we need the <$TTY >$TTY stuff here due to instant Prompt
+# see https://github.com/romkatv/powerlevel10k/issues/388
+stty stop undef <$TTY >$TTY       # Disable ctrl-s to freeze terminal.
 zle_highlight=('paste:none')
 
 # beeping is annoying
@@ -127,5 +140,5 @@ export EDITOR="nvim"
 # swap escape and caps
 # setxkbmap -option caps:swapescape
 
-
-
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
