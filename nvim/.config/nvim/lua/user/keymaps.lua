@@ -80,7 +80,7 @@ keymap("n", "<leader>g", "<cmd>lua require'telescope.builtin'.current_buffer_fuz
 keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
 keymap("n", "<leader>.", "<cmd>lua require'telescope.builtin'.lsp_code_actions()<cr>", opts)
 
-keymap("n", "<leader>d", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
+keymap("n", "<leader>dl", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
 
 -- Cheatsheet
 keymap("n", "<leader>?", ":Cheatsheet<cr>", opts)
@@ -100,3 +100,10 @@ keymap("n","<leader>gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>')
 keymap("n", "<leader>", ":WhichKey '<Space>'<CR>", opts)
 keymap("v", "<leader>", "<c-u> :WhichKeyVisual '<Space>'<CR>", opts)
 
+-- vimspector keybindings
+-- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
+-- for normal mode - the word under the cursor
+-- vim.cmd("nmap <Leader>di <Plug>VimspectorBalloonEval")
+-- vim.cmd("xmap <Leader>di <Plug>VimspectorBalloonEval")
+keymap("n", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
+keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)

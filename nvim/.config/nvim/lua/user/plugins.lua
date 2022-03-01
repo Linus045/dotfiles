@@ -146,6 +146,9 @@ return packer.startup(function(use)
 
 
   use "p00f/nvim-ts-rainbow"
+
+  use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
