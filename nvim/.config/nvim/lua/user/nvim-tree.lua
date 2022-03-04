@@ -40,13 +40,13 @@ nvim_tree.setup {
   hijack_netrw = true,
   open_on_setup = false,
   ignore_ft_on_setup = {},
-  auto_close = true,
+  auto_close = false,
   auto_reload_on_write = true,
   open_on_tab = false,
   hijack_cursor = false,
   update_cwd = true,
-  hijack_unnamed_buffer_when_opening = false,
-    hijack_directories   = {
+  hijack_unnamed_buffer_when_opening = true,
+  hijack_directories   = {
     enable = true,
     auto_open = true,
   },
@@ -93,7 +93,7 @@ nvim_tree.setup {
       global = false,
     },
     open_file = {
-      quit_on_open = true,
+      quit_on_open = false,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",

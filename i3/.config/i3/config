@@ -1,6 +1,6 @@
-include autostart
-include keybindings
 include monitor_setup
+include keybindings
+include autostart
 
 # i3 config file (v4)
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!

@@ -19,7 +19,7 @@ comment.setup {
     ---@type string|fun():string
     ignore = '^$',
 
-    ---LHS of toggle mappings in NORMAL + VISUAL mode 
+    ---LHS of toggle mappings in NORMAL + VISUAL mode
     ---@type table
     toggler = {
         ---Line-comment toggle keymap
