@@ -62,12 +62,12 @@ font-0 = FiraCode Nerd Font Mono:size=12;3
 font-1 = FiraCode Nerd Font Mono:style=Regular:size=12;3i
 font-2 = :size=12;3
 font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
-
+font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 
 ; Modules
 modules-left   = cpu spacerSmall temperature spacerBig memory
 modules-center = time i3 date
-modules-right  = pulseaudio-control brightness battery network lock logout_i3 poweroff
+modules-right  = pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
 
 ; Cursor actions
 cursor-click  = pointer
@@ -434,8 +434,8 @@ type = custom/text
 ; Label
 content            = 
 ; content-foreground = ${colors.foreground}
-content-padding    = 2
-
+content-padding    = 1
+content-font = 5
 ; Mouse click
 click-left = i3exit logout
 
@@ -457,9 +457,22 @@ type = custom/text
 content            = 
 content-foreground = ${colors.red}
 content-padding    = 2
+content-font = 5
 
 ; Mouse click
 click-left = poweroff
+
+[module/hibernate]
+type = custom/text
+
+; Label
+content = 鈴
+content-foreground = ${colors.white}
+content-font = 5 
+content-padding = 0
+
+click-left = systemctl hibernate
+
 
 
 
