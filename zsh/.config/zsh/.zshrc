@@ -29,6 +29,7 @@ setopt appendhistory
 # some useful options (man zshoptions)
 setopt autocd extendedglob nomatch menucomplete
 setopt interactive_comments
+setopt complete_aliases
 
 # we need the <$TTY >$TTY stuff here due to instant Prompt
 # see https://github.com/romkatv/powerlevel10k/issues/388
@@ -41,7 +42,8 @@ unsetopt BEEP
 
 # completions
 autoload -Uz compinit
-
+_comp_options+=(globdots)		# Include hidden files.
+compinit
 
 # Do menu-driven completion.
 zstyle ':completion:*' menu select
@@ -62,8 +64,6 @@ zstyle ':completion:*' group-name ''
 
 
 zmodload zsh/complist
-# compinit
-_comp_options+=(globdots)		# Include hidden files.
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
@@ -116,7 +116,6 @@ bindkey "^[[1;5D" backward-word
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f $ZDOTDIR/completion/_fnm ] && fpath+="$ZDOTDIR/completion/"
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
-compinit
 
 # Bind caps to escape
 setxkbmap -option caps:escape

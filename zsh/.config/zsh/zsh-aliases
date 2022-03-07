@@ -36,6 +36,20 @@ alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 # force vt100 when using ssh
 alias ssh='TERM=vt100 ssh' 
 
+#alias manpdf='man -k . | dmenu -l 20 | awk '"'"'{ print $1}'"'"' | xargs -r man -Tpdf | zathura -'
+manpdf_helper() {
+  if [ "$1" = "" ]; then
+    man -k . | dmenu -l 20 | awk '{ print $1}' | xargs -r man -Tpdf | zathura -;
+  else
+    man -Tpdf $1 | zathura -;
+  fi
+}
+alias manpdf=manpdf_helper
+compdef manpdf=man
+
+
+
+
 case "$(uname -s)" in
 
 Darwin)
