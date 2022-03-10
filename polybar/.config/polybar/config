@@ -67,7 +67,7 @@ font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 ; Modules
 modules-left   = cpu spacerSmall temperature spacerBig memory
 modules-center = time i3 date
-modules-right  = pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
+modules-right  = safeeyes pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
 
 ; Cursor actions
 cursor-click  = pointer
@@ -263,6 +263,15 @@ label-separator-foreground = #e350b1
 
 
 
+[module/safeeyes]
+type = custom/script
+label = %output%
+; requires datediff from dateutils package
+exec = ~/.config/polybar/scripts/safeeyes_status_time.sh
+interval = 10
+label-padding = 1
+format-underline = #ad3d87
+click-left = if safeeyes --status | grep -q Disabled; then safeeyes --enable; else safeeyes --disable; fi
 
 
 ; [module/weather]
