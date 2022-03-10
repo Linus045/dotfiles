@@ -68,19 +68,26 @@ keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- open terminal in split
-keymap("n", "<leader>ts", ":vsplit | term<cr>:vertical resize 90<cr>i", opts)
+keymap("n", "<leader>tv", ":vsplit | term<cr>:vertical resize 90<cr>i", opts)
+keymap("n", "<leader>th", ":split | term<cr>:resize 15<cr>i", opts)
 keymap("n", "<leader>x", ":bw<cr>", opts)
 keymap("n", "<leader>X", ":bw!<cr>", opts)
 
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>d", "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>GH", "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden'}})<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
+keymap("n", "<leader>dd", "<cmd>Telescope git_files<cr>", opts)
+keymap("n", "<leader>b", ":Telescope buffers<cr><esc>", opts)
+
+-- default Live Grep
 keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
-keymap("n", "<leader>bb", ":Telescope buffers<cr>", opts)
-keymap("n", "<leader>bg", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
-keymap("n", "<leader>.", "<cmd>lua require'telescope.builtin'.lsp_code_actions()<cr>", opts)
+-- Live Grep with hidden hiles
+keymap("n", "<leader>GH", "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden'}})<cr>", opts)
+
+
+
+keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts)
+-- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
+keymap("n", "<leader>.", "<cmd>lua require'telescope.builtin'.lsp_code_actions()<cr><esc>", opts)
 
 keymap("n", "<leader>dl", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
 

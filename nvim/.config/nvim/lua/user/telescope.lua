@@ -22,7 +22,7 @@ telescope.setup {
       "%.mkv",
       "%.mp4",
       "%.zip"
-    }, 
+    },
     vimgrep_arguments = {
       'rg',
       '--color=never',
@@ -101,8 +101,24 @@ telescope.setup {
   },
  pickers = {
     find_files = {
-      hidden = true
+      hidden = true,
+      theme = 'dropdown',
+      previewer = false
     },
+    buffers = {
+      theme = 'ivy'
+    },
+    current_buffer_fuzzy_find = {
+      theme = 'dropdown',
+      previewer = false
+    },
+    git_files = {
+      theme = 'dropdown',
+      previewer = false
+    },
+    lsp_code_actions= {
+      theme = 'cursor'
+    }
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,
