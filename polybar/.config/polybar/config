@@ -456,12 +456,15 @@ type = custom/text
 ; Label
 content            = 
 content-foreground = ${colors.red}
-content-padding    = 2
+content-padding    = 1
 content-font = 5
 
 ; Mouse click
 click-left = poweroff
 
+
+; see https://www.github.com/Linus045/useful_scripts
+; Consider adding suspend@.service and resume@.service to pause/kill tasks before hibernation
 [module/hibernate]
 type = custom/text
 

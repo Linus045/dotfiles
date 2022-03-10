@@ -22,6 +22,17 @@ telescope.setup {
       "%.mkv",
       "%.mp4",
       "%.zip"
+    }, 
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      -- '--hidden', -- include hidden files
+      -- '-u' -- single u includes .gitignore, 2 u's include gitignore and hidden files
     },
     mappings = {
       i = {
@@ -88,10 +99,10 @@ telescope.setup {
       },
     },
   },
-  pickers = {
+ pickers = {
     find_files = {
       hidden = true
-    }
+    },
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,

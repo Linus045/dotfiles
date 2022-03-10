@@ -73,11 +73,12 @@ keymap("n", "<leader>x", ":bw<cr>", opts)
 keymap("n", "<leader>X", ":bw!<cr>", opts)
 
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-keymap("n", "<leader>G", "<cmd>Telescope live_grep<cr>", opts)
-keymap("n", "<leader>b", ":Telescope buffers<cr>", opts)
-keymap("n", "<leader>g", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>f", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>d", "<cmd>lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
+keymap("n", "<leader>GH", "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden'}})<cr>", opts)
+keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>bb", ":Telescope buffers<cr>", opts)
+keymap("n", "<leader>bg", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
 keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
 keymap("n", "<leader>.", "<cmd>lua require'telescope.builtin'.lsp_code_actions()<cr>", opts)
 
@@ -95,7 +96,7 @@ keymap("n", "<leader>l", ":lua _LAZYGIT_TOGGLE()<cr>", opts)
 
 -- Open links on gx (remap needed because nvim-tree overrides it)
 -- xgd-open needs to be replaced with whatever you want to topen the link
-keymap("n","<leader>gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
+keymap("n","gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 
 -- WhichKey
 keymap("n", "<leader>", ":WhichKey '<Space>'<CR>", opts)
