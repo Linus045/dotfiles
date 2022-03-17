@@ -116,3 +116,7 @@ keymap("v", "<leader>", "<c-u> :WhichKeyVisual '<Space>'<CR>", opts)
 -- vim.cmd("xmap <Leader>di <Plug>VimspectorBalloonEval")
 keymap("n", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
 keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
+
+
+-- Calendar keymap
+keymap("n", "<leader>k", "<Plug>(calendar)", term_opts)

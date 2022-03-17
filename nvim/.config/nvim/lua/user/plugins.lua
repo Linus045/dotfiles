@@ -128,6 +128,7 @@ return packer.startup(function(use)
 
   use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
 
+  use "itchyny/calendar.vim"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then

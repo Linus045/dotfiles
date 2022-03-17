@@ -1,1 +1,5 @@
 **/packer_compiled.lua
+
+# File required by the calendar plugin see: https://github.com/itchyny/calendar.vim
+lua/credentials/calendar_oauth_credentials.lua
+
