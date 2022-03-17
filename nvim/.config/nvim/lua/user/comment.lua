@@ -63,8 +63,8 @@ comment.setup {
         extended = false,
     },
 
-    ---Pre-hook, called before commenting the line
-    ---@type fun(ctx: Ctx):string
+    --Pre-hook, called before commenting the line
+    --@type fun(ctx: Ctx):string
     pre_hook = function(ctx)
         -- Only calculate commentstring for tsx filetypes
         if vim.bo.filetype == 'typescriptreact' then
@@ -88,7 +88,7 @@ comment.setup {
         end
     end,
 
-    ---Post-hook, called after commenting is done
-    ---@type fun(ctx: Ctx)
+    --Post-hook, called after commenting is done
+    --@type fun(ctx: Ctx)
      post_hook = nil,
 }
