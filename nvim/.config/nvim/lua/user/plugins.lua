@@ -121,6 +121,8 @@ return packer.startup(function(use)
   -- Treesitter context dependant comments
   use 'JoosepAlviste/nvim-ts-context-commentstring'
 
+  use "folke/twilight.nvim"
+  use "folke/zen-mode.nvim"
 
   use "p00f/nvim-ts-rainbow"
 
