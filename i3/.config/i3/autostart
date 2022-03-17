@@ -9,4 +9,3 @@ exec /usr/bin/alacritty
 exec /usr/bin/firefox
 exec /usr/bin/spotify
 
-exec --no-startup-id /usr/bin/safeeyes

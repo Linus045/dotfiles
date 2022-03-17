@@ -4,3 +4,6 @@ export MYNERDFONT="3270SemiNarrow Nerd Font Mono"
 
 #zsh config dir
 export ZDOTDIR=$HOME/.config/zsh
+
+#Start safeeyes
+/usr/bin/safeeyes &

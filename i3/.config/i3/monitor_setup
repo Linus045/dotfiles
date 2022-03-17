@@ -3,7 +3,7 @@ set $inner_gaps 15
 set $outer_gaps 12
 
 # #---Gaps---# #
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 3
 gaps inner $inner_gaps
 gaps outer $outer_gaps
 
@@ -15,10 +15,10 @@ exec_always --no-startup-id autotiling
 
 # setup multiple monitors 
 # use xrandr in console to get monitor names and then use this to set it up, then log out and back in
-exec_always xrandr --output eDP --auto --left-of HDMI-A-0 &
+exec_always xrandr --output eDP --auto --right-of HDMI-A-0 &
 
 # this tells i3 which workspace to put on which screen
 workspace 1 output eDP
 workspace 2 output HDMI-A-0
-
+workspace 3 output HDMI-A-0
 
