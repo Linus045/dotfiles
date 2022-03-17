@@ -65,10 +65,7 @@ return packer.startup(function(use)
   use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
   use "kdheepak/lazygit.nvim"
 
-  use {
-      'AckslD/nvim-whichkey-setup.lua',
-      requires = {'liuchengxu/vim-which-key'},
-  }
+  use "folke/which-key.nvim"
 
   use "ms-jpq/coq_nvim"
   use "ms-jpq/coq.artifacts"

@@ -105,10 +105,6 @@ keymap("n", "<leader>l", ":lua _LAZYGIT_TOGGLE()<cr>", opts)
 -- xgd-open needs to be replaced with whatever you want to topen the link
 keymap("n","gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 
--- WhichKey
-keymap("n", "<leader>", ":WhichKey '<Space>'<CR>", opts)
-keymap("v", "<leader>", "<c-u> :WhichKeyVisual '<Space>'<CR>", opts)
-
 -- vimspector keybindings
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
 -- for normal mode - the word under the cursor
