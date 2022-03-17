@@ -34,6 +34,7 @@ vim.opt.scrolloff = 8                           -- always keep 8 lines above and
 vim.opt.guifont = "monospace:h17"               -- set font
 vim.opt.shortmess:append "c"                    -- shorten messages
 vim.opt.autochdir = false
+vim.opt.spell = true
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those

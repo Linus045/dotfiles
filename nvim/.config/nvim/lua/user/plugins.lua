@@ -66,6 +66,7 @@ return packer.startup(function(use)
   use "kdheepak/lazygit.nvim"
 
   use "folke/which-key.nvim"
+  use 'lewis6991/spellsitter.nvim'
 
   use "ms-jpq/coq_nvim"
   use "ms-jpq/coq.artifacts"
