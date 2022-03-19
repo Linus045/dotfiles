@@ -104,6 +104,7 @@ return packer.startup(function(use)
   use "folke/todo-comments.nvim"
   -- Colorize color codes
   use "norcalli/nvim-colorizer.lua"
+  use "lukas-reineke/indent-blankline.nvim"
 
   -- git diff support
   use "sindrets/diffview.nvim"
