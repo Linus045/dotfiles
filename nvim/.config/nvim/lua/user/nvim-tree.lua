@@ -64,6 +64,11 @@ nvim_tree.setup {
     update_cwd = true,
     ignore_list = {},
   },
+   filters = {
+    dotfiles = false,
+    custom = {},
+    exclude = {},
+  },
   git = {
     enable = true,
     ignore = true,
