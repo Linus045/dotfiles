@@ -120,3 +120,6 @@ keymap("n", "<leader>k", "<Plug>(calendar)", term_opts)
 -- Zen mode
 -- width will be 85% of the editor width
 keymap("n", "<leader><SPACE>","<cmd>lua require'zen-mode'.toggle({window ={width = .85}})<CR>", opts)
+
+-- Undotree
+keymap("n", "<leader>U",":UndotreeToggle<CR>", opts)
