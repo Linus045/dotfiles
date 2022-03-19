@@ -33,7 +33,7 @@ zen_mode.setup {
       ruler = false, -- disables the ruler text in the cmd line area
       showcmd = false, -- disables the command in the last line of the screen
     },
-    twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
+    twilight = { enabled = false }, -- enable to start Twilight when zen mode opens
     gitsigns = { enabled = false }, -- disables git signs
     -- tmux = { enabled = false }, -- disables the tmux statusline
     -- this will change the font size on kitty when in zen mode
@@ -47,8 +47,20 @@ zen_mode.setup {
   },
   -- callback where you can add custom code when the Zen window opens
   on_open = function(win)
+    -- Make it work with Shade.nvim 
+    -- see https://github.com/sunjon/Shade.nvim/issues/10
+    local status_ok, shade = pcall(require, "shade")
+    if status_ok then
+      shade.toggle()
+    end
   end,
   -- callback where you can add custom code when the Zen window closes
   on_close = function()
+    -- Make it work with Shade.nvim 
+    -- see https://github.com/sunjon/Shade.nvim/issues/10
+    local status_ok, shade = pcall(require, "shade")
+    if status_ok then
+      shade.toggle()
+    end
   end,
 }

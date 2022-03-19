@@ -123,6 +123,8 @@ return packer.startup(function(use)
 
   use "folke/twilight.nvim"
   use "folke/zen-mode.nvim"
+  use "xiyaowong/nvim-transparent"
+  use 'sunjon/shade.nvim'
 
   use "p00f/nvim-ts-rainbow"
 
