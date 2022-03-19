@@ -9,3 +9,7 @@ exec /usr/bin/alacritty
 exec /usr/bin/firefox
 exec /usr/bin/spotify
 
+# start picom to allow transparency
+# -f for fading effect
+#exec --no-startup-id "picom -f &"
+exec --no-startup-id "picom &"

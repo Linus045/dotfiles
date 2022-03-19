@@ -1,6 +1,9 @@
 selection:
   save_to_clipboard: false
 
+window:
+  opacity: 0.92
+
 font:
   size: 12
   normal:
