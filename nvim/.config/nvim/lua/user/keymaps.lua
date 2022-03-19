@@ -28,7 +28,6 @@ keymap("n", "<C-l>", "<C-w>l" , opts)
 --keymap("n", "<leader>e", ":Lexplore 20<cr>", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
-
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<cr>", opts)
 keymap("n", "<C-Down>", ":resize -2<CR>", opts)
@@ -99,7 +98,7 @@ keymap("n", "<leader>?", ":Cheatsheet<cr>", opts)
 
 -- Toggleterm keybindings: see toggleterm.lua file
 keymap("n", "<leader>h", ":lua _HTOP_TOGGLE()<cr>", opts)
-keymap("n", "<leader>l", ":lua _LAZYGIT_TOGGLE()<cr>", opts)
+--keymap("n", "<leader>l", ":lua _LAZYGIT_TOGGLE()<cr>", opts)
 
 -- Open links on gx (remap needed because nvim-tree overrides it)
 -- xgd-open needs to be replaced with whatever you want to topen the link
@@ -123,3 +122,8 @@ keymap("n", "<leader><SPACE>","<cmd>lua require'zen-mode'.toggle({window ={width
 
 -- Undotree
 keymap("n", "<leader>U",":UndotreeToggle<CR>", opts)
+
+-- Remove search highlights
+-- keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
+keymap("n", "<leader>l",":nohl<CR>", opts)
+
