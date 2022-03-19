@@ -27,7 +27,8 @@ HISTFILESIZE=200000
 setopt appendhistory
 
 # some useful options (man zshoptions)
-setopt autocd extendedglob nomatch menucomplete
+# setopt autocd #cd automatically when entering a path
+setopt extendedglob nomatch menucomplete
 setopt interactive_comments
 setopt complete_aliases
 
