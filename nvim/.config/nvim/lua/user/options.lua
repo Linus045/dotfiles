@@ -36,6 +36,7 @@ vim.opt.shortmess:append "c"                    -- shorten messages
 vim.opt.autochdir = false
 vim.opt.spell = true
 vim.g.transparent_enabled = false
+vim.opt.colorcolumn = "80,120"
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those
