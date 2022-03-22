@@ -1,15 +1,12 @@
-# Autostart firefox and alacritty
-# no exec_always because it should only happen on inital start
-# load workspace layout and then start application
-exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/linus/.config/i3/workspace-1.json'"
-exec --no-startup-id "i3-msg 'workspace 2; append_layout /home/linus/.config/i3/workspace-2.json'"
-exec --no-startup-id "i3-msg 'workspace 3; append_layout /home/linus/.config/i3/workspace-3.json'"
-
-exec /usr/bin/alacritty
-exec /usr/bin/firefox
-exec /usr/bin/spotify
-
 # start picom to allow transparency
 # -f for fading effect
 #exec --no-startup-id "picom -f &"
 exec --no-startup-id "picom &"
+
+# Autostart firefox and alacritty
+# no exec_always because it should only happen on inital start
+# load workspace layout and then start application
+exec --no-startup-id i3-msg 'workspace 1; append_layout /home/linus/.config/i3/workspace-1.json; exec /usr/bin/alacritty; sleep 2'
+exec --no-startup-id i3-msg 'workspace 2; append_layout /home/linus/.config/i3/workspace-2.json; exec /usr/bin/firefox; sleep 10'
+exec --no-startup-id i3-msg 'workspace 3; append_layout /home/linus/.config/i3/workspace-3.json; exec /usr/bin/spotify; sleep 10'
+
