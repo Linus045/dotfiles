@@ -48,3 +48,20 @@ To add these configs, clone the repo into ~/dotfiles and cd into it and run `sto
   - Remove Battery module if not needed
 3. Install fonts or replace them (e.g. Arch `sudp pacman -S ttf-iosevka-nerd` and reload fonts cache `fs-cache`)
 
+Programs used for polybar and other stuff
+  - feh
+  - dunst
+  - picom
+  - ranger
+  - zshell/zsh
+  - safeeyes
+  - alacritty
+  - i3lock
+  - rofi
+  - i3 autotiling
+  - lazygit
+  - pulseaudio
+  - wal-theme-picker
+  - wal
+  - 
+
