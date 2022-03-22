@@ -7,3 +7,5 @@ export ZDOTDIR=$HOME/.config/zsh
 
 #Start safeeyes
 /usr/bin/safeeyes &
+
+wal -R

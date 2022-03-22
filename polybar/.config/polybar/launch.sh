@@ -20,7 +20,11 @@ echo "$I3ENABLED"
 for m in $(polybar --list-monitors | cut -d":" -f1); do
   # use top_i3 bar if i3 is used (it has other logout config and stuff)
   if [ $I3ENABLED = 1 ]; then
-    MONITOR=$m polybar --reload top_i3 &
+    if [ $m == "eDP" ]; then
+      MONITOR=$m polybar --reload top_i3_main 2> ~/.polybar_errorlog_$m &
+    else
+      MONITOR=$m polybar --reload top_i3 2> ~/.polybar_errorlog_$m &
+    fi
   else
     MONITOR=$m polybar --reload top_xfce &
   fi

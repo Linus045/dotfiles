@@ -142,3 +142,9 @@ export EDITOR="nvim"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# load color scheme from image
+# -n so it doesn't set wallpaper background
+# NOTE: now set in .xprofile to run on startup
+# wal -i ~/background.png -n -q
+

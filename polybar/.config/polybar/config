@@ -16,6 +16,72 @@ grey = #8fa6a1
 margin-top    = 0
 margin-bottom = 5
 
+[bar/top_i3_main]
+monitor = ${env:MONITOR:}
+; Size
+width  = 100%
+height = 25
+
+locale = de_DE.UTF-8
+
+; Offset
+;offset-x = 50%
+;offset-y = 50%
+
+; Position
+bottom = false
+
+; Radius
+radius = 0
+
+; Align modules fixed to middle
+fixed-center = true
+
+; Colors
+background = ${colors.background}
+foreground = ${colors.grey}
+
+; Underline
+line-size  = 2
+line-color = ${colors.foreground}
+
+; Border
+border-size  = 0
+border-color = ${colors.background}
+
+; Padding
+padding-left  = 0
+padding-right = 0
+
+; Margin of modules
+module-margin-left  = 0
+module-margin-right = 0
+
+; Font
+; last number behind the semicolon is y offset from top
+; font0 = Iosevka:size=12;3
+font-0 = FiraCode Nerd Font Mono:size=12;3
+font-1 = FiraCode Nerd Font Mono:style=Regular:size=12;3i
+font-2 = :size=12;3
+font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
+font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
+
+; Modules
+modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory
+modules-center = time i3 date background_swapper_auto
+modules-right  = safeeyes pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
+
+; Cursor actions
+cursor-click  = pointer
+cursor-scroll = ns-resize
+
+
+
+
+
+
+
+
 [bar/top_i3]
 monitor = ${env:MONITOR:}
 ; Size
@@ -65,7 +131,7 @@ font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 
 ; Modules
-modules-left   = cpu spacerSmall temperature spacerBig memory
+modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory
 modules-center = time i3 date
 modules-right  = safeeyes pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
 
@@ -272,6 +338,22 @@ interval = 10
 label-padding = 1
 format-underline = #ad3d87
 click-left = if safeeyes --status | grep -q Disabled; then safeeyes --enable; else safeeyes --disable; fi
+
+
+
+
+[module/background_swapper]
+type = custom/text
+content = 
+content-font = 5
+content-padding = 0
+format-underline = #ad3d87
+click-left = ~/.config/polybar/scripts/set_random_background.sh
+
+[module/background_swapper_auto]
+type = custom/script
+exec = ~/.config/polybar/scripts/set_random_background.sh
+interval = 1800
 
 
 ; [module/weather]
