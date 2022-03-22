@@ -167,4 +167,5 @@ bindsym $mod+d exec --no-startup-id rofi -combi-modi window#drun -show combi -mo
 
 # bindsym $mod+Tab workspace back_and_forth
 
-
+bindsym $mod+o exec alacritty -t "htop-float" -e "htop" for_window [title="^htop-float$"] floating enable, move position mouse, sticky enable
+bindsym $mod+t exec dunstctl history-pop
