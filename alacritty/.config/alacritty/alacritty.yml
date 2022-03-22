@@ -2,7 +2,7 @@ selection:
   save_to_clipboard: false
 
 window:
-  opacity: 0.75
+  opacity: 0.85
 
 font:
   size: 12
