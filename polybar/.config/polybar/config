@@ -88,6 +88,8 @@ monitor = ${env:MONITOR:}
 width  = 100%
 height = 25
 
+locale = de_DE.UTF-8
+
 ; Offset
 ;offset-x = 50%
 ;offset-y = 50%
@@ -138,6 +140,9 @@ modules-right  = safeeyes pulseaudio-control brightness battery network lock log
 ; Cursor actions
 cursor-click  = pointer
 cursor-scroll = ns-resize
+
+
+
 
 
 
@@ -433,7 +438,7 @@ type = internal/date
 interval = 1.0
 
 ; Format
-date = %%{F#999}%Y-%m-%d%%{F-} 
+date = %%{F#999}%a - %d.%m.%Y%%{F-} 
 
 ; Label
 label         =   %date%
