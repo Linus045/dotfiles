@@ -148,3 +148,6 @@ export EDITOR="nvim"
 # NOTE: now set in .xprofile to run on startup
 # wal -i ~/background.png -n -q
 
+# make sure to load the last theme if it was changed automatically
+# -e to not reload i3
+wal -e -R > /dev/null
