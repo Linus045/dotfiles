@@ -194,7 +194,7 @@ font-1 = Font Awesome:style=Regular:size=12;3
 
 ; Modules
 modules-left   = cpu spacerSmall temperature spacerBig memory
-modules-center = weather time date
+modules-center = time i3 date
 modules-right  = battery network lock_xfce logout poweroff
 
 ; Cursor actions
