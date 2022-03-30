@@ -13,7 +13,7 @@ vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
 vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 
 vim.opt.list = false -- show special characters
--- vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
 
 indent_blankline.setup {

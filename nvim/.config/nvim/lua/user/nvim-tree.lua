@@ -1,3 +1,9 @@
+local status_ok, nvim_tree = pcall(require, "nvim-tree")
+if not status_ok then
+  vim.notify("nvim-tree not found")
+  return
+end
+
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 vim.g.nvim_tree_icons = {
@@ -21,11 +27,6 @@ vim.g.nvim_tree_icons = {
   },
 }
 
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
-if not status_ok then
-  vim.notify("nvim-tree not found")
-  return
-end
 
 local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
 if not config_status_ok then
@@ -35,12 +36,15 @@ end
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
+-- auto_close has been removed, this replaces it
+-- vim.cmd [[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' .. tabpagenr() | quit | endif]]
+
 nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = false,
   ignore_ft_on_setup = {},
-  auto_close = true,
+  -- auto_close = true, -- removed, see command above
   auto_reload_on_write = true,
   open_on_tab = false,
   hijack_cursor = false,
@@ -122,4 +126,12 @@ nvim_tree.setup {
     folder_arrows = 1,
     tree_width = 30,
   },
+  -- log = {
+  --   enable = true,
+  --   truncate = true,
+  --   types = {
+  --     git = true,
+  --     profile = true,
+  --   },
+  -- },
 }

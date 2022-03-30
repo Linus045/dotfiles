@@ -36,7 +36,7 @@ vim.opt.shortmess:append "c"                    -- shorten messages
 vim.opt.autochdir = false
 vim.opt.spell = true
 vim.g.transparent_enabled = false
-vim.opt.colorcolumn = "80,120"
+vim.opt.colorcolumn = "80,120"  
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those
@@ -44,3 +44,6 @@ vim.cmd [[set iskeyword+=-]]                    -- add - to be grouped as word
 --vim.cmd [[set formatoptions-=c formatoptions-=r formatoptions-=o]]              -- edits the format options (no automatic comment character is inserted on ENTER) (Note: that using :set formatoptions-=cro won't work as expected (since it's a string))
 vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 
+-- vim.cmd [[match errorMsg /\s\+$/]]
+vim.cmd [[au BufEnter * highlight HIGHLIGHT_SPACES ctermbg=red guibg=red guifg=red]]
+vim.cmd [[au BufEnter * match HIGHLIGHT_SPACES /\s\+$/]]

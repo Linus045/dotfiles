@@ -97,7 +97,7 @@ keymap("n", "<leader>?", ":Cheatsheet<cr>", opts)
 --keymap("n", "<leader>k", ":LazyGit<CR>", opts)
 
 -- Toggleterm keybindings: see toggleterm.lua file
-keymap("n", "<leader>h", ":lua _HTOP_TOGGLE()<cr>", opts)
+--keymap("n", "<leader>h", ":lua _HTOP_TOGGLE()<cr>", opts)
 --keymap("n", "<leader>l", ":lua _LAZYGIT_TOGGLE()<cr>", opts)
 
 -- Open links on gx (remap needed because nvim-tree overrides it)
@@ -117,13 +117,50 @@ keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
 keymap("n", "<leader>k", "<Plug>(calendar)", term_opts)
 
 -- Zen mode
--- width will be 85% of the editor width
-keymap("n", "<leader><SPACE>","<cmd>lua require'zen-mode'.toggle({window ={width = .85}})<CR>", opts)
+keymap("n", "<leader><SPACE>","<cmd>lua require'zen-mode'.toggle()<CR>", opts)
 
 -- Undotree
+keymap("n", "<leader>u",":UndotreeToggle<CR>", opts)
 keymap("n", "<leader>U",":UndotreeToggle<CR>", opts)
+
+-- Turn editor transparent
+keymap("n", "<leader>P",":TransparentToggle<CR>", opts)
 
 -- Remove search highlights
 -- keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
 keymap("n", "<leader>l",":nohl<CR>", opts)
+
+
+
+-- Rename with window: https://www.reddit.com/r/neovim/comments/nsfv7h/rename_in_floating_window_with_neovim_lsp/
+local function dorename(win)
+  local new_name = vim.trim(vim.fn.getline('.'))
+  vim.api.nvim_win_close(win, true)
+  vim.lsp.buf.rename(new_name)
+end
+
+local function rename()
+  local opts = {
+    relative = 'cursor',
+    row = 0,
+    col = 0,
+    width = 30,
+    height = 1,
+    style = 'minimal',
+    border = 'single'
+  }
+  local cword = vim.fn.expand('<cword>')
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, opts)
+  local fmt =  '<cmd>lua Rename.dorename(%d)<CR>'
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {cword})
+  vim.api.nvim_buf_set_keymap(buf, 'i', '<CR>', string.format(fmt, win), {silent=true})
+end
+
+_G.Rename = {
+   rename = rename,
+   dorename = dorename
+}
+vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua Rename.rename()<CR>', {silent = true})
 

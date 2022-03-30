@@ -56,82 +56,118 @@ return packer.startup(function(use)
   use "joshdick/onedark.vim"
   use "sainnhe/gruvbox-material"
 
+  -- Line at the bottom showing useful information
   use {
     "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true }
   }
 
-  -- Buffer line above
+  -- Buffer line above showing buffers and tabs
   use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
-  use "kdheepak/lazygit.nvim"
 
+  -- lazygit for nvim
+  --use "kdheepak/lazygit.nvim"
+
+  -- show keyboard shortcuts
   use "folke/which-key.nvim"
+
+  -- easier spell checking
   use 'lewis6991/spellsitter.nvim'
 
+  -- Faster autocompletion
   use "ms-jpq/coq_nvim"
   use "ms-jpq/coq.artifacts"
   use "ms-jpq/coq.thirdparty"
 
+  -- LSP server
   use "neovim/nvim-lspconfig"
+  -- autoinstall lsp server
   use "williamboman/nvim-lsp-installer"
 
+  -- telescope.
   use "nvim-telescope/telescope.nvim"
+
+  -- better highlightings and other useful features
   use "nvim-treesitter/nvim-treesitter"
+
+  -- fzf search for telescope
   use "nvim-telescope/telescope-fzf-native.nvim"
 
-  use {
-    'sudormrfbin/cheatsheet.nvim',
+  -- show keyboard shortcuts in a searchable menu (similar to :Telescope keymaps)
+  -- use {
+  --   'sudormrfbin/cheatsheet.nvim',
 
-    requires = {
-      {'nvim-telescope/telescope.nvim'},
-      {'nvim-lua/popup.nvim'},
-      {'nvim-lua/plenary.nvim'},
-    }
-  }
+  --   requires = {
+  --     {'nvim-telescope/telescope.nvim'},
+  --     {'nvim-lua/popup.nvim'},
+  --     {'nvim-lua/plenary.nvim'},
+  --   }
 
+  -- better file explorer sidebar
   use 'kyazdani42/nvim-tree.lua'
+
+  -- shows undo/redo tree structure
   use 'mbbill/undotree'
 
+  -- floating terminal in nvim
   use "akinsho/toggleterm.nvim"
--- hightlight keywods:
--- TODO:
--- BUG:
--- HACK:
--- BUG:
--- PERF:
--- NOTE:
--- WARNING:
+
+  -- hightlight keywods:
+  -- TODO:
+  -- BUG:
+  -- HACK:
+  -- BUG:
+  -- PERF:
+  -- NOTE:
+  -- WARNING:
   use "folke/todo-comments.nvim"
-  -- Colorize color codes
+
+  -- Colorize color codes e.g. #222266
   use "norcalli/nvim-colorizer.lua"
-  use "lukas-reineke/indent-blankline.nvim"
+
+  -- show line indentation
+  --use "lukas-reineke/indent-blankline.nvim"
 
   -- git diff support
   use "sindrets/diffview.nvim"
+
+  -- git inside nvim
   use "TimUntersberger/neogit"
 
-  -- git sings support
+  -- git sings support on the sidebar
   use {'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }}
 
+  -- easier code navigation
   use 'ggandor/lightspeed.nvim'
 
+  -- JS Formatter
+  --use 'maksimr/vim-jsbeautify'
+
   --Start screen
-  use { "startup-nvim/startup.nvim", requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }}
+  -- use { "startup-nvim/startup.nvim", requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }}
 
   -- Easily comment stuff
   use "numToStr/Comment.nvim"
   -- Treesitter context dependant comments
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  --use 'JoosepAlviste/nvim-ts-context-commentstring'
 
-  use "folke/twilight.nvim"
+  -- only highlight the current scope/surrounding lines
+  --use "folke/twilight.nvim"
+
+  -- bring current buffer in focus
   use "folke/zen-mode.nvim"
+
+  -- allow transparent code
   use "xiyaowong/nvim-transparent"
-  use 'sunjon/shade.nvim'
+  -- gray out not focused panels (kinda buggy atm)
+  -- use 'sunjon/shade.nvim'
 
   use "p00f/nvim-ts-rainbow"
 
+  -- debugger
   use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
 
+  -- show calender (synched with google)
   use "itchyny/calendar.vim"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
