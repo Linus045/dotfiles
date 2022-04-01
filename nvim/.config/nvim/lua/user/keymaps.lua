@@ -107,8 +107,6 @@ keymap("n","<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.inpu
 keymap("n","<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
 keymap("n","<F6>", ":lua require'dap'.run_last()<CR>", opts)
 
-keymap("n", "<leader>5", ":Telescope dap frames<CR>", opts)
-
 keymap("n","<F4>", ":lua require'dapui'.toggle()<CR>", opts)
 keymap("n", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
 keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
