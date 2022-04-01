@@ -164,6 +164,8 @@ return packer.startup(function(use)
 
   use "p00f/nvim-ts-rainbow"
 
+  -- surround text easier (e.g. with ", {. <, etc.)
+  use "tpope/vim-surround"
   -- debugger
   -- use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
   --  use "mfussenegger/nvim-dap"
