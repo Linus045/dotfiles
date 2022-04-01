@@ -165,8 +165,13 @@ return packer.startup(function(use)
   use "p00f/nvim-ts-rainbow"
 
   -- debugger
-  use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
-
+  -- use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
+  --  use "mfussenegger/nvim-dap"
+  use "theHamsta/nvim-dap-virtual-text"
+  use "nvim-telescope/telescope-dap.nvim"
+  use { "rcarriga/nvim-dap-ui",
+    requires = {"mfussenegger/nvim-dap"}
+  }
   -- show calender (synched with google)
   use "itchyny/calendar.vim"
   -- Automatically set up your configuration after cloning packer.nvim

@@ -88,8 +88,32 @@ keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuz
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
 keymap("n", "<leader>.", "<cmd>lua require'telescope.builtin'.lsp_code_actions()<cr><esc>", opts)
 
-keymap("n", "<leader>dl", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
+keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
 
+-- Telescope DAP
+keymap("n", "<leader>dlb", ":Telescope dap list_breakpoints<CR>", opts)
+keymap("n", "<leader>dlc", ":Telescope dap configurations<CR>", opts)
+keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts)
+keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts)
+keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts)
+
+keymap("n","<F10>", ":lua require'dap'.step_over()<CR>", opts)
+keymap("n","<F5>", ":lua require'dap'.continue()<CR>", opts)
+keymap("n","<F11>", ":lua require'dap'.step_into()<CR>", opts)
+keymap("n","<F12>", ":lua require'dap'.step_out()<CR>", opts)
+keymap("n","<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts)
+keymap("n","<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
+keymap("n","<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
+keymap("n","<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
+keymap("n","<F6>", ":lua require'dap'.run_last()<CR>", opts)
+
+keymap("n", "<leader>5", ":Telescope dap frames<CR>", opts)
+
+keymap("n","<F4>", ":lua require'dapui'.toggle()<CR>", opts)
+keymap("n", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
+keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
+
+-- require("dapui").eval(<expression>)
 -- Cheatsheet
 keymap("n", "<leader>?", ":Cheatsheet<cr>", opts)
 
@@ -107,11 +131,11 @@ keymap("n","gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>
 -- vimspector keybindings
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
 -- for normal mode - the word under the cursor
--- vim.cmd("nmap <Leader>di <Plug>VimspectorBalloonEval")
+-- e.g.  vim.cmd("nmap <Leader>di <Plug>VimspectorBalloonEval")
 -- vim.cmd("xmap <Leader>di <Plug>VimspectorBalloonEval")
-keymap("n", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
-keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
 
+--keymap("n", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
+--keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
 
 -- Calendar keymap
 keymap("n", "<leader>k", "<Plug>(calendar)", term_opts)
@@ -128,7 +152,7 @@ keymap("n", "<leader>P",":TransparentToggle<CR>", opts)
 
 -- Remove search highlights
 -- keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
-keymap("n", "<leader>l",":nohl<CR>", opts)
+keymap("n", "<leader>ll",":nohl<CR>", opts)
 
 
 
