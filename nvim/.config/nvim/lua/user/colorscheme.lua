@@ -28,13 +28,3 @@ if not status_ok then
   vim.notify("colorscheme " .. colorscheme .. " not found!")
   return
 end
-
--- hightlight keywods to test todo plugin
--- TODO:
--- BUG:
--- HACK:
--- BUG:
--- PERF:
--- NOTE:
--- WARNING:
-

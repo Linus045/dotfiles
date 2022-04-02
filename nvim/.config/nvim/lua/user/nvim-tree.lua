@@ -81,6 +81,7 @@ nvim_tree.setup {
   view = {
     width = 30,
     height = 30,
+    preserve_window_proportions = false,
     hide_root_folder = false,
     side = "left",
     auto_resize = false,
@@ -102,7 +103,7 @@ nvim_tree.setup {
       global = false,
     },
     open_file = {
-      quit_on_open = false,
+      quit_on_open = true,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
@@ -124,7 +125,6 @@ nvim_tree.setup {
     folders = 1,
     files = 1,
     folder_arrows = 1,
-    tree_width = 30,
   },
   -- log = {
   --   enable = true,

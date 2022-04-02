@@ -49,18 +49,18 @@ zen_mode.setup {
   on_open = function(win)
     -- Make it work with Shade.nvim 
     -- see https://github.com/sunjon/Shade.nvim/issues/10
-    local status_ok, shade = pcall(require, "shade")
-    if status_ok then
-      shade.toggle()
-    end
+    -- local status_ok, shade = pcall(require, "shade")
+    -- if status_ok then
+    --   shade.toggle()
+    -- end
   end,
   -- callback where you can add custom code when the Zen window closes
   on_close = function()
     -- Make it work with Shade.nvim 
     -- see https://github.com/sunjon/Shade.nvim/issues/10
-    local status_ok, shade = pcall(require, "shade")
-    if status_ok then
-      shade.toggle()
-    end
+    -- local status_ok, shade = pcall(require, "shade")
+    -- if status_ok then
+    --   shade.toggle()
+    -- end
   end,
 }

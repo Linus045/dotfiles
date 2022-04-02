@@ -1,6 +1,6 @@
 require "user.options"
 require "user.keymaps"
-require "user.vimspector"
+-- require "user.vimspector"
 require "user.plugins"
 require "user.colorscheme"
 require "user.coq"

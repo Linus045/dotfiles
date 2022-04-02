@@ -9,7 +9,7 @@ vim.opt.hlsearch = true                         -- hightlight all matches on pre
 vim.opt.ignorecase = true                       -- ignore case in search pattern
 vim.opt.mouse = "a"                             -- allow mouse to be used in neovim
 vim.opt.pumheight = 20                          -- pop up menu height
-vim.opt.showmode = true                         -- show/hide the current used mode e.g. -- INSERT --
+vim.opt.showmode = false                         -- show/hide the current used mode e.g. -- INSERT --
 vim.opt.showtabline = 2                         -- always show tabs
 vim.opt.smartcase = true                        -- enables case sensitive search smartly (when an uppercase character is used)
 vim.opt.smartindent = true                      -- enables automatic smart indentation
@@ -30,13 +30,13 @@ vim.opt.relativenumber = false                  -- set relative numbered lines
 vim.opt.numberwidth = 4                         -- set number column width
 vim.opt.signcolumn = "yes"                      -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false                            -- DON'T wrap if lines get too long
-vim.opt.scrolloff = 8                           -- always keep 8 lines above and below the cursor (unless at the beginning/end of file)
+vim.opt.scrolloff = 4                           -- always keep 8 lines above and below the cursor (unless at the beginning/end of file)
 vim.opt.guifont = "monospace:h17"               -- set font
 vim.opt.shortmess:append "c"                    -- shorten messages
 vim.opt.autochdir = false
 vim.opt.spell = true
 vim.g.transparent_enabled = false
-vim.opt.colorcolumn = "80,120"  
+vim.opt.colorcolumn = "80,120"
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those
