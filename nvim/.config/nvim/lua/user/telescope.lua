@@ -7,7 +7,6 @@ local actions = require "telescope.actions"
 
 telescope.setup {
   defaults = {
-
     prompt_prefix = " ",
     selection_caret = " ",
     path_display = { "smart" },
@@ -31,6 +30,7 @@ telescope.setup {
       '--line-number',
       '--column',
       '--smart-case',
+      '--trim'
       -- '--hidden', -- include hidden files
       -- '-u' -- single u includes .gitignore, 2 u's include gitignore and hidden files
     },
@@ -103,21 +103,30 @@ telescope.setup {
     find_files = {
       hidden = true,
       theme = 'dropdown',
-      previewer = false
+      previewer = false,
+      winblend = 15
+    },
+    keymaps = {
+      theme = 'ivy',
+      winblend = 15
     },
     buffers = {
-      theme = 'ivy'
+      theme = 'ivy',
+      winblend = 15
     },
     current_buffer_fuzzy_find = {
       theme = 'dropdown',
-      previewer = false
+      previewer = false,
+      winblend = 15
     },
     git_files = {
       theme = 'dropdown',
-      previewer = false
+      previewer = false,
+      winblend = 15
     },
     lsp_code_actions= {
-      theme = 'cursor'
+      theme = 'cursor',
+      winblend = 15
     }
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
