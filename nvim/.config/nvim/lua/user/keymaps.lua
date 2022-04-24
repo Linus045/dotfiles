@@ -151,4 +151,15 @@ keymap("n", "<leader>P",":TransparentToggle<CR>", opts)
 
 -- Remove search highlights
 -- keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
-keymap("n", "<leader>ll",":nohl<CR>", opts)
+keymap("n", "<leader>h",":nohl<CR>:VMClear<CR>", opts)
+-- Vim Visual multi cursor keymaps
+vim.g.VM_mouse_mappings = 1
+vim.g.VM_theme = 'sand'
+vim.g.VM_highlight_matches = 'red'
+vim.g.VM_maps = {
+  ['Find Under'] = '<C-d>',
+  ['Find Subword Under'] = '<C-d>',
+  ["Undo"] = 'u',
+  ["Redo"] = '<C-r>'
+}
+

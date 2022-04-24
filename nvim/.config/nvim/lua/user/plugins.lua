@@ -102,6 +102,9 @@ return packer.startup(function(use)
   --     {'nvim-lua/popup.nvim'},
   --     {'nvim-lua/plenary.nvim'},
   --   }
+  
+  -- multi cursor
+  use "mg979/vim-visual-multi"
 
   -- better file explorer sidebar
   use 'kyazdani42/nvim-tree.lua'
