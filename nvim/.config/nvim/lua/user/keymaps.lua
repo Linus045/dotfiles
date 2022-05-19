@@ -150,7 +150,7 @@ keymap("n", "<leader>U",":UndotreeToggle<CR>", opts)
 keymap("n", "<leader>P",":TransparentToggle<CR>", opts)
 
 -- Remove search highlights
--- keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
+keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
 keymap("n", "<leader>h",":nohl<CR>:VMClear<CR>", opts)
 -- Vim Visual multi cursor keymaps
 vim.g.VM_mouse_mappings = 1
