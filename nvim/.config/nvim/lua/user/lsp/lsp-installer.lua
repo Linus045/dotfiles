@@ -5,6 +5,17 @@ end
 
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
+
+require("nvim-lsp-installer").setup {}
+
+require("nvim-lsp-installer").setup {}
+local lspconfig = require("lspconfig")
+
+lspconfig.sumneko_lua.setup {}
+lspconfig.tsserver.setup {}
+
+
+--[[
 lsp_installer.on_server_ready(function(server)
 	local opts = {
 		on_attach = require("user.lsp.handlers").on_attach,
@@ -33,4 +44,4 @@ lsp_installer.on_server_ready(function(server)
 	-- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
   server:setup(opts)
 end)
-
+]]
