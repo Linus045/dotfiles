@@ -117,15 +117,6 @@ nvim_tree.setup {
       }
     }
   },
-  git_hl = 1,
-  disable_window_picker = 0,
-  root_folder_modifier = ":t",
-  show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1,
-    folder_arrows = 1,
-  },
   -- log = {
   --   enable = true,
   --   truncate = true,
@@ -134,4 +125,14 @@ nvim_tree.setup {
   --     profile = true,
   --   },
   -- },
+}
+
+vim.g.nvim_tree_git_hl = true
+vim.g.disable_window_picker = true
+vim.g.root_folder_modifier = ":t"
+vim.g.show_icons = {
+ git = 1,
+ folders = 1,
+ files = 1,
+ folder_arrows = 1,
 }

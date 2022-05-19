@@ -3,6 +3,9 @@ if not status_ok then
   return
 end
 
+return
+
+--[[
 configs.setup {
   ensure_installed = "maintained",
   sync_install = false,
@@ -34,3 +37,5 @@ configs.setup {
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.wo.foldlevel = 999
+
+]]
