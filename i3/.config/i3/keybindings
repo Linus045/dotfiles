@@ -119,7 +119,7 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-bindsym $mod+x move workspace to output right 
+bindsym $mod+x move workspace to output right
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -159,8 +159,8 @@ mode "drawing" {
   bindsym $mod+c exec "/home/linus/dotfiles/polybar/.config/polybar/scripts/gromit-mpx-control.sh clear"
   bindsym $mod+z exec "/home/linus/dotfiles/polybar/.config/polybar/scripts/gromit-mpx-control.sh undo"
   bindsym $mod+Shift+z exec "/home/linus/dotfiles/polybar/.config/polybar/scripts/gromit-mpx-control.sh redo"
-  bindsym Escape mode "default"; exec"/home/linus/dotfiles/polybar/.config/polybar/scripts/gromit-mpx-control.sh stop" 
-  # bindsym Return mode "default";
+  bindsym Escape mode "default"; exec "/home/linus/dotfiles/polybar/.config/polybar/scripts/gromit-mpx-control.sh stop"
+  bindsym Return mode "default"; exec "/home/linus/dotfiles/polybar/.config/polybar/scripts/gromit-mpx-control.sh pen"
 }
 
 # if gromit is not running start it
