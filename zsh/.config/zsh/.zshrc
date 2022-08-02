@@ -18,8 +18,12 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
+# load nvm versions for nvim github copilot
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-export ZDOTDIR=$HOME/.config/zsh
+source /usr/share/nvm/init-nvm.sh
+
 HISTFILE=~/.zsh_history
 HISTTIMEFORMAT="%d.%m.%y %T "
 HISTSIZE=200000
