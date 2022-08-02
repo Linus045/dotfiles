@@ -15,7 +15,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd [[packadd packer.nvim]]
 end
 
-
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
   augroup packer_user_config
@@ -31,7 +30,6 @@ if not status_ok then
   return
 end
 
-
 -- Have packer use a popup window
 packer.init {
   display = {
@@ -40,7 +38,6 @@ packer.init {
     end,
   },
 }
-
 
 -- Install your plugins here
 return packer.startup(function(use)
@@ -68,16 +65,19 @@ return packer.startup(function(use)
   -- lazygit for nvim
   --use "kdheepak/lazygit.nvim"
 
+  use "rcarriga/nvim-notify"
+
   -- show keyboard shortcuts
   use "folke/which-key.nvim"
 
   -- easier spell checking
   use 'lewis6991/spellsitter.nvim'
 
+  -- snippet engine required by nvim-cmp
+  use "L3MON4D3/LuaSnip"
   -- Faster autocompletion
-  use "ms-jpq/coq_nvim"
-  use "ms-jpq/coq.artifacts"
-  use "ms-jpq/coq.thirdparty"
+  use 'hrsh7th/nvim-cmp'
+  use "hrsh7th/cmp-nvim-lsp"
 
   -- LSP server
   use "neovim/nvim-lspconfig"
@@ -93,6 +93,10 @@ return packer.startup(function(use)
   -- fzf search for telescope
   use "nvim-telescope/telescope-fzf-native.nvim"
 
+  use "git@github.com:github/copilot.vim.git"
+
+  use "norcalli/nvim_utils"
+
   -- show keyboard shortcuts in a searchable menu (similar to :Telescope keymaps)
   -- use {
   --   'sudormrfbin/cheatsheet.nvim',
@@ -102,7 +106,14 @@ return packer.startup(function(use)
   --     {'nvim-lua/popup.nvim'},
   --     {'nvim-lua/plenary.nvim'},
   --   }
-  
+
+  -- better nvim sessions
+  use {
+    'dhruvasagar/vim-prosession',
+    requires = {'tpope/vim-obsession'}
+  }
+
+
   -- multi cursor
   use "mg979/vim-visual-multi"
 

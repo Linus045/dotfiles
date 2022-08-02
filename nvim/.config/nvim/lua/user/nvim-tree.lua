@@ -4,30 +4,6 @@ if not status_ok then
   return
 end
 
--- following options are the default
--- each of these are documented in `:help nvim-tree.OPTION_NAME`
-vim.g.nvim_tree_icons = {
-  default = "",
-  symlink = "",
-  git = {
-    unstaged = "",
-    staged = "S",
-    unmerged = "",
-    renamed = "➜",
-    deleted = "",
-    untracked = "U",
-    ignored = "◌",
-  },
-  folder = {
-    default = "",
-    open = "",
-    empty = "",
-    empty_open = "",
-    symlink = "",
-  },
-}
-
-
 local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
 if not config_status_ok then
   vim.notify("nvim-tree.config not found")
@@ -84,7 +60,6 @@ nvim_tree.setup {
     preserve_window_proportions = false,
     hide_root_folder = false,
     side = "left",
-    auto_resize = false,
     mappings = {
       custom_only = false,
       list = {
@@ -97,6 +72,30 @@ nvim_tree.setup {
     relativenumber = false,
     signcolumn = "yes"
   },
+  renderer = {
+    icons = {
+      glyphs = {
+        default = "",
+        symlink = "",
+        git = {
+          unstaged = "",
+          staged = "S",
+          unmerged = "",
+          renamed = "➜",
+          deleted = "",
+          untracked = "U",
+          ignored = "◌",
+        },
+        folder = {
+          default = "",
+          open = "",
+          empty = "",
+          empty_open = "",
+          symlink = "",
+        },
+      },
+    },
+  },
   actions = {
     change_dir = {
       enable = true,
@@ -104,6 +103,7 @@ nvim_tree.setup {
     },
     open_file = {
       quit_on_open = true,
+      resize_window = false,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",

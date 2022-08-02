@@ -163,3 +163,7 @@ vim.g.VM_maps = {
   ["Redo"] = '<C-r>'
 }
 
+-- change github copilot keybindings
+vim.cmd [[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]]
+vim.g.copilot_no_tab_map = true
+
