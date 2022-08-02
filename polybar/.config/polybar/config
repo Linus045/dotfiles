@@ -1,6 +1,8 @@
 [colors]
-background = #282a36
-foreground = #f8f8f2
+background = #dd2bb8a3
+foreground = #b82b40
+foreground_line = #b82b40
+border_line = #000000
 red        = #ff5555
 bloodofmyenemies = #a60b00
 green      = #50fa7b
@@ -15,6 +17,25 @@ grey = #8fa6a1
 [global/wm]
 margin-top    = 0
 margin-bottom = 5
+
+
+[settings]
+screenchange-reload     = true
+
+; Compositing operators
+; @see: https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-operator-t
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+; Enables pseudo-transparency for the bar
+; If set to true the bar can be transparent without a compositor.
+pseudo-transparency = true
+
+
+
 
 [bar/top_i3_main]
 monitor = ${env:MONITOR:}
@@ -39,15 +60,15 @@ fixed-center = true
 
 ; Colors
 background = ${colors.background}
-foreground = ${colors.grey}
+foreground = ${colors.foreground}
 
 ; Underline
 line-size  = 2
-line-color = ${colors.foreground}
+line-color = ${colors.foreground_line}
 
 ; Border
 border-size  = 0
-border-color = ${colors.background}
+border-color = ${colors.border_line}
 
 ; Padding
 padding-left  = 0
@@ -67,9 +88,9 @@ font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 
 ; Modules
-modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory
-modules-center = time i3 date background_swapper_auto
-modules-right  = safeeyes pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
+modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory spacerBig fs-root
+modules-center = time i3 date
+modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
 
 ; Cursor actions
 cursor-click  = pointer
@@ -105,15 +126,15 @@ fixed-center = true
 
 ; Colors
 background = ${colors.background}
-foreground = ${colors.grey}
+foreground = ${colors.foreground}
 
 ; Underline
 line-size  = 2
-line-color = ${colors.foreground}
+line-color = ${colors.foreground_line}
 
 ; Border
 border-size  = 0
-border-color = ${colors.background}
+border-color = ${colors.border_line}
 
 ; Padding
 padding-left  = 0
@@ -133,9 +154,9 @@ font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 
 ; Modules
-modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory
+modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory spacerBig fs-root
 modules-center = time i3 date
-modules-right  = safeeyes pulseaudio-control brightness battery network lock logout_i3 hibernate poweroff
+modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
 
 ; Cursor actions
 cursor-click  = pointer
@@ -169,16 +190,15 @@ fixed-center = true
 
 ; Colors
 background = ${colors.background}
-foreground = ${colors.grey}
+foreground = ${colors.foreground}
 
 ; Underline
 line-size  = 2
-line-color = ${colors.foreground}
+line-color = ${colors.foreground_line}
 
 ; Border
 border-size  = 0
-border-color = ${colors.background}
-
+border-color = ${colors.border_line}
 ; Padding
 padding-left  = 0
 padding-right = 0
@@ -202,6 +222,17 @@ cursor-click  = pointer
 cursor-scroll = ns-resize
 
 
+
+[fs-base]
+type = internal/fs
+fixed-values = true
+label-mounted = %mountpoint%: %free%
+
+
+[module/fs-root]
+inherit = fs-base
+mount-0 = /
+label-mounted = 力 %free%
 
 
 
@@ -346,6 +377,14 @@ click-left = if safeeyes --status | grep -q Disabled; then safeeyes --enable; el
 
 
 
+[module/dunst]
+type = custom/script
+label = %output%
+exec = if dunstctl is-paused | grep -q false; then echo " ON"; else echo "  OFF"; fi
+interval = 10
+label-padding = 1
+format-underline = #ad3d87
+click-left = if dunstctl is-paused | grep -q false; then dunstify -a "Dunst notifications" "Disabled"; sleep 1 && dunstctl set-paused toggle; else dunstctl set-paused toggle; dunstify -a "Dunst notifications" "Enabled"; fi
 
 [module/background_swapper]
 type = custom/text
@@ -355,21 +394,13 @@ content-padding = 0
 format-underline = #ad3d87
 click-left = ~/.config/polybar/scripts/set_random_background.sh
 
-[module/background_swapper_auto]
-type = custom/script
-exec = ~/.config/polybar/scripts/set_random_background.sh 2> ~/.polybar_errorlog_background_swapper
-interval = 1800
-
-
-; [module/weather]
+; see 'crontab -e'
+; moved to crontab so it doesnt update the desktop every time polybar restarts
+; [module/background_swapper_auto]
 ; type = custom/script
-; 
-; ; Update interval
-; interval = 600
-; 
-; ; Label
-; label         = %output%
-; label-padding = 4
+; exec = ~/.config/polybar/scripts/set_random_background.sh 2> ~/.polybar_errorlog_background_swapper
+; interval = 1800
+
 
 [module/brightness]
 type = custom/script
@@ -399,7 +430,7 @@ exec = ~/.config/polybar/scripts/pulseaudio-control.sh --icons-volume "奔,墳" 
 ; get device.description via `pacmd list-sinks | grep name:`
 click-right = exec pavucontrol &
 ; click-left = ~/.config/polybar/scripts/pulseaudio-control.sh togmute
-click-left = playerctl play-pause 
+click-left = playerctl play-pause
 ; click-middle = ~/.config/polybar/scripts/pulseaudio-control.sh --sink-blacklist "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2" next-sink
 
 scroll-up = ~/.config/polybar/scripts/pulseaudio-control.sh --volume-max 130 up
@@ -423,14 +454,6 @@ time = %%{F#fff}%H:%M:%S%%{F-}
 label         =  %time%
 label-padding = 2
 
-
-
-
-
-
-
-
-
 [module/date]
 type = internal/date
 
@@ -438,7 +461,7 @@ type = internal/date
 interval = 1.0
 
 ; Format
-date = %%{F#999}%a - %d.%m.%Y%%{F-} 
+date = %a - %d.%m.%Y
 
 ; Label
 label         =   %date%
@@ -467,15 +490,14 @@ label-muted-padding    = 2
 
 
 
-[module/network]
+[module/wireless-network]
 type = internal/network
+interface = wlp2s0
 
-; Interface
-interface = wlp2s0 
-
+interval = 5
 
 ; Connected label
-label-connected            = 
+label-connected            =  
 label-connected-foreground = ${colors.green}
 label-connected-padding    = 2
 
@@ -575,17 +597,6 @@ click-left = systemctl hibernate
 
 
 
-
-
-
-
-
-[settings]
-screenchange-reload     = true
-;compositing-background = xor
-;compositing-foreground = source
-;compositing-border     = over
-;pseudo-transparency    = false
 
 
 
@@ -751,7 +762,7 @@ format = <label>
 ;   %gb_swap_total%
 ;   %gb_swap_free%
 ;   %gb_swap_used%
-label = RAM %gb_used%/%gb_total% (%percentage_used%%)
+label = %gb_used%/%gb_total% (%percentage_used%%)
 
 ; Only applies if <bar-used> is used
 bar-used-indicator =

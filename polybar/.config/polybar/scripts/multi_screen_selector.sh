@@ -20,4 +20,5 @@ for (( i=0; i<${l}; i++ )); do
   xrandr --output ${disconnected_screens[i]} --off
 done
 
-
+# restart i3 to reload polybar
+# sleep 2 && /bin/bash /home/linus/.config/polybar/launch.sh
