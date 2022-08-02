@@ -29,6 +29,15 @@ HISTTIMEFORMAT="%d.%m.%y %T "
 HISTSIZE=200000
 HISTFILESIZE=200000
 setopt appendhistory
+setopt extendedhistory
+# to show history in zsh's fzf reverse search see:
+# https://github.com/junegunn/fzf/issues/1308
+# sudo -e /usr/share/fzf/key-bindings.zsh
+# add -i option to the fc command  in line 100
+
+# like so here:       V see here
+#   selected=( $(fc -ril 1 | perl -ne 'print if !$seen{(/^\s*[0-9]+\**\s+(.*)/, $1)}++' | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort,ctrl-z:ignore $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+
 
 # some useful options (man zshoptions)
 # setopt autocd #cd automatically when entering a path
