@@ -210,6 +210,8 @@ return packer.startup(function(use)
 	-- show calender (synched with google)
 	use("itchyny/calendar.vim")
 
+	-- Latex plugins
+	use("lervag/vimtex")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
