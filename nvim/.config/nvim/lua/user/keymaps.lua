@@ -19,10 +19,10 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h" , opts)
-keymap("n", "<C-j>", "<C-w>j" , opts)
-keymap("n", "<C-k>", "<C-w>k" , opts)
-keymap("n", "<C-l>", "<C-w>l" , opts)
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Replaced with nvim-tree
 --keymap("n", "<leader>e", ":Lexplore 20<cr>", opts)
@@ -47,7 +47,7 @@ keymap("i", "jk", "<ESC>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
- -- Move text up and down
+-- Move text up and down
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
 keymap("v", "<A-k>", ":m .-2<CR>==", opts)
 keymap("v", "p", '"_dP', opts)
@@ -81,9 +81,12 @@ keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts)
 -- default Live Grep
 keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
 -- Live Grep with hidden hiles
-keymap("n", "<leader>GH", "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim'}})<cr>", opts)
-
-
+keymap(
+	"n",
+	"<leader>GH",
+	"<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim'}})<cr>",
+	opts
+)
 
 keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts)
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
@@ -98,17 +101,17 @@ keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts)
 keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts)
 keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts)
 
-keymap("n","<F10>", ":lua require'dap'.step_over()<CR>", opts)
-keymap("n","<F5>", ":lua require'dap'.continue()<CR>", opts)
-keymap("n","<F11>", ":lua require'dap'.step_into()<CR>", opts)
-keymap("n","<F12>", ":lua require'dap'.step_out()<CR>", opts)
-keymap("n","<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts)
-keymap("n","<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
-keymap("n","<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
-keymap("n","<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
-keymap("n","<F6>", ":lua require'dap'.run_last()<CR>", opts)
+keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts)
+keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts)
+keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts)
+keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts)
+keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts)
+keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
+keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
+keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
+keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts)
 
-keymap("n","<F4>", ":lua require'dapui'.toggle()<CR>", opts)
+keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts)
 keymap("n", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
 keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
 
@@ -125,7 +128,7 @@ keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
 
 -- Open links on gx (remap needed because nvim-tree overrides it)
 -- xgd-open needs to be replaced with whatever you want to topen the link
-keymap("n","gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
+keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 
 -- vimspector keybindings
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
@@ -140,30 +143,29 @@ keymap("n","gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>
 keymap("n", "<leader>k", "<Plug>(calendar)", term_opts)
 
 -- Zen mode
-keymap("n", "<leader><SPACE>","<cmd>lua require'zen-mode'.toggle()<CR>", opts)
+keymap("n", "<leader><SPACE>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts)
 
 -- Undotree
-keymap("n", "<leader>u",":UndotreeToggle<CR>", opts)
-keymap("n", "<leader>U",":UndotreeToggle<CR>", opts)
+keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts)
+keymap("n", "<leader>U", ":UndotreeToggle<CR>", opts)
 
 -- Turn editor transparent
-keymap("n", "<leader>P",":TransparentToggle<CR>", opts)
+keymap("n", "<leader>P", ":TransparentToggle<CR>", opts)
 
 -- Remove search highlights
-keymap("n", "<leader>l",":set hls!<CR>", opts) --Toggle instead
-keymap("n", "<leader>h",":nohl<CR>:VMClear<CR>", opts)
+keymap("n", "<leader>l", ":set hls!<CR>", opts) --Toggle instead
+keymap("n", "<leader>h", ":nohl<CR>:VMClear<CR>", opts)
 -- Vim Visual multi cursor keymaps
 vim.g.VM_mouse_mappings = 1
-vim.g.VM_theme = 'sand'
-vim.g.VM_highlight_matches = 'red'
+vim.g.VM_theme = "sand"
+vim.g.VM_highlight_matches = "red"
 vim.g.VM_maps = {
-  ['Find Under'] = '<C-d>',
-  ['Find Subword Under'] = '<C-d>',
-  ["Undo"] = 'u',
-  ["Redo"] = '<C-r>'
+	["Find Under"] = "<C-d>",
+	["Find Subword Under"] = "<C-d>",
+	["Undo"] = "u",
+	["Redo"] = "<C-r>",
 }
 
 -- change github copilot keybindings
-vim.cmd [[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]]
+vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])
 vim.g.copilot_no_tab_map = true
-
