@@ -90,7 +90,7 @@ keymap(
 
 keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts)
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
-keymap("n", "<leader>.", "<cmd>lua require'telescope.builtin'.lsp_code_actions()<cr><esc>", opts)
+keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
 keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
 

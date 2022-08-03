@@ -124,10 +124,6 @@ telescope.setup({
 			previewer = false,
 			winblend = 15,
 		},
-		lsp_code_actions = {
-			theme = "cursor",
-			winblend = 15,
-		},
 		-- Default configuration for builtin pickers goes here:
 		-- picker_name = {
 		--   picker_config_key = value,
@@ -142,8 +138,16 @@ telescope.setup({
 		--   extension_config_key = value,
 		-- }
 		-- please take a look at the readme of the extension you want to configure
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+        theme = "dropdown",
+        winblend = 15
+      }
+    }
 	},
 })
 
 -- load debugger extension
 telescope.load_extension("dap")
+telescope.load_extension("ui-select")

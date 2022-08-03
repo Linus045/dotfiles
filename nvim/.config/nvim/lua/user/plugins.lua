@@ -114,10 +114,13 @@ return packer.startup(function(use)
 	-- fzf search for telescope
 	use("nvim-telescope/telescope-fzf-native.nvim")
 
-	use("git@github.com:github/copilot.vim.git")
+	-- telescope popup menu
+	use("nvim-telescope/telescope-ui-select.nvim")
 
 	use("norcalli/nvim_utils")
 
+	-- Copilot
+	use("git@github.com:github/copilot.vim.git")
 	-- show keyboard shortcuts in a searchable menu (similar to :Telescope keymaps)
 	-- use {
 	--   'sudormrfbin/cheatsheet.nvim',
