@@ -65,6 +65,7 @@ return packer.startup(function(use)
   -- lazygit for nvim
   --use "kdheepak/lazygit.nvim"
 
+  -- popup notification windows
   use "rcarriga/nvim-notify"
 
   -- show keyboard shortcuts
@@ -78,6 +79,27 @@ return packer.startup(function(use)
   -- Faster autocompletion
   use 'hrsh7th/nvim-cmp'
   use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-nvim-lsp-signature-help"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/cmp-path"
+  use "hrsh7th/cmp-calc"
+  use "f3fora/cmp-spell"
+
+  -- hook into formatters, code actions etc.
+  use "jose-elias-alvarez/null-ls.nvim"
+
+  -- smooth scrolling (eg. using PageUp/PageDown)
+  use "psliwka/vim-smoothie"
+
+  -- auto-resize focused window
+  use { "beauwilliams/focus.nvim",
+    config = function()
+      require("focus").setup()
+    end
+  }
+
+
+  use "nvim-treesitter/nvim-treesitter-context"
 
   -- LSP server
   use "neovim/nvim-lspconfig"
@@ -108,6 +130,7 @@ return packer.startup(function(use)
   --   }
 
   -- better nvim sessions
+  -- run :Prosession to start a new session and run :Prosession again to load it on nvim restart
   use {
     'dhruvasagar/vim-prosession',
     requires = {'tpope/vim-obsession'}

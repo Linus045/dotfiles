@@ -4,14 +4,17 @@ if not status_ok then
   return
 end
 
+local status_ok2, luasnip = pcall(require,'luasnip')
+if not status_ok2 then
+  vim.notify("luasnip not found. Can't autocomplete snippets. PLEASE ADD luasnip OR edit TAB/S-TAB keybinding function")
+  return
+end
+
 -- Used for the TAB key mapping
+-- See: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 cmp.setup({
@@ -38,27 +41,33 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       elseif has_words_before() then
         cmp.complete()
       else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+        fallback()
       end
     end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function()
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
       end
     end, { "i", "s" }),
+
+
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    -- { name = 'vsnip' }, -- For vsnip users.
+    { name = 'nvim_lsp_signature_help' },
     { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-  }, {
     { name = 'buffer' },
+    { name = 'path' }
   })
 })
 
@@ -89,21 +98,24 @@ cmp.setup.cmdline(':', {
   })
 })
 
+
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+-- HERE CHANGE
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local lspconfig = require('lspconfig')
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['pyright'].setup {
-  capabilities = capabilities
+local lsps = {
+  "vuels",
+  "sumneko_lua"
 }
 
-require('lspconfig')['sumneko_lua'].setup {
-  capabilities = capabilities
-}
+for _, lsp in ipairs(lsps) do
+  lspconfig[lsp].setup {
+    capabilities = capabilities
+  }
+  -- vim.lsp.register_client(lspconfig[lsp])
+end
 
-require('lspconfig')['tsserver'].setup {
-  capabilities = capabilities
-}
-
-require('lspconfig')['eslint'].setup {
-  capabilities = capabilities
-}

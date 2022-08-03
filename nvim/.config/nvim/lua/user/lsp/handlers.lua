@@ -115,11 +115,19 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+  -- vim.notify("Attaching LSP Client: " .. client.name .. " to buffer")
   lsp_keymaps(bufnr)
   lsp_highlight_document(client)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-M.capabilities = capabilities --cmp_nvim_lsp.update_capabilities(capabilities)
+local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status_ok then
+  vim.notify("cmp_nvim_lsp not found. See LSP handler.lua")
+	return
+end
+
+M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+
 return M
