@@ -27,8 +27,8 @@ font:
 colors:
   # Default colors
   primary:
-    background: '#282828'
-    foreground: '#eeeeee'
+    background: '#505050'
+    foreground: '#ffffff'
 
   # Normal colors
   normal:
@@ -48,7 +48,7 @@ colors:
     green:   '#dfe593'
     yellow:  '#ffd299'
     blue:    '#bfe9ff'
-    magenta: '#d3b987'
+    magenta: '#d3ccaa'
     cyan:    '#3bd496'
     white:   '#feffff'
 
