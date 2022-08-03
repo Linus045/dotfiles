@@ -1,6 +1,7 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -18,9 +19,10 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
+
 # load nvm versions for nvim github copilot
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 source /usr/share/nvm/init-nvm.sh
 
@@ -30,6 +32,8 @@ HISTSIZE=200000
 HISTFILESIZE=200000
 setopt appendhistory
 setopt extendedhistory
+
+
 # to show history in zsh's fzf reverse search see:
 # https://github.com/junegunn/fzf/issues/1308
 # sudo -e /usr/share/fzf/key-bindings.zsh
@@ -53,7 +57,6 @@ zle_highlight=('paste:none')
 # beeping is annoying
 unsetopt BEEP
 
-
 # completions
 autoload -Uz compinit
 _comp_options+=(globdots)		# Include hidden files.
@@ -75,7 +78,6 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*' group-name ''
-
 
 zmodload zsh/complist
 
@@ -155,7 +157,6 @@ export EDITOR="nvim"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # load color scheme from image
 # -n so it doesn't set wallpaper background
 # NOTE: now set in .xprofile to run on startup
@@ -163,4 +164,9 @@ export EDITOR="nvim"
 
 # make sure to load the last theme if it was changed automatically
 # -e to not reload i3
-wal -e -R > /dev/null
+# wal -a 0 -e -R > /dev/null
+
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+curl -s "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f dragon
+
+
