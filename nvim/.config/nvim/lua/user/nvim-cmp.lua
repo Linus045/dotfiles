@@ -12,6 +12,15 @@ if not status_ok2 then
 	return
 end
 
+local status_ok3, lspkind = pcall(require, "lspkind")
+if not status_ok3 then
+	vim.notify("lspkind not found. Autocomplete Menu can't display type")
+	return
+end
+
+-- load friendly snippets
+require("luasnip/loaders/from_vscode").lazy_load()
+
 -- Used for the TAB key mapping
 -- See: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
 local has_words_before = function()
@@ -21,25 +30,16 @@ end
 
 cmp.setup({
 	snippet = {
-		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
-			-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-			-- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-			-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+			require("luasnip").lsp_expand(args.body)
 		end,
 	},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
 	mapping = cmp.mapping.preset.insert({
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-k>"] = cmp.mapping.scroll_docs(-4),
+		["<C-j>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
@@ -62,12 +62,98 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 	}),
+	completion = {
+		keyword_length = 1,
+		completeopt = "menu,menuone,preview,noinsert",
+	},
+	confirmation = {
+		default_behavior = require('cmp.types').cmp.ConfirmBehavior.Replace,
+	},
+	preselect = false,
+	view = {
+		entries = "custom", -- can be "custom", "wildmenu" or "native"
+		selection_order = "near_cursor",
+	},
+  window = {
+		-- completion = cmp.config.window.bordered(),
+		completion = {
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+			col_offset = -3,
+			side_padding = 0,
+		},
+    documentation = {
+        border = {
+            '╭',
+            '─',
+            '╮',
+            '│',
+            '╯',
+            '─',
+            '╰',
+            '│',
+        },
+
+        winhighlight = 'NormalFloat:NormalFloat,FloatBorder:NormalFloat',
+        maxwidth = math.floor(20 * (vim.o.columns / 100)),
+        maxheight = math.floor(20 * (vim.o.lines / 100)),
+    },
+		-- documentation = cmp.config.window.bordered(),
+	},
+  formatting = {
+		fields = { "kind", "abbr", "menu" },
+		format = function(entry, vim_item)
+			local kind = require("lspkind").cmp_format({
+				mode = "symbol_text",
+				maxwidth = 50,
+				menu = {
+					nvim_lsp = "[LSP]",
+					nvim_lsp_signature_help = "[Arg]",
+					luasnip = "[LuaSnip]",
+					buffer = "[Buffer]",
+					path = "[Path]",
+					nvim_lua = "[Lua]",
+					calc = "[Calc]",
+					--latex_symbols = "[Latex]",
+				},
+			})(entry, vim_item)
+			local strings = vim.split(kind.kind, "%s", { trimempty = true })
+			kind.kind = " " .. strings[1] .. " "
+			-- kind.menu = "    (" .. strings[2] .. ")"
+			return kind
+		end,
+	},
+
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "nvim_lsp_signature_help" },
-		{ name = "luasnip" }, -- For luasnip users.
-		{ name = "buffer" },
-		{ name = "path" },
+		{
+			name = "nvim_lsp",
+			priority = 100,
+			group_index = 1,
+		},
+		{
+			name = "nvim_lsp_signature_help",
+			priority = 100,
+			group_index = 1,
+		},
+		{
+			name = "luasnip",
+			priority = 90,
+			group_index = 2,
+		},
+		{
+			name = "buffer",
+			priority = 80,
+			group_index = 3,
+		},
+		{
+			name = "path",
+			priority = 80,
+			group_index = 3,
+		},
+		{
+			name = "calc",
+			priority = 100,
+			group_index = 3,
+		},
 	}),
 })
 
@@ -106,14 +192,10 @@ cmp.setup.cmdline(":", {
 
 local lspconfig = require("lspconfig")
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-local lsps = {
-	"vuels",
-	"sumneko_lua",
-}
+local lsps = require'nvim-lsp-installer.servers'.get_installed_server_names()
 
 for _, lsp in ipairs(lsps) do
 	lspconfig[lsp].setup({
 		capabilities = capabilities,
 	})
-	-- vim.lsp.register_client(lspconfig[lsp])
 end

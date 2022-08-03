@@ -17,23 +17,22 @@ require("nvim-lsp-installer").setup({
 })
 local lspconfig = require("lspconfig")
 
-local servers = {
-	"vuels",
-	"sumneko_lua",
-}
+
+local lsps = require'nvim-lsp-installer.servers'.get_installed_server_names()
 
 lsp_installer.setup({
-	ensure_installed = servers,
+	ensure_installed = lsps,
 })
 
-for _, server in pairs(servers) do
+for _, server in pairs(lsps) do
 	local opts = {
 		on_attach = require("user.lsp.handlers").on_attach,
 		capabilities = require("user.lsp.handlers").capabilities,
 	}
 	local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server)
 	if has_custom_opts then
-		opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
+    opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
+    -- print("[LSP-Installer] Custom options for " .. server .. " loaded")
 	end
-	lspconfig[server].setup(opts)
+  lspconfig[server].setup(opts)
 end

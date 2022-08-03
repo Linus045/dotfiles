@@ -75,6 +75,9 @@ return packer.startup(function(use)
 
 	-- snippet engine required by nvim-cmp
 	use("L3MON4D3/LuaSnip")
+	use("rafamadriz/friendly-snippets")
+	-- show icons for entries in autocomplete menu
+	use("onsails/lspkind.nvim")
 	-- Faster autocompletion
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-nvim-lsp")
