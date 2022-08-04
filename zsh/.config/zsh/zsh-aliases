@@ -5,7 +5,11 @@
 alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
 alias nvimrc='nvim ~/.config/nvim/'
 alias nvimdot='nvim ~/dotfiles/'
+alias nvimjournal='nvim ~/.nvim_journal'
 # alias lvim='nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim"'
+
+# ASCII aquarium art
+alias aq="asciiquarium"
 
 alias feh='feh -d --scale-down'
 

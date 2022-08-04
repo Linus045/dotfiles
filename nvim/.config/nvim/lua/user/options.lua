@@ -1,6 +1,6 @@
 vim.opt.backup = false                          -- creates a backup file
 vim.opt.hidden = true                           -- allow hidden buffers and don't unload them
--- vim.opt.clipboard = "unnamedplus"               -- allow neovim to access the system clipboard
+vim.opt.clipboard = "unnamedplus"               -- allow neovim to access the system clipboard
 vim.opt.cmdheight = 2                           -- more space in the neovim command line for displaying messages
 vim.opt.completeopt = { "menuone", "noselect"}  -- autocomplete in popup menu with default selection
 vim.opt.conceallevel = 0                        -- so that `` is visible in markdown files
@@ -52,3 +52,6 @@ vim.g.prosession_dir = "~/.config/nvim/nvim_prosession/"
 -- vim.cmd [[match errorMsg /\s\+$/]]
 vim.cmd [[au BufEnter * highlight HIGHLIGHT_SPACES ctermbg=red guibg=red guifg=red]]
 vim.cmd [[au BufEnter * match HIGHLIGHT_SPACES /\s\+$/]]
+
+
+
