@@ -20,12 +20,23 @@ end
 
 -- load friendly snippets
 require("luasnip/loaders/from_vscode").lazy_load()
+require("user.luasnip")
+
+require'cmp_zsh'.setup {
+    zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+    filetypes = { "sh", "zsh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
+}
 
 -- Used for the TAB key mapping
 -- See: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+
+function do_stuff(abc, dr)
+  
 end
 
 cmp.setup({
@@ -51,7 +62,6 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
@@ -64,42 +74,41 @@ cmp.setup({
 	}),
 	completion = {
 		keyword_length = 1,
-		completeopt = "menu,menuone,preview,noinsert",
+		completeopt = "menu,menuone,noselect,preview,noinsert",
 	},
 	confirmation = {
-		default_behavior = require('cmp.types').cmp.ConfirmBehavior.Replace,
+		default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace,
 	},
 	preselect = false,
 	view = {
 		entries = "custom", -- can be "custom", "wildmenu" or "native"
 		selection_order = "near_cursor",
 	},
-  window = {
+	window = {
 		-- completion = cmp.config.window.bordered(),
 		completion = {
 			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
 			col_offset = -3,
 			side_padding = 0,
 		},
-    documentation = {
-        border = {
-            '╭',
-            '─',
-            '╮',
-            '│',
-            '╯',
-            '─',
-            '╰',
-            '│',
-        },
-
-        winhighlight = 'NormalFloat:NormalFloat,FloatBorder:NormalFloat',
-        maxwidth = math.floor(20 * (vim.o.columns / 100)),
-        maxheight = math.floor(20 * (vim.o.lines / 100)),
-    },
+		documentation = {
+			border = {
+				"╭",
+				"─",
+				"╮",
+				"│",
+				"╯",
+				"─",
+				"╰",
+				"│",
+			},
+			winhighlight = "NormalFloat:NormalFloat,FloatBorder:NormalFloat",
+			maxwidth = math.floor(20 * (vim.o.columns / 100)),
+			maxheight = math.floor(20 * (vim.o.lines / 100)),
+		},
 		-- documentation = cmp.config.window.bordered(),
 	},
-  formatting = {
+	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
 			local kind = require("lspkind").cmp_format({
@@ -108,21 +117,29 @@ cmp.setup({
 				menu = {
 					nvim_lsp = "[LSP]",
 					nvim_lsp_signature_help = "[Arg]",
-					luasnip = "[LuaSnip]",
+					luasnip = "[Snippet]",
 					buffer = "[Buffer]",
 					path = "[Path]",
 					nvim_lua = "[Lua]",
 					calc = "[Calc]",
+          zsh = "[Zsh]",
 					--latex_symbols = "[Latex]",
 				},
 			})(entry, vim_item)
 			local strings = vim.split(kind.kind, "%s", { trimempty = true })
-			kind.kind = " " .. strings[1] .. " "
-			-- kind.menu = "    (" .. strings[2] .. ")"
+      if strings[1] ~= "" then
+        kind.kind = " " .. strings[1] .. " "
+      else
+        kind.kind = " UNKNOWN KIND "
+      end
+
+      if kind.menu == nil then
+        kind.menu = "[" .. entry.source.name .. "]"
+      end
+      -- kind.menu = "    (" .. strings[2] .. ")"
 			return kind
 		end,
 	},
-
 	sources = cmp.config.sources({
 		{
 			name = "nvim_lsp",
@@ -135,6 +152,11 @@ cmp.setup({
 			group_index = 1,
 		},
 		{
+			name = "nvim_lua",
+			priority = 100,
+			group_index = 1,
+		},
+		{
 			name = "luasnip",
 			priority = 90,
 			group_index = 2,
@@ -143,6 +165,7 @@ cmp.setup({
 			name = "buffer",
 			priority = 80,
 			group_index = 3,
+			keyword_length = 3,
 		},
 		{
 			name = "path",
@@ -154,9 +177,26 @@ cmp.setup({
 			priority = 100,
 			group_index = 3,
 		},
-	}),
+    {
+      name = "zsh",
+    },
+  }),
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      require "cmp-under-comparator".under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+	experimental = {
+		ghost_text = true,
+	},
 })
-
 -- Set configuration for specific filetype.
 cmp.setup.filetype("gitcommit", {
 	sources = cmp.config.sources({
@@ -169,12 +209,14 @@ cmp.setup.filetype("gitcommit", {
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline("/", {
 	mapping = cmp.mapping.preset.cmdline(),
-	sources = {
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp_document_symbol" },
+	}, {
 		{ name = "buffer" },
-	},
+	}),
 })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+-- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
@@ -192,7 +234,7 @@ cmp.setup.cmdline(":", {
 
 local lspconfig = require("lspconfig")
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-local lsps = require'nvim-lsp-installer.servers'.get_installed_server_names()
+local lsps = require("nvim-lsp-installer.servers").get_installed_server_names()
 
 for _, lsp in ipairs(lsps) do
 	lspconfig[lsp].setup({

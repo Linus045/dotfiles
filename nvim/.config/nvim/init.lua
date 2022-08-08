@@ -1,3 +1,15 @@
+_G.__luacache_config = {
+  chunks = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_chunks',
+  },
+  modpaths = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+  }
+}
+require('impatient')
+
 require("user.options")
 require("user.keymaps")
 -- require "user.vimspector"
@@ -5,6 +17,7 @@ require("user.plugins")
 require("user.colorscheme")
 --require "user.coq"
 require("user.nvim-cmp")
+-- require("user.luasnip")
 require("user.lsp")
 require("user.telescope")
 require("user.treesitter")
@@ -16,10 +29,11 @@ require("user.toggleterm")
 require("user.gitsigns")
 require("user.comment")
 require("user.nvim-tree")
-require("user.bufferline")
+-- require("user.bufferline")
 require("user.which_key_nvim")
 require("user.lightspeed")
 require("user.colorizer")
+require("user.nvim-autopairs")
 -- require "user.startup"
 -- require "user.cheatsheet"
 require("credentials.calendar_oauth_credentials")

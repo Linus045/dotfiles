@@ -11,5 +11,5 @@ local old_notify = vim.notify
 
 vim.notify = function(...)
 	notify(...)
-	old_notify(...)
+  old_notify(...)
 end

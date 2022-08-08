@@ -10,14 +10,10 @@ local highlight_groups = HighlightGroups({
 
 highlighter:new():add(highlight_groups):register_highlights()
 
--- highlight text on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank({
-			higroup = highlight_groups.TextYank.name,
-			timeout = 300,
-			on_visual = true,
-		})
-	end,
-})
+vim.cmd("autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup=(vim.fn['hlexists']('HighlightedyankRegion') > 0 and 'HighlightedyankRegion' or 'IncSearch'), timeout=300}")
+
+
+function P(v)
+  print(vim.inspect(v))
+  return v
+end

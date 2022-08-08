@@ -88,7 +88,29 @@ keymap(
 	opts
 )
 
+keymap(
+	"n",
+	"<leader>0",
+	"<CMD>lua require'user.telescope-custom'.dot_files()<CR>",
+	opts
+)
+
+keymap(
+	"n",
+	"<leader>9",
+	"<CMD>:e ~/.nvim_journal<CR>",
+	opts
+)
+
+keymap(
+	"n",
+	"<leader>8",
+	"<CMD>lua require'user.telescope-custom'.list_sessions()<CR>",
+	opts
+)
+
 keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts)
+
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
 keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
@@ -160,11 +182,16 @@ vim.g.VM_mouse_mappings = 1
 vim.g.VM_theme = "sand"
 vim.g.VM_highlight_matches = "red"
 vim.g.VM_maps = {
-	["Find Under"] = "<C-d>",
-	["Find Subword Under"] = "<C-d>",
+	-- ["Find Under"] = "<C-d>",
+	-- ["Find Subword Under"] = "<C-d>",
 	["Undo"] = "u",
 	["Redo"] = "<C-r>",
 }
+
+-- Unicode fuzzy search (see plugin unicode.vim)
+keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts)
+
+keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts)
 
 -- change github copilot keybindings
 vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])

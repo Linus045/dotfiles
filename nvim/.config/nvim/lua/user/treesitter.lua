@@ -3,22 +3,23 @@ if not status_ok then
 	return
 end
 
-return
-
---[[
 configs.setup {
-  ensure_installed = "maintained",
-  sync_install = false,
-  ignore_install = { "" }, -- List of parsers to ignore installing
+  -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+  -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+  -- the name of the parser)
+  -- list of language that will be disabled
+  disable = { },
+
+  -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+  -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+  -- Using this option may slow down your editor, and you may see some duplicate highlights.
+  -- Instead of true it can also be a list of languages
+  additional_vim_regex_highlighting = true,
+
   highlight = {
     enable = true, -- false will disable the whole extension
-    disable = { "" }, -- list of language that will be disabled
-    additional_vim_regex_highlighting = true,
-  },
-  indent = { enable = true,
-    disable = {
-
-    }
+    -- Automatically install missing parsers when entering buffers
+    auto_install = true,
   },
   rainbow = {
     enable = true,
@@ -28,14 +29,5 @@ configs.setup {
     -- colors = {}, -- table of hex strings
     -- termcolors = {} -- table of colour name strings
   },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  }
 }
 
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.wo.foldlevel = 999
-
-]]

@@ -46,7 +46,7 @@ end
 
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.documentHighlightProvider then
 		vim.api.nvim_exec(
 			[[
       augroup lsp_document_highlight
@@ -105,7 +105,8 @@ local function lsp_keymaps(bufnr)
 		"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
 		opts
 	)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua Rename.rename()<CR>", opts)
+	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua Rename.rename()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
@@ -125,10 +126,17 @@ local function lsp_keymaps(bufnr)
 	vim.cmd([[:command! F lua vim.lsp.buf.formatting_sync(nil, 1000)]])
 end
 
+require"lsp-status".register_progress()
+
 M.on_attach = function(client, bufnr)
 	-- vim.notify("Attaching LSP Client: " .. client.name .. " to buffer")
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
+
+  require"lsp-status".on_attach(client)
+
+  -- Register folds for: pierreglaser/folding-nvim
+  -- require('folding').on_attach()
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -140,5 +148,4 @@ if not status_ok then
 end
 
 M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-
 return M

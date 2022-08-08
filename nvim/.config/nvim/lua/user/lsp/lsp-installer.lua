@@ -17,6 +17,7 @@ require("nvim-lsp-installer").setup({
 })
 local lspconfig = require("lspconfig")
 
+local lsp_status = require"lsp-status"
 
 local lsps = require'nvim-lsp-installer.servers'.get_installed_server_names()
 
@@ -29,6 +30,8 @@ for _, server in pairs(lsps) do
 		on_attach = require("user.lsp.handlers").on_attach,
 		capabilities = require("user.lsp.handlers").capabilities,
 	}
+  opts.capabilities = vim.tbl_extend('keep', opts.capabilities or {}, lsp_status.capabilities)
+
 	local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server)
 	if has_custom_opts then
     opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
