@@ -555,7 +555,7 @@ content            = 
 content-padding    = 1
 content-font = 5
 ; Mouse click
-click-left = i3exit logout
+click-left = i3-msg exit
 
 
 
