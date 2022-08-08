@@ -35,10 +35,6 @@ local has_words_before = function()
 end
 
 
-function do_stuff(abc, dr)
-  
-end
-
 cmp.setup({
 	snippet = {
 		expand = function(args)

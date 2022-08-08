@@ -10,6 +10,6 @@ notify.setup({
 local old_notify = vim.notify
 
 vim.notify = function(...)
-	notify(...)
+  notify(...)
   old_notify(...)
 end
