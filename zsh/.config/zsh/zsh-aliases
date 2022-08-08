@@ -13,6 +13,12 @@ alias aq="asciiquarium"
 
 alias feh='feh -d --scale-down'
 
+# Tmux alias
+alias tn='tmux new-session'
+alias ta='tmux attach'
+alias tmuxstart="~/.config/tmux/start_session.sh"
+alias tmuxkill="tmux kill-session"
+
 # Sort entries when using ls
 alias ls='ls --group-directories-first --color=auto'
 
@@ -25,6 +31,21 @@ alias myip="curl https://ipinfo.io"
 # Lists all installed packages and the related info
 # https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
 alias pacman-packages="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+alias pacman-packages-upgradable="pacman -Qu | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+
+
+alias print-colors="curl -s https://gist.githubusercontent.com/HaleTom/89ffe32783f89f403bba96bd7bcd1263/raw/ | $SHELL"
+
+function cheatsheet() {
+  curl -s cht.sh/$1 | less
+}
+
+function changetheme() {
+  Theme=$(wal --theme | fzf | sed "s/ - //")
+  wal -e --theme $Theme > /dev/null
+  wal --preview
+  echo "$Theme"
+}
 
 # get fastest mirrors
 # alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"

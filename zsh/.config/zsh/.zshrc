@@ -44,7 +44,7 @@ setopt extendedhistory
 
 
 # some useful options (man zshoptions)
-# setopt autocd #cd automatically when entering a path
+setopt autocd #cd automatically when entering a path
 setopt extendedglob nomatch menucomplete
 setopt interactive_comments
 setopt complete_aliases
@@ -167,6 +167,4 @@ export EDITOR="nvim"
 # wal -a 0 -e -R > /dev/null
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-curl -s "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f dragon
-
-
+curl --max-time 1 -s "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f stegosaurus

@@ -1,5 +1,7 @@
-export TERMINAL="alacritty"
-export TERM="alacritty"
+export TERMINAL="kitty"
+export TERM="kitty"
+# export TERMINAL="alacritty"
+# export TERM="alacritty"
 
 #zsh config dir
 export ZDOTDIR=$HOME/.config/zsh
@@ -7,4 +9,6 @@ export ZDOTDIR=$HOME/.config/zsh
 #Start safeeyes
 /usr/bin/safeeyes &
 
+# Reload theme
 wal -R
+# wal -e --theme base16-gruvbox-dark > /dev/null
