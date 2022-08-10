@@ -6,11 +6,9 @@ alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git
 alias nvimrc='nvim ~/.config/nvim/'
 alias nvimdot='nvim ~/dotfiles/'
 alias nvimjournal='nvim ~/.nvim_journal'
-# alias lvim='nvim -u ~/.local/share/lunarvim/lvim/init.lua --cmd "set runtimepath+=~/.local/share/lunarvim/lvim"'
 
 # ASCII aquarium art
 alias aq="asciiquarium"
-
 alias feh='feh -d --scale-down'
 
 # Tmux alias
@@ -34,17 +32,14 @@ alias pacman-packages="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reve
 alias pacman-packages-upgradable="pacman -Qu | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 
 
-alias print-colors="curl -s https://gist.githubusercontent.com/HaleTom/89ffe32783f89f403bba96bd7bcd1263/raw/ | $SHELL"
+alias print-colors="$SHELL $ZDOTDIR/print_colors.sh"
 
 function cheatsheet() {
   curl -s cht.sh/$1 | less
 }
 
 function changetheme() {
-  Theme=$(wal --theme | fzf | sed "s/ - //")
-  wal -e --theme $Theme > /dev/null
-  wal --preview
-  echo "$Theme"
+  wal --theme | fzf --preview='$SHELL $ZDOTDIR/print_colors.sh' --bind 'enter:execute(wal -e --theme $(echo {} | sed "s/ - //") > /dev/null)'
 }
 
 # get fastest mirrors

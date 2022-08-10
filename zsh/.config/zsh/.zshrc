@@ -1,4 +1,4 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 
@@ -97,6 +97,7 @@ zsh_add_file "zsh-exports"
 zsh_add_file "zsh-vim-mode"
 zsh_add_file "zsh-aliases"
 zsh_add_file "zsh-prompt"
+zsh_add_file "zsh-user-functions"
 
 # Plugins
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
@@ -135,25 +136,13 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
 # Bind caps to escape
 setxkbmap -option caps:escape
+# swap escape and caps
+# setxkbmap -option caps:swapescape
 
 # faster keys see "man xset" 
 # r rate <delay> <rate>
-xset r rate 210 40
-
-# Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
-
-# Environment variables set everywhere
-export EDITOR="nvim"
-
-# For QT Themes
-#export QT_QPA_PLATFORMTHEME=qt5ct
-
-# remap caps to escape
-# setxkbmap -option caps:escape
-# swap escape and caps
-# setxkbmap -option caps:swapescape
+xset r rate 210 50
+# xset r rate 210 5
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -168,3 +157,6 @@ export EDITOR="nvim"
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 curl --max-time 1 -s "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f stegosaurus
+
+
+zshstartup
