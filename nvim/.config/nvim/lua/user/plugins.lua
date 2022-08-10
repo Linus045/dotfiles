@@ -309,12 +309,12 @@ end})
   use({ "liuchengxu/vista.vim", cmd = "Vista" })
 
 	-- auto-resize focused window
-	use({
-		"beauwilliams/focus.nvim",
-		config = function()
-			require("focus").setup()
-		end,
-	})
+	-- use({
+	-- 	"beauwilliams/focus.nvim",
+	-- 	config = function()
+	-- 		require("focus").setup()
+	-- 	end,
+	-- })
 
 	-- popup notification windows
 	use("rcarriga/nvim-notify")
@@ -421,7 +421,7 @@ end})
 		end,
 	})
 
-  -- open markdown preview 
+  -- open markdown preview
   -- " normal/insert
   -- <Plug>MarkdownPreview
   -- <Plug>MarkdownPreviewStop

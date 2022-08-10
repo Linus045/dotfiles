@@ -50,4 +50,5 @@ require("user.nvim_dap_virtual_text")
 -- require "user.latex"
 require("user.notify")
 require("user.utilities")
+require("user.tabline")
 -- vim.cmd [[source ~/.config/nvim/lua/user/coc.vim]]

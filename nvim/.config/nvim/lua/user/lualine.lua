@@ -31,10 +31,10 @@ lualine.setup({
   },
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { "branch", "diff", "diagnostics" },
+		lualine_b = { "branch", "diff", --[[ "diagnostics" ]] },
 		lualine_c = { "filename" },
 		lualine_x = { mycustomcomponent, "fileformat", "filetype" },
-		lualine_y = { "progress" },
+		lualine_y = { --[[ "progress" ]] },
 		lualine_z = { "location" },
 	},
 	inactive_sections = {

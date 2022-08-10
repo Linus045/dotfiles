@@ -13,6 +13,8 @@ highlighter:new():add(highlight_groups):register_highlights()
 vim.cmd("autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup=(vim.fn['hlexists']('HighlightedyankRegion') > 0 and 'HighlightedyankRegion' or 'IncSearch'), timeout=300}")
 
 
+-- e.g. :lua P(vim.api)
+-- now also :lua =vim.api works
 function P(v)
   print(vim.inspect(v))
   return v
