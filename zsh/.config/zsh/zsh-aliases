@@ -17,6 +17,8 @@ alias ta='tmux attach'
 alias tmuxstart="~/.config/tmux/start_session.sh"
 alias tmuxkill="tmux kill-session"
 
+# use bat instead of cat
+alias cat='bat'
 # Sort entries when using ls
 alias ls='ls --group-directories-first --color=auto'
 
@@ -35,7 +37,7 @@ alias pacman-packages-upgradable="pacman -Qu | fzf --preview 'pacman -Qil {}' --
 alias print-colors="$SHELL $ZDOTDIR/print_colors.sh"
 
 function cheatsheet() {
-  curl -s cht.sh/$1 | less
+  curl -s cht.sh/$1 | less -R
 }
 
 function changetheme() {

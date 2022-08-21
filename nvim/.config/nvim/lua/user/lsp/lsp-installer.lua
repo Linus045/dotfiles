@@ -1,29 +1,48 @@
-local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+local status_ok, mason = pcall(require, "mason")
 if not status_ok then
+  vim.notify("mason.nvim not found")
   return
 end
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
+local status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not status_ok then
+  vim.notify("williamboman/mason-lspconfig.nvim not found")
+  return
+end
 
-require("nvim-lsp-installer").setup({
+local status_ok, lsp_status = pcall(require, 'lsp-status')
+if not status_ok then
+  vim.notify('File lsp-installer.lua: lsp_status not found.')
+  return
+end
+
+local status_ok, lspconfig = pcall(require, 'lspconfig')
+if not status_ok then
+  vim.notify('File lsp-installer.lua: lspconfig not found.')
+  return
+end
+
+mason.setup({
   ui = {
     icons = {
-      server_installed = "✓",
-      server_pending = "➜",
-      server_uninstalled = "✗",
-    },
-  },
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
+  }
 })
-local lspconfig = require("lspconfig")
 
-local lsp_status = require "lsp-status"
-
-local lsps = require 'nvim-lsp-installer.servers'.get_installed_server_names()
-
-lsp_installer.setup({
-  ensure_installed = lsps,
+mason_lspconfig.setup({
+  ensure_installed = {
+    "sumneko_lua",
+    "rust_analyzer",
+    "volar",
+    "tsserver",
+  }
 })
+
+
+local lsps = mason_lspconfig.get_installed_servers()
 
 for _, server in pairs(lsps) do
   local opts = {

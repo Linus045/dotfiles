@@ -2,22 +2,22 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 #!/bin/sh
 
 # Use powerline
 #USE_POWERLINE="true"
 # Source manjaro-zsh-configuration
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-  source /usr/share/zsh/manjaro-zsh-config
-fi
-# Use manjaro zsh prompt
-if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-  source /usr/share/zsh/manjaro-zsh-prompt
-fi
+# if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+#   source /usr/share/zsh/manjaro-zsh-config
+# fi
+# # Use manjaro zsh prompt
+# if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+#   source /usr/share/zsh/manjaro-zsh-prompt
+# fi
 
 
 # load nvm versions for nvim github copilot
@@ -145,7 +145,8 @@ xset r rate 210 50
 # xset r rate 210 5
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # load color scheme from image
 # -n so it doesn't set wallpaper background
 # NOTE: now set in .xprofile to run on startup
@@ -156,7 +157,8 @@ xset r rate 210 50
 # wal -a 0 -e -R > /dev/null
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-curl --max-time 1 -s "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f stegosaurus
-
+# curl -s --fail-early --connect-timeout 1 "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f stegosaurus
+cowsay -f stegosaurus Good morning
 
 zshstartup
+eval "$(starship init zsh)"

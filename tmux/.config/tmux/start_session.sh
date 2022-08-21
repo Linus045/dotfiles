@@ -8,8 +8,9 @@ fi
 tmux new-session -s "dev" -d -n "terminal"
 
 # nvim in project directory
-tmux new-window -t dev -da -n "dev" "cd ~/dev && nvim"
+tmux new-window -t dev -da -n "dev"
 tmux select-window -t dev:dev
+tmux send-keys -t dev:dev "cd ~/dev && nvim" Enter
 tmux move-window -t 2
 
 # fun stuff

@@ -1,11 +1,17 @@
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
+
 -- shorten function name
-local keymap = vim.api.nvim_set_keymap
+
+local keymap = require("user.utilities").keymap
+if keymap == nil then
+  vim.notify("File keymaps.lua: Can't setup keymaps, error loading user.utilities")
+  return
+end
 
 -- Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
+keymap("n", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -19,20 +25,20 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+-- keymap("n", "<C-h>", "<C-w>h", opts)
+-- keymap("n", "<C-j>", "<C-w>j", opts)
+-- keymap("n", "<C-k>", "<C-w>k", opts)
+-- keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Replaced with nvim-tree
 --keymap("n", "<leader>e", ":Lexplore 20<cr>", opts)
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts, "NVIM Tree")
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize +2<cr>", opts)
-keymap("n", "<C-Down>", ":resize -2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
+keymap("n", "<C-Up>", ":resize +2<cr>", opts, "Resize up")
+keymap("n", "<C-Down>", ":resize -2<CR>", opts, "Resize down")
+keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts, "Resize left")
+keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts, "Resize right")
 
 -- Navigate buffers
 -- keymap("n", "<S-l>", ":bnext<CR>", opts)
@@ -40,102 +46,118 @@ keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 
 -- Insert --
 -- Press jk fast to escape
-keymap("i", "jk", "<ESC>", opts)
+keymap("i", "jk", "<ESC>", opts, nil, true)
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+keymap("v", "<", "<gv", opts, nil, true)
+keymap("v", ">", ">gv", opts, nil, true)
+
 
 -- Move text up and down
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-keymap("v", "p", '"_dP', opts)
+keymap("n", "<A-k>", "<Esc>:m .-2<CR>", opts, nil, true)
+keymap("n", "<A-j>", "<Esc>:m .+1<CR>", opts, nil, true)
+keymap("v", "<A-j>", ":m .+1<CR>", opts, nil, true)
+keymap("v", "<A-k>", ":m .-2<CR>", opts, nil, true)
+keymap("x", "p", '"_dP', opts, nil, true)
+
 
 -- Visual Block --
 -- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap("x", "J", ":move '>+1<CR>gv-gv", opts, nil, true)
+keymap("x", "K", ":move '<-2<CR>gv-gv", opts, nil, true)
+keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts, nil, true)
+keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts, nil, true)
 
 -- Terminal --
 -- Better terminal navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts, nil, true)
+keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts, nil, true)
+keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts, nil, true)
+keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts, nil, true)
 
 -- open terminal in split
-keymap("n", "<leader>tv", ":vsplit | term<cr>:vertical resize 90<cr>i", opts)
-keymap("n", "<leader>th", ":split | term<cr>:resize 15<cr>i", opts)
-keymap("n", "<leader>x", ":bw<cr>", opts)
-keymap("n", "<leader>X", ":bw!<cr>", opts)
+keymap("n", "<leader>tv", ":vsplit | term<cr>:vertical resize 90<cr>i", opts, "Open Terminal VERTICAL")
+keymap("n", "<leader>th", ":split | term<cr>:resize 15<cr>i", opts, "Open Terminal Horizontal")
+keymap("n", "<leader>x", ":bw<cr>", opts, "Kill window")
+keymap("n", "<leader>X", ":bw!<cr>", opts, "Kill window (forced)")
 
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>dd", "<cmd>Telescope git_files<cr>", opts)
-keymap("n", "<leader>b", ":Telescope buffers<cr><esc>", opts)
-keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts)
+keymap("n", "<leader>f", "", opts, "[FINDER]", false, true)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts, "Telescope find_files")
+keymap("n", "<leader>fg", "<cmd>Telescope git_files<cr>", opts, "Telescope git_files")
+keymap("n", "<leader>fb", ":Telescope buffers<cr><esc>", opts, "Telescope buffers")
+keymap("n", "<leader>fh", ":Telescope help_tags<cr><esc>", opts, "Telescope help tags")
+keymap("n", "<leader>fc", ":Telescope commands<cr><esc>", opts, "Telescope commands")
+keymap("n", "<leader>fd", ":Telescope diagnostics<cr><esc>", opts, "Telescope diagnostics")
+keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts, "Telescope keymaps")
 
 -- default Live Grep
-keymap("n", "<leader>g", "<cmd>Telescope live_grep<cr>", opts)
+keymap("n", "<leader>g", "", opts, "[GREP]", false, true)
+keymap("n", "<leader>gg", "<cmd>Telescope live_grep<cr>", opts, "Telescope live_grep")
 -- Live Grep with hidden hiles
-keymap(
-	"n",
-	"<leader>GH",
-	"<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim'}})<cr>",
-	opts
+keymap("n", "<leader>gh",
+  "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim'}})<cr>"
+  ,
+  opts,
+  "Telescope live_grep (with hidden files)"
 )
 
 keymap(
-	"n",
-	"<leader>0",
-	"<CMD>lua require'user.telescope-custom'.dot_files()<CR>",
-	opts
+  "n",
+  "<leader>0",
+  "<CMD>lua require'user.telescope-custom'.dot_files()<CR>",
+  opts,
+  "Telescope find_files (Dotfiles)"
 )
 
 keymap(
-	"n",
-	"<leader>9",
-	"<CMD>:e ~/.nvim_journal<CR>",
-	opts
+  "n",
+  "<leader>9",
+  "<CMD>:e ~/.nvim_journal<CR>",
+  opts,
+  "Open NvimJournal"
 )
 
 keymap(
-	"n",
-	"<leader>8",
-	"<CMD>lua require'user.telescope-custom'.list_sessions()<CR>",
-	opts
+  "n",
+  "<leader>8",
+  "<CMD>lua require'user.telescope-custom'.list_sessions()<CR>",
+  opts,
+  "Prosessions List"
 )
 
-keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts)
+keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts,
+  "Telescope Fuzzy Buffer")
 
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
-keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
 
-keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts)
+keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts, "Telescope diagnostics")
 
 -- Telescope DAP
-keymap("n", "<leader>dlb", ":Telescope dap list_breakpoints<CR>", opts)
-keymap("n", "<leader>dlc", ":Telescope dap configurations<CR>", opts)
-keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts)
-keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts)
-keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts)
+keymap("n", "<leader>d", "", opts, "[DEBUG]", false, true)
+keymap("n", "<leader>dlb", ":Telescope dap list_breakpoints<CR>", opts, "List breakpoints")
+keymap("n", "<leader>dlc", ":Telescope dap configurations<CR>", opts, "List configurations")
+keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts, "List commands")
+keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts, "List variables")
+keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts, "List frames")
 
-keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts)
-keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts)
-keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts)
-keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts)
-keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts)
-keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
-keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
-keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts)
-keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts)
+keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts, "[DEBUG] Step Over")
+keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts, "[DEBUG] Continue")
+keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts, "[DEBUG] Step Into")
+keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts, "[DEBUG] Step Out")
+keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts, "[DEBUG] Toggle Breakpoint")
+keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts,
+  "[DEBUG] Toggle Breakpoint (Conditioned)")
+keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts,
+  "[DEBUG] Toggle Breakpoint (Log message)")
+keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Open REPL")
+keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts, "[DEBUG] Run last configuration")
 
-keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts)
-keymap("n", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
-keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
+keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts, "[DEBUG] Toggle UI")
+keymap("n", "<leader>di", ":lua require'dapui'.eval()<CR>", opts, "[DEBUG] Evaluate")
+keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts, "[DEBUG] Evaluate")
 
 -- require("dapui").eval(<expression>)
 -- Cheatsheet
@@ -150,7 +172,7 @@ keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts)
 
 -- Open links on gx (remap needed because nvim-tree overrides it)
 -- xgd-open needs to be replaced with whatever you want to topen the link
-keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
+keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts, "Open URL")
 
 -- vimspector keybindings
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
@@ -162,37 +184,47 @@ keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR
 --keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
 
 -- Calendar keymap
-keymap("n", "<leader>k", "<Plug>(calendar)", term_opts)
+keymap("n", "<leader>k", "<Plug>(calendar)", term_opts, "Open calendar")
 
 -- Zen mode
-keymap("n", "<leader><SPACE>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts)
+keymap("n", "<leader><SPACE>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
 
 -- Undotree
-keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts)
-keymap("n", "<leader>U", ":UndotreeToggle<CR>", opts)
+keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
+keymap("n", "<leader>U", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
 
 -- Turn editor transparent
-keymap("n", "<leader>P", ":TransparentToggle<CR>", opts)
+keymap("n", "<leader>P", ":TransparentToggle<CR>", opts, "Transparent Toggle")
 
 -- Remove search highlights
-keymap("n", "<leader>l", ":set hls!<CR>", opts) --Toggle instead
-keymap("n", "<leader>h", ":nohl<CR>:VMClear<CR>", opts)
+keymap("n", "<leader>l", ":set hls!<CR>", opts, "Toggle highlighting (:set hls!)") --Toggle instead
+keymap("n", "<leader>h", ":nohl<CR>:VMClear<CR>", opts, "Clear highlighting (:nohl)")
 -- Vim Visual multi cursor keymaps
-vim.g.VM_mouse_mappings = 1
-vim.g.VM_theme = "sand"
+-- vim.g.VM_mouse_mappings = 1
+-- vim.g.VM_theme = "sand"
 vim.g.VM_highlight_matches = "red"
 vim.g.VM_maps = {
-	-- ["Find Under"] = "<C-d>",
-	-- ["Find Subword Under"] = "<C-d>",
-	["Undo"] = "u",
-	["Redo"] = "<C-r>",
+  -- ["Find Under"] = "<C-d>",
+  -- ["Find Subword Under"] = "<C-d>",
+  ["Undo"] = "u",
+  ["Redo"] = "<C-r>",
 }
 
 -- Unicode fuzzy search (see plugin unicode.vim)
-keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts)
+keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts, "Insert Unicode Character")
 
-keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts)
+keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "Insert annotation")
 
 -- change github copilot keybindings
 vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])
 vim.g.copilot_no_tab_map = true
+
+
+-- trouble.nvim
+keymap("n", "<leader>t", "", opts, "[TROUBLE|TERMINAL|GITSIGNS]", false, true)
+keymap("n", "<leader>tx", "<cmd>TroubleToggle<cr>", opts, "[TROUBLE] Toggle Trouble")
+keymap("n", "<leader>tw", "<cmd>Trouble workspace_diagnostics<cr>", opts, "[TROUBLE] Workspace diagnostics")
+keymap("n", "<leader>tt", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUBLE] Document diagnostics")
+keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location list")
+keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
+keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")

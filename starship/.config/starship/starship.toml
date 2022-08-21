@@ -1,0 +1,89 @@
+# Disables the blank line at the start of the prompt
+add_newline = false
+
+# move the rest of the prompt to the right
+right_format = """
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$vcsh\
+$hg_branch\
+$docker_context\
+$package\
+$nodejs\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$env_var\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$jobs\
+$battery\
+$time\
+$status\
+$container\
+$line_break\
+$shell\
+"""
+
+# Move the directory to the second line
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$character"""
+
+command_timeout = 2000
+
+[character]
+success_symbol = "[🢚](bold green)"
+error_symbol = "[↯ ](bold red)"
+vimcmd_symbol = "[⇶ ](bold purple)"
+
+
+[directory]
+style = "bold white"
+truncation_length = 10
+truncate_to_repo = false
+
+[memory_usage]
+disabled = false
+threshold = 75
+style = "bold dimmed green"
+
+[username]
+disabled = false
+show_always = true
+format="[$user]($style)|"
+
+[time]
+disabled = false
+
+[status]
+disabled = false
+
+success_symbol = "[✓](bold dimmed green)"
+style = "bold white"
+format = "[$symbol$status]($style) "
+
+[[battery.display]]
+threshold = 20
+style = "bold red"
+
+[[battery.display]]
+threshold = 50
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 90
+style = "bold green"

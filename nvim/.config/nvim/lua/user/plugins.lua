@@ -1,9 +1,9 @@
-local fn = vim.fn
-
+local first_install = false
 -- Automatically install packer
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system({
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  first_install = true
+  PACKER_BOOTSTRAP = vim.fn.system({
     "git",
     "clone",
     "--depth",
@@ -69,7 +69,10 @@ return packer.startup(function(use)
   -- better highlightings and other useful features
   use({ "nvim-treesitter/nvim-treesitter",
     -- keep treesitter parsers up-to-date
-    run = ":TSUpdate"
+    run = function()
+      if first_install then return end
+      vim.cmd(":TSUpdate")
+  end
   })
 
   -- not sure if this is needed
@@ -92,22 +95,31 @@ return packer.startup(function(use)
   use({
     "nvim-lua/lsp-status.nvim",
     config = function()
+      if first_install then return end
       require("lsp-status").config({
         status_symbol = "❤ ",
       })
     end,
   })
 
+  use { "j-hui/fidget.nvim",
+    config = function()
+      if first_install then return end
+      require "fidget".setup {}
+    end
+  }
+
 
   ----------------------------- PERFORMANCE -------------------------------
   -- cache plugins for faster startup
-  use("lewis6991/impatient.nvim")
+  -- use("lewis6991/impatient.nvim")
 
 
   ----------------------------- TEXT UTILS -------------------------------
   use({
     "chrisbra/unicode.vim",
     config = function()
+      if first_install then return end
       vim.g.Unicode_no_default_mappings = true
     end,
   })
@@ -160,6 +172,7 @@ return packer.startup(function(use)
   use({
     "norcalli/nvim-terminal.lua",
     config = function()
+      if first_install then return end
       require("terminal").setup()
     end,
   })
@@ -195,8 +208,8 @@ return packer.startup(function(use)
 
 
   ----------------------------- AUTOCOMPLETE STUFF ---------------------------
-  -- Copilot
-  use("git@github.com:github/copilot.vim.git")
+  -- Copilot (Disable due to high cpu for some reason)
+  -- use("git@github.com:github/copilot.vim.git")
 
   -- Faster autocompletion
   use("hrsh7th/nvim-cmp")
@@ -227,6 +240,7 @@ return packer.startup(function(use)
   use({
     "danymat/neogen",
     config = function()
+      if first_install then return end
       require("neogen").setup({
         snippet_engine = "luasnip",
       })
@@ -240,18 +254,28 @@ return packer.startup(function(use)
   use("neovim/nvim-lspconfig")
 
   -- autoinstall lsp server
-  use("williamboman/nvim-lsp-installer")
+  use("williamboman/mason.nvim")
 
+  -- mason lsp config extension
+  use("williamboman/mason-lspconfig.nvim")
+
+  -- autoformat on save (see :FormatDisable/Enable)
   use "lukas-reineke/lsp-format.nvim"
 
+  -- better diagnostics
+  use "folke/trouble.nvim"
 
-
-
-
-
-
-
-
+  use {
+    'ericpubu/lsp_codelens_extensions.nvim',
+    -- Only required for debugging
+    requires = { { "nvim-lua/plenary.nvim", "mfussenegger/nvim-dap" } },
+    config = function()
+      if first_install then return end
+      require("codelens_extensions").setup {
+        init_rust_commands = true
+      }
+    end,
+  }
   ----------------------------- TELESCOPE ---------------------------
   -- telescope.
   use("nvim-telescope/telescope.nvim")
@@ -272,16 +296,26 @@ return packer.startup(function(use)
     "dhruvasagar/vim-prosession",
     requires = { "tpope/vim-obsession" },
     config = function()
+      if first_install then return end
       vim.g.prosession_tmux_title = true
       vim.g.prosession_on_startup = false
     end
   })
 
   -- add startscreen
-  use({ "mhinz/vim-startify",
+  -- use({ "mhinz/vim-startify",
+  --   config = function()
+  --     vim.g.startify_custom_header = 'startify#pad(startify#fortune#boxed())'
+  --   end })
+
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
-      vim.g.startify_custom_header = 'startify#pad(startify#fortune#boxed())'
-    end })
+      if first_install then return end
+      require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
+    end
+  }
 
 
 
@@ -338,6 +372,9 @@ return packer.startup(function(use)
   -- git sings support on the sidebar
   use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } })
 
+  -- show git changes on the side (replaced with gitsigns)
+  -- use "airblade/vim-gitgutter"
+
   -- allow transparent code
   use("xiyaowong/nvim-transparent")
 
@@ -373,6 +410,7 @@ return packer.startup(function(use)
   use("TimUntersberger/neogit")
   use("tpope/vim-fugitive")
 
+
   -- copy link to current line with <leader>gy into clipboard
   -- e.g. https://github.com/Linus045/dotfiles/blob/bccb860b05dcc3b5f4ee1e861ddb4cf661f3a522/nvim/.config/nvim/lua/user/plugins.lua#L249
   -- use({ "ruifm/gitlinker.nvim",
@@ -394,9 +432,6 @@ return packer.startup(function(use)
   --   end
   -- }
 
-
-
-
   ----------------------------- DEBUGGER -------------------------
   -- use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
   --  use "mfussenegger/nvim-dap"
@@ -415,12 +450,13 @@ return packer.startup(function(use)
   use("alec-gibson/nvim-tetris")
 
   -- use nvim in browser textedits (requires same browser plugin)
-  use({
-    "glacambre/firenvim",
-    run = function()
-      vim.fn["firenvim#install"](0)
-    end,
-  })
+  -- use({
+  --   "glacambre/firenvim",
+  --   run = function()
+  --     if first_install then return end
+  --     vim.fn["firenvim#install"](0)
+  --   end,
+  -- })
 
   -- open markdown preview
   -- " normal/insert
@@ -436,7 +472,7 @@ return packer.startup(function(use)
     ft = { "markdown" },
   })
 
-
+  use "vimwiki/vimwiki"
 
   ----------------------------- DISABLED -------------------------
 

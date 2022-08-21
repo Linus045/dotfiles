@@ -90,7 +90,8 @@ font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 ; Modules
 modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory spacerBig fs-root
 modules-center = time i3 date
-modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
+; modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
+modules-right  = dunst pulseaudio-control brightness battery wireless-network hibernate spacerSmall
 
 ; Cursor actions
 cursor-click  = pointer
@@ -156,7 +157,8 @@ font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 ; Modules
 modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory spacerBig fs-root
 modules-center = time i3 date
-modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
+modules-right  = dunst pulseaudio-control brightness battery wireless-network hibernate
+; modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
 
 ; Cursor actions
 cursor-click  = pointer

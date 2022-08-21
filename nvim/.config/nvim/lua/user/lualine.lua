@@ -15,7 +15,7 @@ local function mycustomcomponent()
   else
     autosaveText = "[Format on save enabled]"
   end
-  return lspStatus .. " " .. autosaveText
+  return--[[ lspStatus .. " " .. ]]  autosaveText
 end
 
 lualine.setup({

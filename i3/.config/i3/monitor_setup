@@ -15,6 +15,7 @@ exec_always --no-startup-id autotiling
 
 # setup multiple monitors 
 # use xrandr in console to get monitor names and then use this to set it up, then log out and back in
+# exec_always xrandr --output eDP --auto --right-of HDMI-A-0 &
 exec_always xrandr --output eDP --auto --right-of HDMI-A-0 &
 
 # this tells i3 which workspace to put on which screen

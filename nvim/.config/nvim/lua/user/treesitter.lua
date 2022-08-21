@@ -1,6 +1,6 @@
 local status_ok, configs = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
-	return
+  return
 end
 
 configs.setup {
@@ -8,18 +8,18 @@ configs.setup {
   -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
   -- the name of the parser)
   -- list of language that will be disabled
-  disable = { },
+  disable = {},
 
   -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
   -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
   -- Using this option may slow down your editor, and you may see some duplicate highlights.
   -- Instead of true it can also be a list of languages
   additional_vim_regex_highlighting = true,
+  -- Automatically install missing parsers when entering buffers
+  auto_install = true,
 
   highlight = {
     enable = true, -- false will disable the whole extension
-    -- Automatically install missing parsers when entering buffers
-    auto_install = true,
   },
   rainbow = {
     enable = true,
@@ -30,4 +30,3 @@ configs.setup {
     -- termcolors = {} -- table of colour name strings
   },
 }
-

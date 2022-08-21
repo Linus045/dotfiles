@@ -16,6 +16,7 @@ null_ls.setup({
   sources = {
     diagnostics.eslint,
     code_actions.eslint,
-    formatting.prettier.with({ extra_args = { "--no-semi", "--double-quote", "--jsx-double-quote" } }),
+    null_ls.builtins.code_actions.gitsigns,
+    -- formatting.prettier.with({ extra_args = { "--no-semi", "--double-quote", "--jsx-double-quote" } }),
   },
 })

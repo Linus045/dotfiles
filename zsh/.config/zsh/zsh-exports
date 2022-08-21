@@ -13,7 +13,12 @@ export MANWIDTH=999
 export DOTFILES="$HOME/dotfiles"
 export NVIMJOURNAL="$HOME/.nvim_journal"
 export DEV="$HOME/dev"
-#export PATH=$HOME/.cargo/bin:$PATH
+
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
+export PATH=$HOME/.cargo/bin:$PATH
+
+# Disable cowsay for ansible playbooks
+export ANSIBLE_NOCOWS=1
 #export PATH=$HOME/.local/share/go/bin:$PATH
 #export GOPATH=$HOME/.local/share/go
 #export PATH=$HOME/.fnm:$PATH

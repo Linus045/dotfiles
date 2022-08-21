@@ -40,6 +40,14 @@ vim.opt.colorcolumn = "80,120"
 vim.opt.foldlevel = 0
 vim.opt.foldlevelstart = 99
 vim.g.snippets = "luasnip"
+vim.opt.list = true                               -- show specials characters for tab, end-of-line etc.
+
+-- characters to show
+vim.opt.listchars = {
+  tab = ">>",
+  eol = "⮒",
+  nbsp = "+"
+}
 
 vim.cmd "set whichwrap+=<,>,[,]"                -- which keys wrap to the next line
 vim.cmd "set backspace=indent,eol,start"        -- allow backspacing over those
@@ -53,8 +61,8 @@ vim.g.prosession_dir = "~/.config/nvim/nvim_prosession/"
 
 
 -- vim.cmd [[match errorMsg /\s\+$/]]
-vim.cmd [[au BufEnter * highlight HIGHLIGHT_SPACES ctermbg=red guibg=red guifg=red]]
-vim.cmd [[au BufEnter * match HIGHLIGHT_SPACES /\s\+$/]]
+-- vim.cmd [[au BufEnter * highlight HIGHLIGHT_SPACES ctermbg=red guibg=red guifg=red]]
+-- vim.cmd [[au BufEnter * match HIGHLIGHT_SPACES /\s\+$/]]
 
 
 

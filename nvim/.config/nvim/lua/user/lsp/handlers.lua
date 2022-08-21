@@ -130,6 +130,9 @@ local function lsp_keymaps(client, bufnr)
   vim.cmd([[:command! F lua vim.lsp.buf.format(nil, 1000)]])
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gl", "<cmd>lua require('user.lsp.codelens').run()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
 end
 
 local function lsp_codelens(client, bufnr)
