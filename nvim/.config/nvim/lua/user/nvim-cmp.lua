@@ -45,18 +45,28 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-d>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.abort(),
-    ["<c-y>"] = cmp.mapping(
-      cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
-      },
-      { "i", "c" }
-    ),
+    -- ["<Esc>"] = cmp.abort(),
+    ["<c-y>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm({ select = true })
+        -- if luasnip.expand_or_jumpable() then
+        --   luasnip.expand_or_jump()
+        -- end
+      else
+        fallback()
+      end
+    end, { "i", "c" }),
     ["<c-space>"] = cmp.mapping {
-      i = cmp.mapping.complete(),
+      i = function(fallback)
+        if not cmp.visible() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end,
       c = function(_ --[[fallback]])
         if cmp.visible() then
           if not cmp.confirm { select = true } then
@@ -96,7 +106,7 @@ cmp.setup({
   confirmation = {
     default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace,
   },
-  preselect = false,
+  preselect = cmp.PreselectMode.Item,
   view = {
     entries = "custom", -- can be "custom", "wildmenu" or "native"
     selection_order = "near_cursor",
@@ -109,16 +119,7 @@ cmp.setup({
       side_padding = 0,
     },
     documentation = {
-      border = {
-        "╭",
-        "─",
-        "╮",
-        "│",
-        "╯",
-        "─",
-        "╰",
-        "│",
-      },
+      border = "double",
       winhighlight = "NormalFloat:NormalFloat,FloatBorder:NormalFloat",
       maxwidth = math.floor(20 * (vim.o.columns / 100)),
       maxheight = math.floor(20 * (vim.o.lines / 100)),
@@ -165,8 +166,10 @@ cmp.setup({
     },
     {
       name = "nvim_lsp_signature_help",
-      priority = 100,
+      priority = 110,
       group_index = 1,
+      -- always show the signature help
+      keyword_length = 0
     },
     {
       name = "nvim_lua",
@@ -196,6 +199,7 @@ cmp.setup({
     },
     {
       name = "zsh",
+      group_index = 3,
     },
   }),
   sorting = {

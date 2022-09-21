@@ -26,6 +26,7 @@ end
 -- if not status_ok then
 --   vim.notify("impatient not found")
 -- end
+-- impatient.enable_profile()
 
 
 require("user.utilities")

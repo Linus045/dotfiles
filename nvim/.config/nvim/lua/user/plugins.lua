@@ -72,7 +72,7 @@ return packer.startup(function(use)
     run = function()
       if first_install then return end
       vim.cmd(":TSUpdate")
-  end
+    end
   })
 
   -- not sure if this is needed
@@ -102,6 +102,7 @@ return packer.startup(function(use)
     end,
   })
 
+  -- LSP loading in a small hover text in the bottom right corner
   use { "j-hui/fidget.nvim",
     config = function()
       if first_install then return end
@@ -124,7 +125,8 @@ return packer.startup(function(use)
     end,
   })
 
-  -- use("pierreglaser/folding-nvim")
+  -- automatically creates folds (use zc to close and zo to open a fold)
+  use("pierreglaser/folding-nvim")
   -- easier spell checking
   use("lewis6991/spellsitter.nvim")
 
@@ -149,7 +151,11 @@ return packer.startup(function(use)
     end,
   })
 
-
+  -- converts between the number representations encountered when programming,
+  -- that is in addition to decimal, hex, octal, and binary representation.
+  -- gA shows number under cursor in different formats
+  -- crd, crXm cro and crb will convert the number to the given format
+  use { "glts/vim-radical", requires = "glts/vim-magnum" }
 
   -------------------------- VISUAL EDITOR UTILS ---------------------------
   -- multi cursor
@@ -183,6 +189,8 @@ return packer.startup(function(use)
   -- bring current buffer in focus
   use("folke/zen-mode.nvim")
 
+
+  use("powerman/vim-plugin-AnsiEsc")
 
 
 
@@ -276,6 +284,9 @@ return packer.startup(function(use)
       }
     end,
   }
+
+
+  use "rust-lang/rust.vim"
   ----------------------------- TELESCOPE ---------------------------
   -- telescope.
   use("nvim-telescope/telescope.nvim")
@@ -472,7 +483,12 @@ return packer.startup(function(use)
     ft = { "markdown" },
   })
 
-  use "vimwiki/vimwiki"
+  -- vim wiki
+  use { "vimwiki/vimwiki",
+    config = function()
+      vim.cmd("let g:vimwiki_list = [{'path': '~/.nvim_journal/', 'path_html': '~/.nvim_journal/wiki_html/', 'index': '.nvim_journal', 'syntax': 'markdown', 'ext': '.md'}]")
+    end
+  }
 
   ----------------------------- DISABLED -------------------------
 

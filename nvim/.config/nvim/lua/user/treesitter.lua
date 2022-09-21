@@ -17,7 +17,6 @@ configs.setup {
   additional_vim_regex_highlighting = true,
   -- Automatically install missing parsers when entering buffers
   auto_install = true,
-
   highlight = {
     enable = true, -- false will disable the whole extension
   },

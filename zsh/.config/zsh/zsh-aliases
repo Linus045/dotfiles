@@ -5,7 +5,7 @@
 alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull -q"
 alias nvimrc='nvim ~/.config/nvim/'
 alias nvimdot='nvim ~/dotfiles/'
-alias nvimjournal='nvim ~/.nvim_journal'
+alias nvimjournal='nvim ~/.nvim_journal/.nvim_journal.md'
 
 # ASCII aquarium art
 alias aq="asciiquarium"

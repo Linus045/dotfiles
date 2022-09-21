@@ -11,13 +11,13 @@ if not status_ok2 then
 end
 
 ls.config.set_config {
-  history = true,
+  history = false,
   update_events = "TextChanged,TextChangedI",
   enable_autosnippets = true,
   ext_opts = {
     [types.choiceNode] = {
       active = {
-        virt_text = {{"<-","CHOICE HERE"}},
+        virt_text = { { "<-", "CHOICE HERE" } },
       }
     }
   }
@@ -42,16 +42,15 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
-ls.add_snippets("all",{
+ls.add_snippets("all", {
 })
 
-ls.add_snippets("lua",{
+ls.add_snippets("lua", {
   s("pcall_check_expand", {
-    t("local status_ok, "), i(1, "module_name"), t(" = pcall(require, '"), i(2, "module_name"),t("')"),
-    t({"", "if not status_ok then"}),
-    t({"","  vim.notify('File "}), l(l.TM_FILENAME), t(": "), i(3, "module_name"), t(" not found.')"),
-    t({"", "  return"}),
-    t({"", "end"})
+    t("local status_ok, "), i(1, "module_name"), t(" = pcall(require, '"), i(2, "module_name"), t("')"),
+    t({ "", "if not status_ok then" }),
+    t({ "", "  vim.notify('File " }), l(l.TM_FILENAME), t(": "), i(3, "module_name"), t(" not found.')"),
+    t({ "", "  return" }),
+    t({ "", "end" })
   }),
 })
-

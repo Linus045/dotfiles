@@ -11,7 +11,8 @@ if keymap == nil then
 end
 
 -- Remap space as leader key
-keymap("n", "<Space>", "<Nop>", opts)
+-- no mapping to apply to all. see :help map-modes
+keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -61,6 +62,8 @@ keymap("v", "<A-j>", ":m .+1<CR>", opts, nil, true)
 keymap("v", "<A-k>", ":m .-2<CR>", opts, nil, true)
 keymap("x", "p", '"_dP', opts, nil, true)
 
+keymap("n", "<leader>y", '"+y', opts, "Copy to system clipboard")
+keymap("v", "<leader>y", '"+y', opts, "Copy to system clipboard")
 
 -- Visual Block --
 -- Move text up and down
@@ -90,6 +93,8 @@ keymap("n", "<leader>fb", ":Telescope buffers<cr><esc>", opts, "Telescope buffer
 keymap("n", "<leader>fh", ":Telescope help_tags<cr><esc>", opts, "Telescope help tags")
 keymap("n", "<leader>fc", ":Telescope commands<cr><esc>", opts, "Telescope commands")
 keymap("n", "<leader>fd", ":Telescope diagnostics<cr><esc>", opts, "Telescope diagnostics")
+keymap("n", "<leader>fs", ":Telescope lsp_workspace_symbols<cr><esc>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fe", ":Telescope lsp_document_symbols<cr><esc>", opts, "Telescope workspace symbols")
 keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts, "Telescope keymaps")
 
 -- default Live Grep
@@ -114,7 +119,7 @@ keymap(
 keymap(
   "n",
   "<leader>9",
-  "<CMD>:e ~/.nvim_journal<CR>",
+  "<CMD>:e ~/.nvim_journal/.nvim_journal.md<CR>",
   opts,
   "Open NvimJournal"
 )
@@ -216,8 +221,8 @@ keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts, "Insert Unicode Characte
 keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "Insert annotation")
 
 -- change github copilot keybindings
-vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])
-vim.g.copilot_no_tab_map = true
+-- vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])
+-- vim.g.copilot_no_tab_map = true
 
 
 -- trouble.nvim
@@ -228,3 +233,22 @@ keymap("n", "<leader>tt", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUB
 keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location list")
 keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")
+
+
+-- luasnip
+-- keymap("i", "<tab>",
+--   ":lua if require('luasnip').expand_or_jumpable() then require('luasnip').expand_or_jump() else vim.api.nvim_feedkeys('<Tab>', 'n') end"
+--   , opts, "[LUASNIP] Expand or Jump", true, true)
+
+-- " press <Tab> to expand or jump in a snippet. These can also be mapped separately
+-- " via <Plug>luasnip-expand-snippet and <Plug>luasnip-jump-next.
+vim.cmd [[imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>' ]]
+-- " -1 for jumping backwards.
+vim.cmd [[inoremap <silent> <S-Tab> <cmd>lua require'luasnip'.jump(-1)<Cr>]]
+
+vim.cmd [[snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>]]
+vim.cmd [[snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>]]
+
+-- " For changing choices in choiceNodes (not strictly necessary for a basic setup).
+vim.cmd [[imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']]
+vim.cmd [[smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']]
