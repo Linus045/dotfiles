@@ -51,7 +51,7 @@ bar {
   # Launch polybar on start
   i3bar_command $HOME/.config/polybar/launch.sh
   # Don´t use default bar (workspace number is displayed using polybar)
-  #i3bar_command i3bar
+  # i3bar_command i3bar
 
   colors {
     background #282A36

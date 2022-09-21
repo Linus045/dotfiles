@@ -1,6 +1,6 @@
 # define gaps between panels
-set $inner_gaps 15
-set $outer_gaps 12
+set $inner_gaps 4 #15
+set $outer_gaps 4 #12
 
 # #---Gaps---# #
 for_window [class="^.*"] border pixel 3

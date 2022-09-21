@@ -9,5 +9,5 @@ exec --no-startup-id "picom &"
 exec --no-startup-id i3-msg 'workspace 1; append_layout /home/linus/.config/i3/workspace-1.json; exec /usr/bin/kitty; sleep 2'
 exec --no-startup-id i3-msg 'workspace 2; append_layout /home/linus/.config/i3/workspace-2.json; exec /usr/bin/firefox; sleep 10'
 exec --no-startup-id i3-msg 'workspace 3; append_layout /home/linus/.config/i3/workspace-3.json; exec /usr/bin/spotify; sleep 10'
-exec --no-startup-id i3-msg 'workspace 4; append_layout /home/linus/.config/i3/workspace-2.json; exec /usr/bin/obsidian; sleep 10'
+exec --no-startup-id i3-msg 'workspace 4; append_layout /home/linus/.config/i3/workspace-4.json; exec /usr/bin/obsidian; sleep 10'
 

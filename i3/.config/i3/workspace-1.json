@@ -9,11 +9,11 @@
      "y": 0
   },
   "marks": [],
-  "name": "Alacritty",
+  "name": "Kitty",
   "percent": 1,
   "swallows": [
      {
-        "class": "^Alacritty$"
+        "class": "^kitty$"
      }
   ],
   "type": "con"
