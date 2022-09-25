@@ -3,21 +3,20 @@ A bunch of config files used with stow
 
 To add these configs, clone the repo into ~/dotfiles and cd into it and run `stow <directory name>` or `stow *\` to symlink all directories into the respective place.
 
-# Nvim Setup
+# Nvim Setup (Outdated)
 1. Install neovim (Arch: `sudo pacman -S neovim`)
 2. Clone repo: `git clone https://github.com/Linus045/dotfiles.git`
 3. `cd dotfiles`
 4. link nvim config into .config/nvim: `stow nvim` 
 5. open nvim and wait for packages to install
 6. restart nvim
-7. Run in nvim `:COQdeps` to install dependencies
-8. Install ripgrep for telescope (Arch:`sudo pacman -S ripgrep`)
-9. Install fd for telescope (Arch `sudo pacman -S fd`)
+7. Install ripgrep for telescope (Arch:`sudo pacman -S ripgrep`)
+8. Install fd for telescope (Arch `sudo pacman -S fd`)
 9. Install clipboard manager (e.g. xclip `sudo pacman -S xclip`)
-10. Install lazygit (Arch: `sudo pacman -S lazygit`)
-10. Open nivm and run `:checkhealth`
+10. There might be other programs required for some keybindings, simply check the keymaps.lua file in lua/users/keymaps.lua
+11. Open nivm and run `:checkhealth`
 
-# Alacritty setup
+# Alacritty setup (Outdated, I use kitty now)
 1. Install alacritty (Arch: `sudo pacman -S alacritty`)
 1.2. (Restart system for drivers to update correctly)
 2. Clone repo: `git clone https://github.com/Linus045/dotfiles.git`
@@ -31,14 +30,15 @@ To add these configs, clone the repo into ~/dotfiles and cd into it and run `sto
 3. `cd dotfiles`
 4. link zsh config into .config/zsh `stow zsh`
 5. Set zsh home directory in ~/.xprofile or similar: `export ZDOTDIR=$HOME/.config/zsh`
-6. Set zsh als default shell: `chsh -s /usr/zsh`
-7. Log out and back in to see the change
+6. Set zsh as default shell: `chsh -s /usr/zsh`
+7. (Consider changing it as default shell for tty console as well see 'chsh' command help)
+8. Log out and back in to see the change
 
 # i3 setup
 1. Install i3-gaps (Arch: `sudo pacman -S i3-gaps`)
 2. Install rofi (Arch: `sudo pacman -S rofi`)
 3. Install autotiling (Arch: `yay -S autotiling-git` Note: Needs python-pip)
-3. Log out and change window manager to i3
+4. Log out and change window manager to i3
 
 # Polybar setup
 1. Install polyabr (Arch: `sudo pacman -S polybar`)
@@ -48,7 +48,7 @@ To add these configs, clone the repo into ~/dotfiles and cd into it and run `sto
   - Remove Battery module if not needed
 3. Install fonts or replace them (e.g. Arch `sudp pacman -S ttf-iosevka-nerd` and reload fonts cache `fs-cache`)
 
-Programs used for polybar and other stuff
+Programs (partly used for polybar) and general other stuff
   - feh
   - dunst
   - picom

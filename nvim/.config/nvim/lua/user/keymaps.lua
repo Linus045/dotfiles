@@ -93,8 +93,8 @@ keymap("n", "<leader>fb", ":Telescope buffers<cr><esc>", opts, "Telescope buffer
 keymap("n", "<leader>fh", ":Telescope help_tags<cr><esc>", opts, "Telescope help tags")
 keymap("n", "<leader>fc", ":Telescope commands<cr><esc>", opts, "Telescope commands")
 keymap("n", "<leader>fd", ":Telescope diagnostics<cr><esc>", opts, "Telescope diagnostics")
-keymap("n", "<leader>fs", ":Telescope lsp_workspace_symbols<cr><esc>", opts, "Telescope workspace symbols")
-keymap("n", "<leader>fe", ":Telescope lsp_document_symbols<cr><esc>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fw", ":Telescope lsp_workspace_symbols<cr><esc>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fs", ":Telescope lsp_document_symbols<cr><esc>", opts, "Telescope workspace symbols")
 keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts, "Telescope keymaps")
 
 -- default Live Grep

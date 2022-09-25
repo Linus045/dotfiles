@@ -14,9 +14,9 @@ local code_actions = null_ls.builtins.code_actions
 null_ls.setup({
   debug = false,
   sources = {
-    diagnostics.eslint,
-    code_actions.eslint,
-    null_ls.builtins.code_actions.gitsigns,
+    diagnostics.eslint_d,
+    code_actions.eslint_d,
+    -- null_ls.builtins.code_actions.gitsigns,
     -- formatting.prettier.with({ extra_args = { "--no-semi", "--double-quote", "--jsx-double-quote" } }),
   },
 })

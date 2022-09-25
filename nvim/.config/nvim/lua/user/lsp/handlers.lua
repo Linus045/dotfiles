@@ -108,6 +108,8 @@ local function lsp_keymaps(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>F", "<cmd>lua vim.lsp.buf.format(nil, 1000)<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "[q", '<cmd>cprevious<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "]q", '<cmd>cnext<CR>', opts)
   vim.cmd([[:command! F lua vim.lsp.buf.format(nil, 1000)]])
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
