@@ -70,3 +70,6 @@ Programs (partly used for polybar) and general other stuff
   - wal
   - 
 
+
+# Setup Preview
+![Image](preview.png)
