@@ -12,6 +12,7 @@ function zshstartup() {
   echo $orange_color "Alt-c" $reset_color "cd directory using fzf"
 
   echo $red_color "\nUseful stuff:"
+  echo $orange_color "zshstartup" $reset_color "Print this help again"
   echo $orange_color "zsh-update-plugins" $reset_color "Update zsh plugins"
   echo $orange_color "myip" $reset_color "Get my current ip (via ipinfo.io)"
   echo $orange_color "pacman-packages" $reset_color "List all pacman packages"
@@ -22,6 +23,8 @@ function zshstartup() {
   echo $orange_color "psmem" $reset_color "Get top process eating memory"
   echo $orange_color "pscpu" $reset_color "Get top process eating cpu"
   echo $orange_color "manpdf" $reset_color "View man page in PDF format"
+  echo $orange_color "tmuxstart" $reset_color "Start tmux dev session with predefined windows (or attaches back to it)"
+  echo $orange_color "tmuxstop" $reset_color "Kills running tmux dev session"
 }
 zle -N zshstartup
 bindkey '^_' zshstartup
