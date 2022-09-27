@@ -3,6 +3,11 @@ A bunch of config files used with stow
 
 To add these configs, clone the repo into ~/dotfiles and cd into it and run `stow <directory name>` or `stow *\` to symlink all directories into the respective place.
 
+
+# Other repos
+- [Ansible Playbooks scripts](https://github.com/Linus045/playbooks)
+- [Small scripts I use for linux](https://github.com/Linus045/useful_scripts)
+
 # Nvim Setup (Outdated)
 1. Install neovim (Arch: `sudo pacman -S neovim`)
 2. Clone repo: `git clone https://github.com/Linus045/dotfiles.git`
