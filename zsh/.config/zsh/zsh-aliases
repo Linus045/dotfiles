@@ -41,7 +41,7 @@ function cheatsheet() {
 }
 
 function changetheme() {
-  wal --theme | fzf --preview='$SHELL $ZDOTDIR/print_colors.sh' --bind 'enter:execute(wal -e --theme $(echo {} | sed "s/ - //") > /dev/null)'
+  wal --theme | fzf --preview='$SHELL $ZDOTDIR/print_colors.sh; printf "\n\n\nUsage: Press ENTER to change"' --bind 'enter:execute(wal -e --theme $(echo {} | sed -r "s/ - ([a-zA-Z0-9_-]+).*/\1/") > /dev/null)'
 }
 
 # get fastest mirrors
