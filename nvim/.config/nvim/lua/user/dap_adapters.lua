@@ -3,6 +3,7 @@ if not status_ok then
   vim.notify("dap not found. Can't load debugger adapters")
   return
 end
+
 dap.adapters.codelldb = {
   type = 'server',
   port = "${port}",
@@ -33,23 +34,23 @@ dap.configurations.cpp = {
     end,
     runInTerminal = false,
   },
-  {
-    name = 'Launch File [codelldb]',
-    type = "codelldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    args = function()
-      return vim.fn.split(vim.fn.input("Args: ", ""), " ")
-    end,
-    stopOnEntry = false,
-  }
+  -- {
+  --   name = 'Launch File [codelldb]',
+  --   type = "codelldb",
+  --   request = "launch",
+  --   program = function()
+  --     return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+  --   end,
+  --   cwd = '${workspaceFolder}',
+  --   args = function()
+  --     return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+  --   end,
+  --   stopOnEntry = false,
+  -- }
 }
 dap.configurations.c = dap.configurations.cpp
 
--- dap.configurations.rust = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
 --[[ dap.configurations.rust = {
   {
     name = "Launch Rust file [DEBUG]",
