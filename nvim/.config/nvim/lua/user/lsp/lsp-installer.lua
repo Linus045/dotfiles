@@ -22,26 +22,6 @@ if not status_ok then
   return
 end
 
-mason.setup({
-  ui = {
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
-    }
-  }
-})
-
-mason_lspconfig.setup({
-  ensure_installed = {
-    "sumneko_lua",
-    "rust_analyzer",
-    "volar",
-    "tsserver",
-  }
-})
-
-
 local lsps = mason_lspconfig.get_installed_servers()
 
 for _, server in pairs(lsps) do

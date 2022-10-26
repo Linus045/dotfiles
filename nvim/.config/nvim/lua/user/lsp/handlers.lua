@@ -158,8 +158,11 @@ M.on_attach = function(client, bufnr)
 
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   if filetype == "rust" then
-    vim.notify("Rust cargo check on save attached.", vim.log.levels.INFO)
     require("user.utilities").register_rust_cargo_check_autocommand()
+  end
+  if filetype == "c" then
+    require("user.utilities").register_gcc_check_autocommand()
+    require("user.utilities").register_gcc_run_user_command()
   end
 end
 
@@ -182,5 +185,5 @@ if not status_ok then
   return
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 return M

@@ -190,7 +190,8 @@ return packer.startup(function(use)
   use("folke/zen-mode.nvim")
 
 
-  use("powerman/vim-plugin-AnsiEsc")
+  -- use("powerman/vim-plugin-AnsiEsc")
+
 
 
 
@@ -445,7 +446,7 @@ return packer.startup(function(use)
 
   ----------------------------- DEBUGGER -------------------------
   -- use { "puremourning/vimspector", run = "python3 install_gadget.py --enable-rust" }
-  --  use "mfussenegger/nvim-dap"
+  use "mfussenegger/nvim-dap"
   use("theHamsta/nvim-dap-virtual-text")
   use("nvim-telescope/telescope-dap.nvim")
   use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })

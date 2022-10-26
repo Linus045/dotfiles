@@ -3,35 +3,54 @@ if not status_ok then
   vim.notify("dap not found. Can't load debugger adapters")
   return
 end
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    command = "/home/linus/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb",
+    args = { "--port", "${port}" },
+  }
+}
 
-dap.adapters.cppdbg = {
-  id = "cppdbg",
-  type = "executable",
-  command = os.getenv("HOME") ..
-      "/.config/nvim/debug_adapter/cpptools-linux-aarch64/extension/debugAdapters/bin/OpenDebugAD7",
+dap.adapters.lldb = {
+  type = 'executable',
+  command = "/usr/bin/lldb-vscode",
+  name = "lldb"
 }
 
 dap.configurations.cpp = {
   {
-    name = "Launch file",
-    type = "cppdbg",
+    name = 'Launch File [lldb-vscode]',
+    type = 'lldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = function()
+      return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+    end,
+    runInTerminal = false,
+  },
+  {
+    name = 'Launch File [codelldb]',
+    type = "codelldb",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
-    cwd = "${workspaceFolder}",
-    stopOnEntry = true,
-    setupCommands = {
-      {
-        text = "-enable-pretty-printing",
-        description = "enable pretty printing",
-        ignoreFailures = false,
-      },
-    },
-  },
+    cwd = '${workspaceFolder}',
+    args = function()
+      return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+    end,
+    stopOnEntry = false,
+  }
 }
+dap.configurations.c = dap.configurations.cpp
 
-dap.configurations.rust = {
+-- dap.configurations.rust = dap.configurations.cpp
+--[[ dap.configurations.rust = {
   {
     name = "Launch Rust file [DEBUG]",
     type = "cppdbg",
@@ -79,4 +98,4 @@ dap.configurations.rust = {
       },
     },
   },
-}
+} ]]
