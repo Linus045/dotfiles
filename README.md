@@ -68,7 +68,7 @@ Programs (partly used for polybar) and general other stuff
   - pulseaudio
   - wal-theme-picker
   - wal
-  - 
+  - cz-cli (https://github.com/commitizen/cz-cli)
 
 
 # Setup Preview

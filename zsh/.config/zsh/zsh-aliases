@@ -7,24 +7,6 @@ alias nvimrc='nvim ~/.config/nvim/'
 alias nvimdot='nvim ~/dotfiles/'
 alias nvimjournal='nvim ~/.nvim_journal/.nvim_journal.md'
 
-# ASCII aquarium art
-alias aq="asciiquarium"
-alias feh='feh -d --scale-down'
-
-# Tmux alias
-alias tn='tmux new-session'
-alias ta='tmux attach'
-alias tmuxstart="~/.config/tmux/start_session.sh"
-alias tmuxkill="tmux kill-session"
-
-# use bat instead of cat
-alias cat='bat'
-# Sort entries when using ls
-alias ls='ls --group-directories-first --color=auto'
-
-#alias fzf='~/useful_scripts/fzfimg.sh'
-alias sublime='~/dev/sublime_text/sublime_text'
-
 # command to retrieve current public ip
 alias myip="curl https://ipinfo.io"
 
@@ -33,13 +15,37 @@ alias myip="curl https://ipinfo.io"
 alias pacman-packages="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias pacman-packages-upgradable="pacman -Qu | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 
+# ASCII aquarium art
+alias aq="asciiquarium"
+alias feh='feh -d --scale-down'
 
+# Tmux alias
+# alias tn='tmux new-session'
+# alias ta='tmux attach'
+alias tmuxstart="~/.config/tmux/start_session.sh"
+alias tmuxkill="tmux kill-session"
+
+alias vlcwithhttp="vlc -I http --http-host 0.0.0.0 --http-port 8080 --http-password vlc"
+
+# use bat instead of cat
+# see https://github.com/sharkdp/bat
+alias cat='bat'
+
+# Sort entries when using ls
+alias ls='ls --group-directories-first --color=auto'
+
+# https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
+#alias fzf='~/useful_scripts/fzfimg.sh'
+
+# prints a color table (to verify the current color scheme)
 alias print-colors="$SHELL $ZDOTDIR/print_colors.sh"
 
+# prints out the result from 
 function cheatsheet() {
   curl -s cht.sh/$1 | less -R
 }
 
+# change with via fzf and ENTER
 function changetheme() {
   wal --theme | fzf --preview='$SHELL $ZDOTDIR/print_colors.sh; printf "\n\n\nUsage: Press ENTER to change"' --bind 'enter:execute(wal -e --theme $(echo {} | sed -r "s/ - ([a-zA-Z0-9_-]+).*/\1/") > /dev/null)'
 }
@@ -60,9 +66,9 @@ alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
 
-# easier to read disk
+# easier to read disk and memory
 alias df='df -h'     # human-readable sizes
-alias free='free -m' # show sizes in MB
+alias free='free -h' # show sizes human-readable
 
 # get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4 | head -5'
@@ -70,7 +76,8 @@ alias psmem='ps auxf | sort -nr -k 4 | head -5'
 # get top process eating cpu ##
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 
-# force vt100 when using ssh
+# force vt100 when using ssh (sets terminal emulator so flashing/bell/etc is outputted correctly)
+# see: https://it.engineering.oregonstate.edu/book/what-does-term-network-or-term-vt100-mean
 alias ssh='TERM=vt100 ssh' 
 
 #alias manpdf='man -k . | dmenu -l 20 | awk '"'"'{ print $1}'"'"' | xargs -r man -Tpdf | zathura -'
@@ -82,4 +89,5 @@ manpdf_helper() {
   fi
 }
 alias manpdf=manpdf_helper
+# sets autocomplete for manpdf equal to man's autocomplete
 compdef manpdf=man

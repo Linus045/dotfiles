@@ -41,6 +41,7 @@ $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
+$python\
 $character"""
 
 command_timeout = 2000
@@ -60,6 +61,10 @@ truncate_to_repo = false
 disabled = false
 threshold = 75
 style = "bold dimmed green"
+
+[python]
+disabled = false
+format = '[\($virtualenv@${version}\)]($style)'
 
 [username]
 disabled = false
