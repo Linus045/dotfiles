@@ -17,11 +17,27 @@ ls.config.set_config {
   ext_opts = {
     [types.choiceNode] = {
       active = {
-        virt_text = { { "<-", "CHOICE HERE" } },
+        virt_text = { { "<- <C-E> to change", "CHOICE HERE" } },
       }
     }
   }
 }
+
+-- prevent jumping back to snippet when placeholders are skipped
+-- see https://github.com/L3MON4D3/LuaSnip/issues/258
+function leave_snippet()
+  if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i') and
+      ls.session.current_nodes[vim.api.nvim_get_current_buf()] and
+      not ls.session.jump_active
+  then
+    ls.unlink_current()
+  end
+end
+
+-- stop snippets when you leave to normal mode
+vim.api.nvim_command([[
+    autocmd ModeChanged * lua leave_snippet()
+]])
 
 local s = ls.snippet
 local sn = ls.snippet_node
@@ -42,15 +58,24 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require("luasnip.util.types")
 local conds = require("luasnip.extras.expand_conditions")
 
-ls.add_snippets("all", {
-})
+ls.snippets = {
+  lua = {
+    s("myreq", { c(1, {
+      fmt("require('{}')", { r(1, 'module') }),
+      fmt("local {} = require('{}')", { rep(1), r(1, 'module') })
+    }
+    ) }, { stored = { module = i(1, "module") } })
+  }
+}
+
+ls.add_snippets("all", {})
 
 ls.add_snippets("lua", {
   s("pcall_check_expand", {
-    t("local status_ok, "), i(1, "module_name"), t(" = pcall(require, '"), i(2, "module_name"), t("')"),
+    t("local status_ok, "), i(1, "module_name"), t(" = pcall(require, '"), r(2, "module_name"), t("')"),
     t({ "", "if not status_ok then" }),
-    t({ "", "  vim.notify('File " }), l(l.TM_FILENAME), t(": "), i(3, "module_name"), t(" not found.')"),
+    t({ "", "  vim.notify('File " }), l(l.TM_FILENAME), t(": "), rep(2, "module_name"), t(" not found.')"),
     t({ "", "  return" }),
-    t({ "", "end" })
-  }),
+    t({ "", "end" }),
+  }, { stored = { module_name = i(1, "module_name") } }),
 })
