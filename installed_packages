@@ -1,0 +1,76 @@
+Personal reference list of packages i use for various things:
+
+alacritty - Terminal emulator
+ansible   - ansible playbooks, automate tasks
+anydesk-bin - teamviewer alternative
+asciiquarium - fun aquarium in the console
+audacity - audio editing tool
+autotiling-git - used in combination with i3
+bat - better cat
+bitwarden - password manager
+brightnessctl - used with polybar to control laptop brightness
+catimg - print images in the terminal (low resolution, for higher resolution look into https://github.com/seebye/ueberzug) 
+code - Visual Studio Code
+cowsay - print messages using ascii cow art
+cpu-x - cpu-z alternative (shows hardware stats)
+ctags - generates tags to jump to (used in neovim with https://github.com/liuchengxu/vista.vim) 
+dateutils - contains some date functions i needed for some stuff
+difftastic - better git diff
+digimend-kernel-drivers-dkms - drivers for drawing tablet
+discord - Discord
+dunst - notification popups
+fd - better find
+feh - image viewer
+ffmpeg - video editor
+flameshot - screenshot tool
+fzf - fuzzy finder
+gdu - disk cleanup tool
+gifsicle - edit gifs
+gromit-mpx - whiteboard tool (allows drawing on the screen)
+i3-gaps - i3 version with gaps between windows
+img2pdf - convert images to pdf
+insomnia - alternative to postman
+kitty - Terminal emulator
+krita - drawing program
+lazygit - TUI git client
+ledger-live-bin - ledger crypto
+monero-gui - monero crypto
+mullvad-vpn - vpn client
+neofetch - print system information in terminal
+nerd-fonts-fira-code - current font
+obs-studio - OBS for streaming/recording
+obsidian - note client
+onedrive-abraunegg - onedrive client
+picom - X compositor (needed for gromit-mpx)
+playerctl - used in polybar scripts (control media thats currently playing e.g. Pause/Resume/change volume/etc.)
+polybar - statusbar at the top 
+powertop - tool to measure power consumption (used to check laptop battery)
+qbittorrent - torrent client
+ranger - vim-like file manager
+redshift - f.lux alternative (reduces blue light at night)
+ripgrep - better grep
+rofi - A window switcher, application launcher and dmenu replacement
+rsync - better scp to copy files via ssh
+rustdesk - teamviewer alternative
+safeeyes - break time reminder
+scrcpy - mirror android phone on pc
+screenfetch - similar to neofetch, shows basic system information
+scrot - screenshot tool
+sddm - display manager | login manager 
+sddm theme (from AUR): aerial-sddm-theme
+starship - terminal prompt
+stow - used to manage dotfiles
+telegram-desktop - telegram client
+thunderbird - email client
+tldr - show basic usage for commands (easier than using man) (also see cheatsheet command in dotfiles/zsh/.config/zsh/zsh-alias)
+tmux - terminal multiplexer
+tree - show file tree
+vlc - video player
+vpnc - vpn client
+wireshark-qt - network analysis tool
+xautolock - locks screen when idle
+xclip - clipboard manager used for neovim 
+xournalpp - notetaking app
+xsane - scanner interface
+yay-bin - package manager for packages from AUR
+zathura - pdf viewer
