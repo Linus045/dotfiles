@@ -86,7 +86,7 @@ keymap("n", "<leader>x", ":bw<cr>", opts, "Kill window")
 keymap("n", "<leader>X", ":bw!<cr>", opts, "Kill window (forced)")
 
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>f", "", opts, "[FINDER]", false, true)
+keymap("n", "<leader>f", nil, opts, "[FINDER]", false, true)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts, "Telescope find_files")
 keymap("n", "<leader>fg", "<cmd>Telescope git_files<cr>", opts, "Telescope git_files")
 keymap("n", "<leader>fb", ":Telescope buffers<cr><esc>", opts, "Telescope buffers")
@@ -98,7 +98,7 @@ keymap("n", "<leader>fs", ":Telescope lsp_document_symbols<cr><esc>", opts, "Tel
 keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts, "Telescope keymaps")
 
 -- default Live Grep
-keymap("n", "<leader>g", "", opts, "[GREP]", false, true)
+keymap("n", "<leader>g", nil, opts, "[GREP]", false, true)
 keymap("n", "<leader>gg", "<cmd>Telescope live_grep<cr>", opts, "Telescope live_grep")
 -- Live Grep with hidden hiles
 keymap("n", "<leader>gh",
@@ -141,7 +141,7 @@ keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code A
 keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts, "Telescope diagnostics")
 
 -- Telescope DAP
-keymap("n", "<leader>d", "", opts, "[DEBUG]", false, true)
+keymap("n", "<leader>d", nil, opts, "[DEBUG]", false, true)
 keymap("n", "<leader>dlb", ":Telescope dap list_breakpoints<CR>", opts, "List breakpoints")
 keymap("n", "<leader>dlc", ":Telescope dap configurations<CR>", opts, "List configurations")
 keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts, "List commands")
@@ -226,7 +226,7 @@ keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "Insert annotat
 
 
 -- trouble.nvim
-keymap("n", "<leader>t", "", opts, "[TROUBLE|TERMINAL|GITSIGNS]", false, true)
+keymap("n", "<leader>t", nil, opts, "[TROUBLE|TERMINAL|GITSIGNS]", false, true)
 keymap("n", "<leader>tx", "<cmd>TroubleToggle<cr>", opts, "[TROUBLE] Toggle Trouble")
 keymap("n", "<leader>tw", "<cmd>Trouble workspace_diagnostics<cr>", opts, "[TROUBLE] Workspace diagnostics")
 keymap("n", "<leader>tt", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUBLE] Document diagnostics")
