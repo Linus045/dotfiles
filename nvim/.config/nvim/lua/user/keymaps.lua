@@ -98,7 +98,7 @@ keymap("n", "<leader>fs", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Tele
 keymap("n", "<leader>?", "<cmd>Telescope keymaps<CR>", opts, "Telescope keymaps")
 
 -- default Live Grep
-keymap("n", "<leader>g", nil, opts, "[GREP]", false, true)
+keymap("n", "<leader>g", nil, opts, "[GREP|Codelens]", false, true)
 -- Live Grep with regular Expression (default rg)
 keymap("n", "<leader>ge", "<cmd>Telescope live_grep<CR>", opts, "Telescope live_grep (with RegEx)")
 -- Live Grep with hidden hiles
@@ -142,6 +142,9 @@ keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuz
 keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
 keymap("v", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
 -- remap to open the Telescope refactoring menu in visual mode
+
+keymap("n", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
+keymap("v", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
 keymap("n", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
   , "Code Actions [Telescope]")
 keymap("v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
@@ -152,6 +155,8 @@ keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr
 
 -- Telescope DAP
 keymap("n", "<leader>d", nil, opts, "[DEBUG]", false, true)
+keymap("v", "<leader>d", nil, opts, "[DEBUG]", false, true)
+keymap("n", "<leader>dl", nil, opts, "[DEBUG] Lists Breakpoints, Variables, Frames...", false, true)
 keymap("n", "<leader>dlb", ":Telescope dap list_breakpoints<CR>", opts, "List breakpoints")
 keymap("n", "<leader>dlc", ":Telescope dap configurations<CR>", opts, "List configurations")
 keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts, "List commands")
@@ -165,7 +170,7 @@ keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts, "[DEBUG] Step Out
 keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts, "[DEBUG] Toggle Breakpoint")
 keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts,
   "[DEBUG] Toggle Breakpoint (Conditioned)")
-keymap("n", "<leader>lp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts,
+keymap("n", "<leader>dp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts,
   "[DEBUG] Toggle Breakpoint (Log message)")
 keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Open REPL")
 keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts, "[DEBUG] Run last configuration")
@@ -204,9 +209,16 @@ keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR
 -- Calendar keymap
 -- keymap("n", "<leader>k", "<Plug>(calendar)", term_opts, "Open calendar")
 
+
+--Vimwiki
+keymap("n", "<leader>w", nil, opts, "[VIMWIKI]", false, true)
+
 keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
 -- Zen mode
 keymap("n", "<leader><SPACE>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
+
+-- Git Messenger (rhysd/git-messenger.vim)
+keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Message (? for keybindings)", false, false)
 
 -- Undotree
 keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
@@ -216,8 +228,10 @@ keymap("n", "<leader>U", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
 keymap("n", "<leader>P", ":TransparentToggle<CR>", opts, "Transparent Toggle")
 
 -- Remove search highlights
-keymap("n", "<leader>l", ":set hls!<CR>", opts, "Toggle highlighting (:set hls!)") --Toggle instead
-keymap("n", "<leader>h", ":nohl<CR>:VMClear<CR>", opts, "Clear highlighting (:nohl)")
+keymap("n", "<leader>l", nil, opts, "Search-Highlight Options", false, true)
+keymap("n", "<leader>lt", ":set hls!<CR>", opts, "Toggle highlighting (:set hls!)") --Toggle instead
+keymap("n", "<leader>ll", ":nohl<CR>:VMClear<CR>:lua print('Cleared search highlights')<CR>", opts,
+  "Clear highlighting (:nohl)")
 -- Vim Visual multi cursor keymaps
 -- vim.g.VM_mouse_mappings = 1
 -- vim.g.VM_theme = "sand"
@@ -230,9 +244,9 @@ vim.g.VM_maps = {
 }
 
 -- Unicode fuzzy search (see plugin unicode.vim)
-keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts, "Insert Unicode Character")
+keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts, "[UNICODE] Insert Unicode Character")
 
-keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "Insert annotation")
+keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "[NEOGEN] Insert annotation")
 
 -- change github copilot keybindings
 -- vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])

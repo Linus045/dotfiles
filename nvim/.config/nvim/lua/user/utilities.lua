@@ -67,10 +67,13 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, b
     return
   end
 
-  if M.bindings[mode][lhs] ~= nil and
-      (M.bindings[mode][lhs]["bufnr"] and (M.bindings[mode][lhs]["bufnr"] == bufnr)) then
-    vim.notify("Conflicting keybinding for: " .. lhs)
-    return
+  local keybindingExists = M.bindings[mode][lhs] ~= nil and true or false
+  if keybindingExists then
+    local bufnrExists = M.bindings[mode][lhs]["bufnr"] and true or false
+    if not bufnrExists or (M.bindings[mode][lhs]["bufnr"] == bufnr) then
+      vim.notify("Conflicting keybinding for: " .. lhs)
+      return
+    end
   end
 
   M.bindings[mode][lhs] = {
@@ -81,8 +84,15 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, b
     ["bufnr"] = bufnr
   }
   local mapping = {
-    [lhs] = { rhs }
+    [lhs] = {}
   }
+
+  -- set as group label if no rhs is given
+  if not rhs then
+    mapping[lhs]["name"] = description
+  else
+    mapping[lhs] = { rhs }
+  end
 
   -- hide binding in popup
   if dontShow then

@@ -101,7 +101,7 @@ _G.Rename = {
 local function lsp_keymaps(client, bufnr)
   local opts = { noremap = true, silent = true }
   -- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-  keymap("n", "<leader>d", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
+  keymap("n", "gq", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
   keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts, "Goto Declaration", nil, nil, bufnr)
   keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts, "Goto Definition", nil, nil, bufnr)
   keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts, "HOVER INFO", nil, nil, bufnr)
@@ -117,7 +117,7 @@ local function lsp_keymaps(client, bufnr)
   -- e.g. lsp/configurations/clangd.lua which contains this command or a more advanced version that can search for implementations if used on a function signature etc.
   -- https://github.com/neovim/nvim-lspconfig/blob/c5dae15c0c94703a0565e8ba35a9f5cb96ca7b8a/lua/lspconfig/server_configurations/clangd.lua#L52-L59
   keymap("n", "gt", '<cmd>ClangdSwitchSourceHeader<CR>', opts, "Switch between source/header file", nil, nil, bufnr)
-  keymap("n", "<space>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens", nil, nil, bufnr)
+  keymap("n", "<leader>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens", nil, nil, bufnr)
   keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, "Rename variable", nil, nil, bufnr)
   keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts, "Diagnostics quickfix list", nil, nil, bufnr)
   keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts,

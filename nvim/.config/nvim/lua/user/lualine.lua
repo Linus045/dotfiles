@@ -41,7 +41,7 @@ lualine.setup({
     lualine_a = { "mode" },
     lualine_b = { "branch", "diff", --[[ "diagnostics" ]] },
     lualine_c = { "filename" },
-    lualine_x = { mycustomcomponent, "fileformat", "filetype" },
+    lualine_x = { mycustomcomponent, "%{FugitiveStatusline()}", "fileformat", "filetype" },
     lualine_y = { --[[ "progress" ]] },
     lualine_z = { "location" },
   },

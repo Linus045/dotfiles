@@ -446,6 +446,8 @@ return packer.startup(function(use)
 
   -- see git line info
   -- <leader>gm
+  vim.g.git_messenger_always_into_popup = true
+  vim.g.git_messenger_no_default_mappings = true
   use("rhysd/git-messenger.vim")
 
   -- show more info when editing GITCOMMIT files, doesn't

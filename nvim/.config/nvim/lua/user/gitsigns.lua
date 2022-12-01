@@ -27,6 +27,8 @@ local function gitsigns_keymappings(bufnr)
   -- Actions
   opts = { noremap = true, silent = true }
   keymap("n", "<leader>h", nil, opts, "[GITSIGNS]", false, true)
+  keymap("v", "<leader>h", nil, opts, "[GITSIGNS]", false, true)
+  keymap("n", "<leader>ht", nil, opts, "[GITSIGNS] Toggles", false, true)
   keymap("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", opts, "[GITSIGNS] Stage hunk", false, false, bufnr)
   keymap("v", "<leader>hs", ":Gitsigns stage_hunk<CR>", opts, "[GITSIGNS] Stage hunk", false, false, bufnr)
   keymap("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", opts, "[GITSIGNS] Reset hunk", false, false, bufnr)
@@ -56,8 +58,9 @@ local function gitsigns_keymappings(bufnr)
     bufnr)
 
   -- Text object
-  keymap("o", "ih", ":<C-U>Gitsigns select_hunk<CR>", opts, "[GITSIGNS] Select Hunk", false, false, bufnr)
-  keymap("x", "ih", ":<C-U>Gitsigns select_hunk<CR>", opts, "[GITSIGNS] Select Hunk", false, false, bufnr)
+  -- Visual-select inner hunk
+  keymap("o", "ih", ":<C-U>Gitsigns select_hunk<CR>", opts, "[GITSIGNS] Select inner hunk", false, false, bufnr)
+  keymap("x", "ih", ":<C-U>Gitsigns select_hunk<CR>", opts, "[GITSIGNS] Select inner hunk", false, false, bufnr)
 end
 
 gitsigns.setup({
