@@ -6,8 +6,10 @@ exec --no-startup-id "picom &"
 # Autostart firefox and alacritty
 # no exec_always because it should only happen on inital start
 # load workspace layout and then start application
-exec --no-startup-id i3-msg 'workspace 1; append_layout /home/linus/.config/i3/workspace-1.json; exec /usr/bin/kitty; sleep 2'
-exec --no-startup-id i3-msg 'workspace 2; append_layout /home/linus/.config/i3/workspace-2.json; exec /usr/bin/firefox; sleep 10'
-exec --no-startup-id i3-msg 'workspace 3; append_layout /home/linus/.config/i3/workspace-3.json; exec /usr/bin/spotify; sleep 10'
+exec --no-startup-id i3-msg 'workspace 1; append_layout /home/linus/.config/i3/workspace-1.json; exec /usr/bin/kitty'
+exec --no-startup-id i3-msg 'workspace 2; append_layout /home/linus/.config/i3/workspace-2.json; exec /usr/bin/firefox'
+exec --no-startup-id i3-msg 'workspace 3; append_layout /home/linus/.config/i3/workspace-3.json; exec sleep 10; workspace 3; exec /usr/bin/spotify'
 # exec --no-startup-id i3-msg 'workspace 4; append_layout /home/linus/.config/i3/workspace-4.json; exec /usr/bin/obsidian; sleep 10'
+exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird'
 
+exec --no-startup-id i3-msg 'exec sleep 20 && /bin/bash /home/linus/.config/polybar/scripts/set_random_background.sh'
