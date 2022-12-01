@@ -457,6 +457,7 @@ return packer.startup(function(use)
   -- git inside nvim
   use("TimUntersberger/neogit")
   use("tpope/vim-fugitive")
+  use("tpope/vim-rhubarb")
 
 
   -- copy link to current line with <leader>gy into clipboard

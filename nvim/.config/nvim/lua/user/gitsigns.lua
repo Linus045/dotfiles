@@ -26,7 +26,7 @@ local function gitsigns_keymappings(bufnr)
 
   -- Actions
   opts = { noremap = true, silent = true }
-  keymap("n", "<leader>h", nil, opts, "[GITSIGNS]", false, true)
+  keymap("n", "<leader>h", nil, opts, "[GITSIGNS|VIM-FUGITIVE]", false, true)
   keymap("v", "<leader>h", nil, opts, "[GITSIGNS]", false, true)
   keymap("n", "<leader>ht", nil, opts, "[GITSIGNS] Toggles", false, true)
   keymap("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", opts, "[GITSIGNS] Stage hunk", false, false, bufnr)

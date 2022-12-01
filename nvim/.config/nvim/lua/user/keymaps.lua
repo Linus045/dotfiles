@@ -195,7 +195,20 @@ keymap('n', '<Leader>die', ":lua require'dapui'.eval(vim.fn.input('[Expression] 
 
 -- Open links on gx (remap needed because nvim-tree overrides it)
 -- xgd-open needs to be replaced with whatever you want to topen the link
-keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts, "Open URL")
+keymap("n", "gx", ":execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>", opts, "Open URL")
+
+-- Define :Browse for tpope/vim-rhubarb since netrw is disabled
+vim.cmd(":command! -nargs=1 Browse silent execute '!xdg-open ' . shellescape(<q-args>,1)")
+
+keymap("n", "<leader>hg", nil, opts, "[VIM-RHUBARB]", false, true)
+keymap("v", "<leader>hg", nil, opts, "[VIM-RHUBARB]", false, true)
+keymap("n", "<leader>hgl", "<CMD>.GBrowse<CR>", opts, "[VIM-RHUBARB] Open current on Github")
+keymap("n", "<leader>hgf", "<CMD>GBrowse<CR>", opts, "[VIM-RHUBARB] Open current file on Github")
+keymap("n", "<leader>hgc", "<CMD>GcLog<CR>", opts, "[VIM-RHUBARB] Commit log")
+keymap("v", "<leader>hgc", ":'<,'>GcLog<CR>", opts, "[VIM-RHUBARB] Show previous revisions of selected lines")
+keymap("n", "<leader>hgb", "<CMD>Git blame<CR>", opts, "[VIM-FUGITIVE] Git Blame this file")
+keymap("n", "<leader>hgd", "<CMD>Git difftool<CR>", opts, "[VIM-FUGITIVE] Git Diff Tool")
+keymap("n", "<leader>hgm", "<CMD>Git mergetool<CR>", opts, "[VIM-FUGITIVE] Git Merge Tool")
 
 -- vimspector keybindings
 -- mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
