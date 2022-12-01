@@ -130,6 +130,9 @@ telescope.setup({
       previewer = false,
       winblend = 15,
     },
+    lsp_references = {
+      trim_text = true,
+    }
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,
@@ -150,7 +153,8 @@ telescope.setup({
         theme = "dropdown",
         winblend = 15
       }
-    }
+    },
+    require("telescope").load_extension("refactoring")
   },
 })
 

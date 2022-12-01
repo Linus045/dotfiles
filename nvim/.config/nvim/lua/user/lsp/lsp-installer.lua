@@ -34,7 +34,9 @@ for _, server in pairs(lsps) do
   local has_custom_opts, server_custom_opts = pcall(require, "user.lsp.settings." .. server)
   if has_custom_opts then
     opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
-    -- print("[LSP-Installer] Custom options for " .. server .. " loaded")
+    -- vim.notify("[LSP-Installer] Custom options for " .. server .. " loaded")
+  else
+    -- print("[LSP-Installer] NO custom options for " .. server .. " found")
   end
   lspconfig[server].setup(opts)
 end

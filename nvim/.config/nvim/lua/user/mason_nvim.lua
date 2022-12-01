@@ -28,6 +28,20 @@ mason_lspconfig.setup({
     "volar",
     "tsserver",
     "clangd",
+    "gopls",
+    "clangd",
+
+    -- Installed but invalid names, need to install manually via mason (no lspconfig integration?! idk)
+    -- "lua-language-server",
+    -- "clang-format",
+    -- "cmake-language-server",
+    -- "debugpy",
+    -- "ltex-ls",
+    -- "mypy",
+    -- "python-lsp-server",
+    -- "typescript-language-server",
+    -- "vue-language-server",
+
     -- "codelldb"
   }
 })

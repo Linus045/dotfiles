@@ -13,6 +13,29 @@ highlighter:new():add(highlight_groups):register_highlights()
 vim.cmd("autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup=(vim.fn['hlexists']('HighlightedyankRegion') > 0 and 'HighlightedyankRegion' or 'IncSearch'), timeout=300}")
 
 
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = { "*.c", "*.h", "*.cpp" },
+  callback = function()
+    vim.api.nvim_buf_set_option(0, "tabstop", 4)
+    vim.api.nvim_buf_set_option(0, "shiftwidth", 4)
+  end
+})
+
+
+-- easier editing of binary files
+-- see :help using-xxd
+vim.cmd([[
+	augroup Binary
+	  au!
+	  au BufReadPre  *.bin let &bin=1
+	  au BufReadPost *.bin if &bin | %!xxd
+	  au BufReadPost *.bin set ft=xxd | endif
+	  au BufWritePre *.bin if &bin | %!xxd -r
+	  au BufWritePre *.bin endif
+	  au BufWritePost *.bin if &bin | %!xxd
+	  au BufWritePost *.bin set nomod | endif
+	augroup END
+]])
 
 -- e.g. :lua P(vim.api)
 -- now also :lua =vim.api works
@@ -34,16 +57,18 @@ M.bindings = {
   i = {},
   v = {},
   x = {},
-  t = {}
+  t = {},
+  o = {}
 }
 
-M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister)
+M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, bufnr)
   if not M.bindings[mode] then
     vim.notify("Error: invalid mode (" .. mode .. ") for keybinding: " .. lhs .. " = " .. rhs)
     return
   end
 
-  if M.bindings[mode][lhs] ~= nil then
+  if M.bindings[mode][lhs] ~= nil and
+      (M.bindings[mode][lhs]["bufnr"] and (M.bindings[mode][lhs]["bufnr"] == bufnr)) then
     vim.notify("Conflicting keybinding for: " .. lhs)
     return
   end
@@ -52,7 +77,8 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister)
     ["mode"] = mode,
     ["lhs"] = lhs,
     ["rhs"] = rhs,
-    ["opts"] = opts
+    ["opts"] = opts,
+    ["bufnr"] = bufnr
   }
   local mapping = {
     [lhs] = { rhs }
@@ -81,7 +107,11 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister)
   end
 
   if not dontRegister then
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    if bufnr ~= nil then
+      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+    else
+      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+    end
   end
 end
 
@@ -190,12 +220,12 @@ M.RunCurrentCFile = function(argsString)
     return
   end
 
-  if vim.api.nvim_buf_is_valid(M.buf_nr) then
+  if M.buf_nr and vim.api.nvim_buf_is_valid(M.buf_nr) then
     -- vim.notify("Closed buffer: " .. M.buf_nr)
     vim.api.nvim_buf_delete(M.buf_nr, { force = true, unload = false })
   end
 
-  if vim.api.nvim_win_is_valid(M.window_nr) then
+  if M.window_nr and vim.api.nvim_win_is_valid(M.window_nr) then
     -- vim.notify("Closed window: " .. M.window_nr)
     vim.api.nvim_win_close(M.window_nr, false)
   end

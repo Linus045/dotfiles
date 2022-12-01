@@ -428,6 +428,11 @@ label-foreground = ${colors.foreground}
 ; You can copy-paste your options for each possible action, which is more
 ; trouble-free but repetitive, or apply only the relevant ones (for example
 ; --sink-blacklist is only needed for next-sink).
+
+; TODO: find a way to kill old process when restarting polybar
+; For now this command kill old processes
+; pgrep -f pulseaudio-control.sh | xargs kill -KILL && pgrep -f pulseaudio-control.sh
+
 exec = ~/.config/polybar/scripts/pulseaudio-control.sh --icons-volume "奔,墳" --icon-muted "ﱝ" --format '$VOL_ICON $VOL_LEVEL %' listen 2> ~/.polybar_errorlog_pulse_audio
 ; get device.description via `pacmd list-sinks | grep name:`
 click-right = exec pavucontrol &

@@ -157,6 +157,36 @@ return packer.startup(function(use)
   -- crd, crXm cro and crb will convert the number to the given format
   use { "glts/vim-radical", requires = "glts/vim-magnum" }
 
+  use { "ThePrimeagen/refactoring.nvim", config = function()
+    require('refactoring').setup({
+      prompt_func_return_type = {
+        go = false,
+        java = true,
+
+        cpp = true,
+        c = true,
+        h = true,
+        hpp = true,
+        cxx = true,
+
+        python = true
+      },
+      prompt_func_param_type = {
+        go = false,
+        java = false,
+
+        cpp = false,
+        c = false,
+        h = false,
+        hpp = false,
+        cxx = false,
+
+        python = true
+      },
+      printf_statements = {},
+      print_var_statements = {},
+    })
+  end }
   -------------------------- VISUAL EDITOR UTILS ---------------------------
   -- multi cursor
   use("mg979/vim-visual-multi")
@@ -232,6 +262,7 @@ return packer.startup(function(use)
   use("hrsh7th/cmp-nvim-lsp-document-symbol")
   use("f3fora/cmp-spell")
   use("tamago324/cmp-zsh")
+  use("kdheepak/cmp-latex-symbols")
 
   -- show icons for entries in autocomplete menu
   use("onsails/lspkind.nvim")
@@ -353,7 +384,10 @@ return packer.startup(function(use)
 
   -- generates method/function list for the current file
   -- use with :Vista
-  use({ "liuchengxu/vista.vim", cmd = "Vista" })
+  use({ "liuchengxu/vista.vim", cmd = "Vista", config = function()
+    vim.g.vista_default_executive = 'nvim_lsp'
+  end
+  })
 
   -- auto-resize focused window
   -- use({
@@ -454,6 +488,7 @@ return packer.startup(function(use)
   -- debug the nvim client
   -- use "jbyuki/one-small-step-for-vimkind"
 
+  use "mfussenegger/nvim-dap-python"
 
 
   ----------------------------- SPECIAL -------------------------
@@ -477,12 +512,13 @@ return packer.startup(function(use)
   -- <Plug>MarkdownPreviewToggle
   use({
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
+    run = function() vim.fn["mkdp#util#install"]() end,
     setup = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_filetypes = { "markdown", "vimwiki" }
     end,
-    ft = { "markdown" },
+    ft = { "markdown", "vimwiki" },
   })
+
 
   -- vim wiki
   use { "vimwiki/vimwiki",
@@ -513,7 +549,7 @@ return packer.startup(function(use)
   -- use("itchyny/calendar.vim")
 
   -- Latex plugins
-  -- use("lervag/vimtex")
+  use("lervag/vimtex")
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

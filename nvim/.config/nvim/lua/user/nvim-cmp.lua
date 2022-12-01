@@ -36,6 +36,7 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -64,7 +65,8 @@ cmp.setup({
         if not cmp.visible() then
           cmp.complete()
         else
-          fallback()
+          -- ignore the keypress
+          --fallback()
         end
       end,
       c = function(_ --[[fallback]])
@@ -77,6 +79,8 @@ cmp.setup({
         end
       end,
     },
+    ['<Down>'] = cmp.config.disable,
+    ['<Up>'] = cmp.config.disable,
     ["<tab>"] = cmp.config.disable,
     -- ["<Tab>"] = cmp.mapping(function(fallback)
     -- 	if cmp.visible() then
@@ -100,9 +104,17 @@ cmp.setup({
     -- end, { "i", "s" }),
   }),
   completion = {
+    autocomplete = {
+      require("cmp.types").cmp.TriggerEvent.InsertEnter,
+    },
+    completeopt = 'menu,menuone,noselect,preview,noinsert',
+    keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     keyword_length = 1,
-    completeopt = "menu,menuone,noselect,preview,noinsert",
   },
+  -- completion = {
+  --   keyword_length = -1,
+  --   completeopt = "menu,menuone,noselect,preview,noinsert",
+  -- },
   confirmation = {
     default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace,
   },
@@ -141,7 +153,7 @@ cmp.setup({
           nvim_lua = "[Lua]",
           calc = "[Calc]",
           zsh = "[Zsh]",
-          --latex_symbols = "[Latex]",
+          latex_symbols = "[Latex]",
         },
       })(entry, vim_item)
       local strings = vim.split(kind.kind, "%s", { trimempty = true })
@@ -177,6 +189,11 @@ cmp.setup({
       group_index = 1,
     },
     {
+      name = "latex_symbols",
+      priority = 80,
+      group_index = 1,
+    },
+    {
       name = "luasnip",
       priority = 90,
       group_index = 2,
@@ -185,7 +202,7 @@ cmp.setup({
       name = "buffer",
       priority = 80,
       group_index = 3,
-      keyword_length = 3,
+      --keyword_length = 3,
     },
     {
       name = "path",
@@ -197,10 +214,10 @@ cmp.setup({
       priority = 100,
       group_index = 3,
     },
-    {
-      name = "zsh",
-      group_index = 3,
-    },
+    -- {
+    --   name = "zsh",
+    --   group_index = 3,
+    -- },
   }),
   sorting = {
     comparators = {

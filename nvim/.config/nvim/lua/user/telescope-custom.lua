@@ -82,10 +82,6 @@ M.custom_selection_menu_files = function(title, cwd, fd_parameter, on_select_cal
   project_picker:find()
 end
 
-M.custom_selection_menu_files("test", "~", function(t)
-  P(t)
-end)
-
 
 M.list_sessions = function()
   -- TODO: Handle case if Prosession is not installed

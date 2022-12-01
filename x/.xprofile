@@ -14,4 +14,4 @@ xset r rate 210 50
 wal -R
 # wal -e --theme base16-gruvbox-dark > /dev/null
 
-xautolock -time 5 -locker "/home/linus/dotfiles/polybar/.config/polybar/scripts/lock_screen.sh" -detectsleep &
+# xautolock -time 5 -locker "/home/linus/dotfiles/polybar/.config/polybar/scripts/lock_screen.sh" -detectsleep &

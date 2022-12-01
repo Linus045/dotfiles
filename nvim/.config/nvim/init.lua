@@ -68,7 +68,7 @@ require("user.nvim-transparent")
 require("user.nvim_dap_ui")
 require("user.dap_adapters")
 require("user.nvim_dap_virtual_text")
--- require "user.latex"
+require "user.latex"
 require("user.notify")
 require("user.tabline")
 -- vim.cmd [[source ~/.config/nvim/lua/user/coc.vim]]

@@ -85,33 +85,36 @@ keymap("n", "<leader>th", ":split | term<cr>:resize 15<cr>i", opts, "Open Termin
 keymap("n", "<leader>x", ":bw<cr>", opts, "Kill window")
 keymap("n", "<leader>X", ":bw!<cr>", opts, "Kill window (forced)")
 
---keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
+--keymap("n", "<leader>f", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>f", nil, opts, "[FINDER]", false, true)
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts, "Telescope find_files")
-keymap("n", "<leader>fg", "<cmd>Telescope git_files<cr>", opts, "Telescope git_files")
-keymap("n", "<leader>fb", ":Telescope buffers<cr><esc>", opts, "Telescope buffers")
-keymap("n", "<leader>fh", ":Telescope help_tags<cr><esc>", opts, "Telescope help tags")
-keymap("n", "<leader>fc", ":Telescope commands<cr><esc>", opts, "Telescope commands")
-keymap("n", "<leader>fd", ":Telescope diagnostics<cr><esc>", opts, "Telescope diagnostics")
-keymap("n", "<leader>fw", ":Telescope lsp_workspace_symbols<cr><esc>", opts, "Telescope workspace symbols")
-keymap("n", "<leader>fs", ":Telescope lsp_document_symbols<cr><esc>", opts, "Telescope workspace symbols")
-keymap("n", "<leader>?", ":Telescope keymaps<cr>", opts, "Telescope keymaps")
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts, "Telescope find_files")
+keymap("n", "<leader>fg", "<cmd>Telescope git_files<CR>", opts, "Telescope git_files")
+keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts, "Telescope buffers")
+keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts, "Telescope help tags")
+keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts, "Telescope commands")
+keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope diagnostics")
+keymap("n", "<leader>fw", "<cmd>Telescope lsp_workspace_symbols<CR>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fs", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>?", "<cmd>Telescope keymaps<CR>", opts, "Telescope keymaps")
 
 -- default Live Grep
 keymap("n", "<leader>g", nil, opts, "[GREP]", false, true)
-keymap("n", "<leader>gg", "<cmd>Telescope live_grep<cr>", opts, "Telescope live_grep")
+-- Live Grep with regular Expression (default rg)
+keymap("n", "<leader>ge", "<cmd>Telescope live_grep<CR>", opts, "Telescope live_grep (with RegEx)")
 -- Live Grep with hidden hiles
 keymap("n", "<leader>gh",
   "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim'}})<cr>"
-  ,
-  opts,
-  "Telescope live_grep (with hidden files)"
+  , opts, "Telescope live_grep (with hidden files)"
 )
+-- Live Grep without regular Expression
+keymap("n", "<leader>gg",
+  "<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg','--color=never','--no-heading','--with-filename','--line-number','--column','--smart-case','--fixed-strings', '--trim'}})<cr>"
+  , opts, "Telescope live_grep (without RegEx)")
 
 keymap(
   "n",
   "<leader>0",
-  "<CMD>lua require'user.telescope-custom'.dot_files()<CR>",
+  "<cmd>lua require'user.telescope-custom'.dot_files()<CR>",
   opts,
   "Telescope find_files (Dotfiles)"
 )
@@ -137,6 +140,13 @@ keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuz
 
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
 keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
+keymap("v", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
+-- remap to open the Telescope refactoring menu in visual mode
+keymap("n", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
+  , "Code Actions [Telescope]")
+keymap("v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
+  , "Code Actions [Telescope]")
+
 
 keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts, "Telescope diagnostics")
 
@@ -161,9 +171,12 @@ keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Op
 keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts, "[DEBUG] Run last configuration")
 
 keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts, "[DEBUG] Toggle UI")
-keymap("n", "<leader>di", ":lua require'dapui'.eval()<CR>", opts, "[DEBUG] Evaluate")
-keymap("v", "<leader>di", ":lua require'dapui'.eval()<CR>", opts, "[DEBUG] Evaluate")
-
+keymap("n", "<leader>di", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
+keymap("v", "<leader>di", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
+-- keymap("n", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr', nil)<CR>", opts, "[DEBUG] Hover")
+keymap("v", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr>', nil)<CR>", opts, "[DEBUG] Hover")
+keymap('n', '<Leader>die', ":lua require'dapui'.eval(vim.fn.input('[Expression] > '))<CR>", opts,
+  "[DEBUG] Evaluate Expression")
 -- require("dapui").eval(<expression>)
 -- Cheatsheet
 -- keymap("n", "<leader>?", ":Cheatsheet<cr>", opts)
@@ -189,8 +202,9 @@ keymap("n", "gx", [[:execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR
 --keymap("v", "<leader>di", "<Plug>VimspectorBalloonEval", term_opts)
 
 -- Calendar keymap
-keymap("n", "<leader>k", "<Plug>(calendar)", term_opts, "Open calendar")
+-- keymap("n", "<leader>k", "<Plug>(calendar)", term_opts, "Open calendar")
 
+keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
 -- Zen mode
 keymap("n", "<leader><SPACE>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
 
@@ -226,10 +240,10 @@ keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "Insert annotat
 
 
 -- trouble.nvim
-keymap("n", "<leader>t", nil, opts, "[TROUBLE|TERMINAL|GITSIGNS]", false, true)
-keymap("n", "<leader>tx", "<cmd>TroubleToggle<cr>", opts, "[TROUBLE] Toggle Trouble")
+keymap("n", "<leader>t", nil, opts, "[TROUBLE|TERMINAL]", false, true)
+keymap("n", "<leader>tt", "<cmd>TroubleToggle<cr>", opts, "[TROUBLE] Toggle Trouble")
 keymap("n", "<leader>tw", "<cmd>Trouble workspace_diagnostics<cr>", opts, "[TROUBLE] Workspace diagnostics")
-keymap("n", "<leader>tt", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUBLE] Document diagnostics")
+keymap("n", "<leader>td", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUBLE] Document diagnostics")
 keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location list")
 keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")

@@ -1,5 +1,12 @@
 local M = {}
 
+local keymap = require("user.utilities").keymap
+if keymap == nil then
+  vim.notify("File keymaps.lua: Can't setup keymaps, error loading user.utilities")
+  return
+end
+
+
 -- TODO: backfill this to template
 M.setup = function()
   local signs = {
@@ -94,22 +101,34 @@ _G.Rename = {
 local function lsp_keymaps(client, bufnr)
   local opts = { noremap = true, silent = true }
   -- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>d", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>F", "<cmd>lua vim.lsp.buf.format(nil, 1000)<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "[q", '<cmd>cprevious<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "]q", '<cmd>cnext<CR>', opts)
+  keymap("n", "<leader>d", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
+  keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts, "Goto Declaration", nil, nil, bufnr)
+  keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts, "Goto Definition", nil, nil, bufnr)
+  keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts, "HOVER INFO", nil, nil, bufnr)
+  keymap("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts, "Signature Help", nil, nil, bufnr)
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts, "Goto Implementation [Telescope]", nil, nil, bufnr)
+  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", opts, "Goto References [Telescope]", nil, nil, bufnr)
+  keymap("n", "gl", '<cmd>lua vim.diagnostic.open_float({ border = "rounded", wrap = true, max_width = 80 })<CR>', opts,
+    "Show Diagnostics", nil, nil, bufnr)
+
+  -- Create own file/directory that allows custom commands/keybindings per language/lsp provider
+  -- e.g. lsp/configurations/clangd.lua which contains this command or a more advanced version that can search for implementations if used on a function signature etc.
+  -- https://github.com/neovim/nvim-lspconfig/blob/c5dae15c0c94703a0565e8ba35a9f5cb96ca7b8a/lua/lspconfig/server_configurations/clangd.lua#L52-L59
+  keymap("n", "gt", '<cmd>ClangdSwitchSourceHeader<CR>', opts, "Switch between source/header file", nil, nil, bufnr)
+  keymap("n", "<space>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens", nil, nil, bufnr)
+  keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, "Rename variable", nil, nil, bufnr)
+  keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts, "Diagnostics quickfix list", nil, nil, bufnr)
+  keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts,
+    "Goto previous diagnostic result", nil, nil,
+    bufnr)
+  keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts, "Goto next diagnostic result"
+    , nil, nil,
+    bufnr)
+  keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format(nil, 1000)<CR>", opts, "Format file", nil, nil, bufnr)
+  keymap("n", "[q", '<cmd>cprevious<CR>', opts, "Jump to previous quickfix entry", nil, nil, bufnr)
+  keymap("n", "]q", '<cmd>cnext<CR>', opts, "Jump to next quickfix entry", nil, nil, bufnr)
   vim.cmd([[:command! F lua vim.lsp.buf.format(nil, 1000)]])
 
   vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
@@ -161,7 +180,7 @@ M.on_attach = function(client, bufnr)
     require("user.utilities").register_rust_cargo_check_autocommand()
   end
   if filetype == "c" then
-    require("user.utilities").register_gcc_check_autocommand()
+    -- require("user.utilities").register_gcc_check_autocommand()
     require("user.utilities").register_gcc_run_user_command()
   end
 end

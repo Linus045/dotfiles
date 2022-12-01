@@ -15,6 +15,7 @@ rm ~/.lockscreen_2.png
 convert ~/.wallpapers/$background1 -resize "$SCREEN_RESOLUTION1" -background black -gravity Center ~/.lockscreen_1.png 
 convert ~/.wallpapers/$background2 -resize "$SCREEN_RESOLUTION2" -background black -gravity West ~/.lockscreen_2.png 
 convert ~/.lockscreen_1.png ~/.lockscreen_2.png +append ~/.lockscreen.png
+
 # feh ~/.lockscreen.png
 i3lock -i ~/.lockscreen.png -f -e --greeter-text "Enter Password to Unlock" -k --indicator --pass-media --pass-screen --greeter-color="ffffffff" --time-color="ffffffff" --date-color="dddddddd"
 

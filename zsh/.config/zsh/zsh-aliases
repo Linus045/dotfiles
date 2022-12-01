@@ -78,7 +78,11 @@ alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 
 # force vt100 when using ssh (sets terminal emulator so flashing/bell/etc is outputted correctly)
 # see: https://it.engineering.oregonstate.edu/book/what-does-term-network-or-term-vt100-mean
-alias ssh='TERM=vt100 ssh' 
+#alias ssh='TERM=vt100 ssh' 
+
+# kitty +kitty fixes problems some problems see: 
+# https://wiki.archlinux.org/title/Kitty#Terminal_issues_with_SSH
+alias ssh="TERM=xterm kitty +kitten ssh"
 
 #alias manpdf='man -k . | dmenu -l 20 | awk '"'"'{ print $1}'"'"' | xargs -r man -Tpdf | zathura -'
 manpdf_helper() {
