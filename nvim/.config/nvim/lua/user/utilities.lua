@@ -71,7 +71,7 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, b
   if keybindingExists then
     local bufnrExists = M.bindings[mode][lhs]["bufnr"] and true or false
     if not bufnrExists or (M.bindings[mode][lhs]["bufnr"] == bufnr) then
-      vim.notify("Conflicting keybinding for: " .. lhs)
+      -- vim.notify("Conflicting keybinding for: " .. lhs)
       return
     end
   end

@@ -31,6 +31,7 @@ vim.opt.numberwidth = 4 -- set number column width
 vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false -- DON'T wrap if lines get too long
 vim.opt.scrolloff = 4 -- always keep 8 lines above and below the cursor (unless at the beginning/end of file)
+vim.opt.inccommand = "nosplit" -- Show substitutions in a preview buffer e.g. when using :%s/test/hello
 vim.opt.guifont = "monospace:h17" -- set font
 vim.opt.shortmess:append "c" -- shorten messages
 vim.opt.autochdir = false

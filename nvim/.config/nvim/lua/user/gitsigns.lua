@@ -45,7 +45,7 @@ local function gitsigns_keymappings(bufnr)
   keymap("n", "<leader>htb", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts, "[GITSIGNS] Toggle current line blame"
     , false, false,
     bufnr)
-  keymap("n", "<leader>hth", "<cmd>Gitsigns toggle_linehl<CR>", opts, "[GITSIGNS] Toggle line highlights", false, false,
+  keymap("n", "<leader>htl", "<cmd>Gitsigns toggle_linehl<CR>", opts, "[GITSIGNS] Toggle line highlights", false, false,
     bufnr)
   keymap("n", "<leader>htw", "<cmd>Gitsigns toggle_word_diff<CR>", opts, "[GITSIGNS] Toggle word diff"
     , false, false, bufnr)
