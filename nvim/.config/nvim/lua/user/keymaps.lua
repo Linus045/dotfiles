@@ -168,6 +168,8 @@ keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr
 -- Telescope DAP
 keymap("n", "<leader>d", nil, opts, "[DEBUG]", false, true)
 keymap("v", "<leader>d", nil, opts, "[DEBUG]", false, true)
+keymap("n", "<leader>di", nil, opts, "[INSPECT]", false, true)
+keymap("v", "<leader>di", nil, opts, "[INSPECT]", false, true)
 keymap("n", "<leader>dl", nil, opts, "[DEBUG] Lists Breakpoints, Variables, Frames...", false, true)
 keymap("n", "<leader>dlb", ":Telescope dap list_breakpoints<CR>", opts, "List breakpoints")
 keymap("n", "<leader>dlc", ":Telescope dap configurations<CR>", opts, "List configurations")
@@ -188,10 +190,10 @@ keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Op
 keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts, "[DEBUG] Run last configuration")
 
 keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts, "[DEBUG] Toggle UI")
-keymap("n", "<leader>di", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
-keymap("v", "<leader>di", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
+keymap("n", "<leader>dii", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
+keymap("v", "<leader>dii", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
 -- keymap("n", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr', nil)<CR>", opts, "[DEBUG] Hover")
-keymap("v", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr>', nil)<CR>", opts, "[DEBUG] Hover")
+-- keymap("v", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr>', nil)<CR>", opts, "[DEBUG] Hover")
 keymap('n', '<Leader>die', ":lua require'dapui'.eval(vim.fn.input('[Expression] > '))<CR>", opts,
   "[DEBUG] Evaluate Expression")
 -- require("dapui").eval(<expression>)

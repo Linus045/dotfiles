@@ -13,6 +13,7 @@ dap.defaults.fallback.external_terminal = {
   command = '/usr/bin/kitty';
   args = { '-e' };
 }
+
 dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
 
 dap.adapters.lldb = {
@@ -21,12 +22,11 @@ dap.adapters.lldb = {
   name = 'lldb'
 }
 
+
 -- https://github.com/mfussenegger/nvim-dap/discussions/93
 -- https://marketplace.visualstudio.com/items?itemName=lanza.lldb-vscode#launch-configuration-settings
-dap.adapters["lldb-vscode-waitfor"] = function(cb, config)
+dap.adapters["lldb-vscode"] = function(cb, config)
   local adapter = dap.adapters.lldb
-  -- set correct type for lldb-vscode
-  config.type = "lldb-vscode"
 
   -- only do this on attach
   if config.request == 'attach' and config.program then
@@ -60,7 +60,6 @@ dap.adapters["lldb-vscode-waitfor"] = function(cb, config)
   cb(adapter)
 end
 
-
 dap.configurations.cpp = {
   {
     name = "Attach to process",
@@ -68,22 +67,22 @@ dap.configurations.cpp = {
     request = "attach",
     pid = require('dap.utils').pick_process
   },
-  {
-    name = "Start process extern and attach [with custom args]",
-    type = "lldb-vscode-waitfor",
-    request = "attach",
-    stopOnEntry = false,
-    waitFor = true,
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    args = function()
-      return vim.fn.split(vim.fn.input("Args: ", ""), " ")
-    end,
-  },
+  -- {
+  --   name = "Start process extern and attach [with custom args]",
+  --   type = "lldb-vscode",
+  --   request = "attach",
+  --   stopOnEntry = false,
+  --   waitFor = true,
+  --   program = function()
+  --     return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+  --   end,
+  --   args = function()
+  --     return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+  --   end,
+  -- },
   {
     name = "Launch process [with custom args]",
-    type = "lldb-vscode-waitfor",
+    type = "lldb-vscode",
     request = "launch",
     stopOnEntry = false,
     program = function()
