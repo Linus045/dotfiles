@@ -15,8 +15,9 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
   debug = false,
   sources = {
-    diagnostics.mypy,
+    -- diagnostics.mypy,
     code_actions.refactoring,
+    -- null_ls.builtins.diagnostics.cppcheck,
     -- formatting.black
     -- diagnostics.eslint_d,
     -- code_actions.eslint_d,

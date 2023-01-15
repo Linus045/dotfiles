@@ -19,7 +19,10 @@ end
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    " autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    autocmd BufWritePost plugins.lua source <afile>
+    autocmd BufWritePost plugins.lua echo "Don't forget :PackerSync"
+
   augroup end
 ]])
 
@@ -74,6 +77,7 @@ return packer.startup(function(use)
       vim.cmd(":TSUpdate")
     end
   })
+  use { "nvim-treesitter/playground" }
 
   -- not sure if this is needed
   -- use("norcalli/nvim_utils")
@@ -449,6 +453,14 @@ return packer.startup(function(use)
   -- use({ "kristijanhusak/vim-dadbod-completion" })
   -- use({ "kristijanhusak/vim-dadbod-ui" })
 
+
+  use({
+    "luukvbaal/statuscol.nvim",
+    config = function() require("statuscol").setup({
+        setopt = true
+      })
+    end
+  })
 
 
 

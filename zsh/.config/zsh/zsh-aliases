@@ -25,7 +25,7 @@ alias feh='feh -d --scale-down'
 alias tmuxstart="~/.config/tmux/start_session.sh"
 alias tmuxkill="tmux kill-session"
 
-alias vlcwithhttp="vlc -I http --http-host 0.0.0.0 --http-port 8080 --http-password vlc"
+alias vlcwithhttp="vlc -I http --http-host 0.0.0.0 --http-port 8081 --http-password vlc"
 
 # use bat instead of cat
 # see https://github.com/sharkdp/bat
@@ -82,7 +82,7 @@ alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 
 # kitty +kitty fixes problems some problems see: 
 # https://wiki.archlinux.org/title/Kitty#Terminal_issues_with_SSH
-alias ssh="TERM=xterm kitty +kitten ssh"
+# alias ssh="TERM=xterm kitty +kitten ssh"
 
 #alias manpdf='man -k . | dmenu -l 20 | awk '"'"'{ print $1}'"'"' | xargs -r man -Tpdf | zathura -'
 manpdf_helper() {

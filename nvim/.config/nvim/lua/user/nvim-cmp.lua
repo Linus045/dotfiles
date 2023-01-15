@@ -104,9 +104,9 @@ cmp.setup({
     -- end, { "i", "s" }),
   }),
   completion = {
-    autocomplete = {
-      require("cmp.types").cmp.TriggerEvent.InsertEnter,
-    },
+    -- autocomplete = {
+    --   require("cmp.types").cmp.TriggerEvent.InsertEnter,
+    -- },
     completeopt = 'menu,menuone,noselect,preview,noinsert',
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     keyword_length = 1,
@@ -196,12 +196,14 @@ cmp.setup({
     {
       name = "luasnip",
       priority = 90,
+      max_item_count = 5,
       group_index = 2,
     },
     {
       name = "buffer",
       priority = 80,
       group_index = 3,
+      max_item_count = 5,
       --keyword_length = 3,
     },
     {
@@ -224,11 +226,11 @@ cmp.setup({
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.score,
-      require "cmp-under-comparator".under,
       cmp.config.compare.kind,
       cmp.config.compare.sort_text,
       cmp.config.compare.length,
       cmp.config.compare.order,
+      require "cmp-under-comparator".under,
     },
   },
   experimental = {

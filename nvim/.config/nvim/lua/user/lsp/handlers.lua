@@ -104,6 +104,8 @@ local function lsp_keymaps(client, bufnr)
   keymap("n", "gq", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
   keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts, "Goto Declaration", nil, nil, bufnr)
   keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts, "Goto Definition", nil, nil, bufnr)
+  -- TODO: Causes problems with :Man (jumping to references no longer works)
+  -- Workaround use Ctrl+] to jump
   keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts, "HOVER INFO", nil, nil, bufnr)
   keymap("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts, "Signature Help", nil, nil, bufnr)
   -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)

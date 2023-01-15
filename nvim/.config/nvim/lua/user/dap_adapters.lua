@@ -15,28 +15,21 @@ dap.defaults.fallback.external_terminal = {
 }
 dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
 
--- dap.adapters.codelldb = {
---   type = 'server',
---   port = "${port}",
---   executable = {
---     command = "/home/linus/.local/share/nvim/mason/packages/codelldb/extension/adapter/codelldb",
---     args = { "--port", "${port}" },
---   }
--- }
+dap.adapters.lldb = {
+  type = 'executable',
+  command = '/usr/bin/lldb-vscode', -- adjust as needed, must be absolute path
+  name = 'lldb'
+}
 
-dap.adapters.lldb = function(cb, config)
-  local adapter = {
-    type = 'executable',
-    command = "/usr/bin/lldb-vscode",
-    name = "lldb"
-  }
+-- https://github.com/mfussenegger/nvim-dap/discussions/93
+-- https://marketplace.visualstudio.com/items?itemName=lanza.lldb-vscode#launch-configuration-settings
+dap.adapters["lldb-vscode-waitfor"] = function(cb, config)
+  local adapter = dap.adapters.lldb
+  -- set correct type for lldb-vscode
+  config.type = "lldb-vscode"
 
+  -- only do this on attach
   if config.request == 'attach' and config.program then
-    if vim.fn.executable(config.program) == 0 then
-      vim.notify(config.program .. " is not executable. Aborting...")
-      cb(nil)
-      return
-    end
     local terminal = dap.defaults[config.type].external_terminal
     local full_args = {}
     vim.list_extend(full_args, terminal.args or {})
@@ -46,6 +39,7 @@ dap.adapters.lldb = function(cb, config)
       args = full_args,
       detached = true
     }
+
     local handle
     local pid_or_err
     handle, pid_or_err = vim.loop.spawn(terminal.command, opts, function(code)
@@ -60,16 +54,11 @@ dap.adapters.lldb = function(cb, config)
       vim.notify('Could not launch process: ' .. terminal.command)
     else
       vim.notify('Launched external terminal: ' .. pid_or_err)
-      while not config.pid do -- Adding a timeout or something might make sensedo
-        config.pid = tonumber(vim.fn.system({ 'pgrep', '-P', pid_or_err }))
-      end
-      vim.notify('Launched: ' .. config.program .. 'within terminal with PID: ' .. config.pid)
-      config.program = nil
     end
   end
+
   cb(adapter)
 end
-
 
 
 dap.configurations.cpp = {
@@ -80,44 +69,32 @@ dap.configurations.cpp = {
     pid = require('dap.utils').pick_process
   },
   {
-    name = "Start and attach to process",
-    type = "lldb",
+    name = "Start process extern and attach [with custom args]",
+    type = "lldb-vscode-waitfor",
     request = "attach",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    -- pid = require('dap.utils').pick_process
-  },
-  {
-    name = 'Launch File [lldb-vscode]',
-    type = 'lldb',
-    request = 'launch',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
     stopOnEntry = false,
+    waitFor = true,
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
     args = function()
       return vim.fn.split(vim.fn.input("Args: ", ""), " ")
     end,
-    runInTerminal = false,
-    externalConsole = false,
-    -- preRunCommands = { 'settings set target.input-path test_input' }
   },
-  -- {
-  --   name = 'Launch File [codelldb]',
-  --   type = "codelldb",
-  --   request = "launch",
-  --   program = function()
-  --     return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-  --   end,
-  --   cwd = '${workspaceFolder}',
-  --   args = function()
-  --     return vim.fn.split(vim.fn.input("Args: ", ""), " ")
-  --   end,
-  --   stopOnEntry = false,
-  -- }
+  {
+    name = "Launch process [with custom args]",
+    type = "lldb-vscode-waitfor",
+    request = "launch",
+    stopOnEntry = false,
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    args = function()
+      return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+    end,
+  },
 }
+
 dap.configurations.c = dap.configurations.cpp
 
 dap.configurations.rust = dap.configurations.cpp
