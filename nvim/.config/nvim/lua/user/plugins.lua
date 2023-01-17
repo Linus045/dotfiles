@@ -228,7 +228,7 @@ return packer.startup(function(use)
 
 
   -- buffer list navigation similar to Ctrl+Tab in browsers
-  use("ghillb/cybu.nvim")
+  -- use("ghillb/cybu.nvim")
 
 
   -- when jumping to line e.g. :123 preview the jump

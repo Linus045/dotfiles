@@ -49,3 +49,8 @@ keymap("n", "<M-S-TAB>", "<Plug>(CybuLastusedPrev)", opts, "[CYCLEBUFFER] Previo
 keymap("n", "<M-TAB>", "<Plug>(CybuLastusedNext)", opts, "[CYCLEBUFFER] Next buffer", false, false)
 keymap("v", "<M-S-TAB>", "<Plug>(CybuLastusedPrev)", opts, "[CYCLEBUFFER] Previous buffer", false, false)
 keymap("v", "<M-TAB>", "<Plug>(CybuLastusedNext)", opts, "[CYCLEBUFFER] Next buffer", false, false)
+
+keymap("n", "<S-TAB>", "<Plug>(CybuLastusedPrev)", opts, "[CYCLEBUFFER] Previous buffer", false, false)
+keymap("n", "<TAB>", "<Plug>(CybuLastusedNext)", opts, "[CYCLEBUFFER] Next buffer", false, false)
+keymap("v", "<S-TAB>", "<Plug>(CybuLastusedPrev)", opts, "[CYCLEBUFFER] Previous buffer", false, false)
+keymap("v", "<TAB>", "<Plug>(CybuLastusedNext)", opts, "[CYCLEBUFFER] Next buffer", false, false)

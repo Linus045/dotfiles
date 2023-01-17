@@ -71,5 +71,5 @@ require("user.nvim_dap_virtual_text")
 require "user.latex"
 require("user.notify")
 require("user.tabline")
-require("user.cybu")
+-- require("user.cybu")
 -- vim.cmd [[source ~/.config/nvim/lua/user/coc.vim]]
