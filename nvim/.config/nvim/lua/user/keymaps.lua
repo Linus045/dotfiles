@@ -276,8 +276,8 @@ keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts, "[UNICODE] Insert Unicod
 keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "[NEOGEN] Insert annotation")
 
 -- change github copilot keybindings
--- vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])
--- vim.g.copilot_no_tab_map = true
+vim.cmd([[imap <silent><script><expr> <S-Right> copilot#Accept("\<CR>")]])
+vim.g.copilot_no_tab_map = true
 
 
 -- trouble.nvim

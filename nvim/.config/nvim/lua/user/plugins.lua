@@ -268,7 +268,7 @@ return packer.startup(function(use)
 
   ----------------------------- AUTOCOMPLETE STUFF ---------------------------
   -- Copilot (Disable due to high cpu for some reason)
-  -- use("git@github.com:github/copilot.vim.git")
+  use("git@github.com:github/copilot.vim.git")
 
   -- Faster autocompletion
   use("hrsh7th/nvim-cmp")
