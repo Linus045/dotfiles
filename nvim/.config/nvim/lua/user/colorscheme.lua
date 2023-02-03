@@ -3,6 +3,7 @@ local colorscheme = nil
 -- colorscheme = "tender"
 -- colorscheme = "onedark"
 colorscheme = "gruvbox-material"
+colorscheme = "nord"
 
 if colorscheme == "gruvbox-material" then
   vim.g.gruvbox_material_background = "dark"
@@ -28,3 +29,14 @@ if not status_ok then
   vim.notify("colorscheme " .. colorscheme .. " not found!")
   return
 end
+
+
+-- idk if this is the correct way but it works
+vim.cmd("highlight clear SpellBad")
+vim.cmd("highlight clear SpellCap")
+vim.cmd("highlight clear SpellLocal")
+vim.cmd("highlight clear SpellRare")
+vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+vim.cmd("highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")

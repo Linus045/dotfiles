@@ -89,9 +89,10 @@ return packer.startup(function(use)
 
   ----------------------------- COLOR SCHEME -------------------------------
   -- use("jacoborus/tender.vim")
-  -- use("folke/tokyonight.nvim")
-  -- use("joshdick/onedark.vim")
+  use("folke/tokyonight.nvim")
+  use("joshdick/onedark.vim")
   use("sainnhe/gruvbox-material")
+  use("arcticicestudio/nord-vim")
 
   -- Line at the bottom showing useful information
   use("nvim-lualine/lualine.nvim")
