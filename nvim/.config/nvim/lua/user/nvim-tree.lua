@@ -15,19 +15,41 @@ local tree_cb = nvim_tree_config.nvim_tree_callback
 -- auto_close has been removed, this replaces it
 -- vim.cmd [[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' .. tabpagenr() | quit | endif]]
 
+
+local function open_nvim_tree(data)
+  -- buffer is a [No Name]
+  local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+  -- buffer is a directory
+  local directory = vim.fn.isdirectory(data.file) == 1
+
+  if no_name and not directory then
+    return
+  end
+
+  -- change to the directory
+  if directory then
+    vim.cmd.cd(data.file)
+  end
+
+  -- open the tree
+  require("nvim-tree.api").tree.open()
+
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
 nvim_tree.setup({
   disable_netrw = true,
   hijack_netrw = true,
-  open_on_setup = false,
-  ignore_ft_on_setup = {},
   -- auto_close = true, -- removed, see command above
   auto_reload_on_write = true,
   open_on_tab = false,
   hijack_cursor = false,
   hijack_unnamed_buffer_when_opening = true,
   hijack_directories = {
-    enable = true,
-    auto_open = true,
+    enable = false,
+    auto_open = false,
   },
   diagnostics = {
     enable = true,
