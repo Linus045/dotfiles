@@ -40,6 +40,11 @@ vim.g.transparent_enabled = true
 vim.opt.colorcolumn = "80,120"
 vim.opt.foldlevel = 0
 vim.opt.foldlevelstart = 99
+
+-- Treesitter folding
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+
 vim.g.snippets = "luasnip"
 vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 

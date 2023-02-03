@@ -131,7 +131,7 @@ return packer.startup(function(use)
   })
 
   -- automatically creates folds (use zc to close and zo to open a fold)
-  use("pierreglaser/folding-nvim")
+  -- use("pierreglaser/folding-nvim")
   -- easier spell checking
   use("lewis6991/spellsitter.nvim")
 
