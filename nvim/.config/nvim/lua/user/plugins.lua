@@ -523,6 +523,8 @@ return packer.startup(function(use)
 
 
   ----------------------------- SPECIAL -------------------------
+  -- CMake integration
+  use "cdelledonne/vim-cmake"
   -- Tetris
   -- :Tetris
   use("alec-gibson/nvim-tetris")
