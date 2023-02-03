@@ -289,6 +289,9 @@ keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location 
 keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")
 
+-- center cursor after scrolling up/down
+-- vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "<C-d>", "<C-d>zz", { noremap = true })
 
 -- luasnip
 -- keymap("i", "<tab>",
