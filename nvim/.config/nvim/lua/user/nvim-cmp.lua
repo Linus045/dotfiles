@@ -49,6 +49,10 @@ cmp.setup({
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.abort(),
+    ["<Esc>"] = cmp.mapping(function(fallback)
+      cmp.mapping.abort()
+      fallback()
+    end),
     -- ["<Esc>"] = cmp.abort(),
     ["<c-y>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -107,7 +111,7 @@ cmp.setup({
     -- autocomplete = {
     --   require("cmp.types").cmp.TriggerEvent.InsertEnter,
     -- },
-    completeopt = 'menu,menuone,noselect,preview,noinsert',
+    -- completeopt = 'menu,menuone,noselect,preview,noinsert',
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     keyword_length = 1,
   },
@@ -124,26 +128,28 @@ cmp.setup({
     selection_order = "near_cursor",
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    completion = {
-      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-      col_offset = -3,
-      side_padding = 0,
-    },
-    documentation = {
-      border = "double",
-      winhighlight = "NormalFloat:NormalFloat,FloatBorder:NormalFloat",
-      maxwidth = math.floor(20 * (vim.o.columns / 100)),
-      maxheight = math.floor(20 * (vim.o.lines / 100)),
-    },
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
+  -- formatting = {
+  --   fields = { 'menu', 'abbr', 'kind' },
+  --   format = function(entry, item)
+  --     local menu_icon = {
+  --       nvim_lsp = 'λ',
+  --       vsnip = '⋗',
+  --       buffer = 'Ω',
+  --       path = '🖫',
+  --     }
+  --     item.menu = menu_icon[entry.source.name]
+  --     return item
+  --   end,
+  -- },
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
       local kind = require("lspkind").cmp_format({
         mode = "symbol_text",
-        maxwidth = 50,
+        --maxwidth = 50,
         menu = {
           nvim_lsp = "[LSP]",
           nvim_lsp_signature_help = "[Arg]",
@@ -175,6 +181,11 @@ cmp.setup({
       name = "nvim_lsp",
       priority = 100,
       group_index = 1,
+      -- workaround for clangd's missing functions/cached results
+      -- see: https://github.com/hrsh7th/nvim-cmp/issues/1176
+      trigger_characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+        's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+        'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_' }
     },
     {
       name = "nvim_lsp_signature_help",
