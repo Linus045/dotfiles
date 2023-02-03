@@ -178,7 +178,7 @@ keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts, "List variables
 keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts, "List frames")
 
 keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts, "[DEBUG] Step Over")
-keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts, "[DEBUG] Continue")
+keymap("n", "<F5>", ":lua require'dap'.my_custom_continue_function()<CR>", opts, "[DEBUG] Continue")
 keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts, "[DEBUG] Step Into")
 keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts, "[DEBUG] Step Out")
 keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts, "[DEBUG] Toggle Breakpoint")
