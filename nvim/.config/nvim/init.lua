@@ -57,7 +57,7 @@ require("user.colorizer")
 require("user.nvim-autopairs")
 -- require "user.startup"
 -- require "user.cheatsheet"
-require("credentials.calendar_oauth_credentials")
+-- require("credentials.calendar_oauth_credentials")
 require("user.calendar")
 require("user.spellsitter")
 -- require "user.shade_nvim"
