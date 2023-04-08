@@ -170,6 +170,12 @@ M.on_attach = function(client, bufnr)
     -- vim.notify('File handlers.lua: folding not found.')
   end
 
+  if client.name == "clangd" then
+    -- Fixes annoying warning
+    -- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
+    -- client.offset_encoding = "utf-16"
+  end
+
   -- Register automatic formatting: lsp-format.nvim
   require("lsp-format").on_attach(client)
 
@@ -185,6 +191,15 @@ M.on_attach = function(client, bufnr)
     -- require("user.utilities").register_gcc_check_autocommand()
     require("user.utilities").register_gcc_run_user_command()
   end
+
+  -- Attach nvim-navbuddy
+  local status_ok, navbuddy = pcall(require, 'nvim-navbuddy')
+  if not status_ok then
+    vim.notify('File handlers.lua: nvim-navbuddy not found.')
+    return
+  end
+  navbuddy.attach(client, bufnr)
+
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -21,18 +21,31 @@ if not status_ok then
   return
 end
 
+--[[
+
+
+  Installed
+    ✓ clang-format
+    ✓ clangd
+    ✓ cmake-language-server
+    ✓ gopls
+    ✓ lua-language-server
+    ✓ rust-analyzer
+    ✓ typescript-language-server
+    ✓ vue-language-server
+
+]]
+
 mason_lspconfig.setup({
   ensure_installed = {
-    "sumneko_lua",
+    "lua_ls",
     "rust_analyzer",
-    "volar",
-    "tsserver",
     "clangd",
     "gopls",
-    "clangd",
+    -- "volar",
+    -- "tsserver",
 
     -- Installed but invalid names, need to install manually via mason (no lspconfig integration?! idk)
-    -- "lua-language-server",
     -- "clang-format",
     -- "cmake-language-server",
     -- "debugpy",

@@ -23,7 +23,7 @@ vim.opt.updatetime = 300 -- faster completion (4000ms default)
 vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file with another program), it is NOT allowed to be edited
 vim.opt.expandtab = true -- converts tabs to spaces
 vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
-vim.opt.tabstop = 2 -- insert 2 spaces for a tab
+vim.opt.tabstop = 4 -- insert 2 spaces for a tab
 vim.opt.cursorline = true -- hightlight the current line
 vim.opt.number = true -- show numbered lines
 vim.opt.relativenumber = true -- set relative numbered lines
@@ -36,10 +36,11 @@ vim.opt.guifont = "monospace:h17" -- set font
 vim.opt.shortmess:append "c" -- shorten messages
 vim.opt.autochdir = false
 vim.opt.spell = true
-vim.g.transparent_enabled = true
-vim.opt.colorcolumn = "80,120"
+vim.g.transparent_enabled = false
+vim.opt.colorcolumn = "80,100"
 vim.opt.foldlevel = 0
 vim.opt.foldlevelstart = 99
+vim.opt.selection = "old"
 
 -- Treesitter folding
 vim.wo.foldmethod = 'expr'
@@ -50,9 +51,9 @@ vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 
 -- characters to show
 vim.opt.listchars = {
-  tab = "> ",
-  eol = "⮒",
-  nbsp = "+"
+    tab = "> ",
+    eol = "↩",
+    nbsp = "+"
 }
 
 -- vim.cmd "set path+=**" -- bad practice see: https://github.com/tpope/vim-apathy
@@ -65,7 +66,7 @@ vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 
 
 -- change prosession directory
-vim.g.prosession_dir = "~/.config/nvim/nvim_prosession/"
+-- vim.g.prosession_dir = "~/.config/nvim/nvim_prosession/"
 
 
 -- vim.cmd [[match errorMsg /\s\+$/]]

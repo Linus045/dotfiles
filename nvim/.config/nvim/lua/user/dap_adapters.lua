@@ -24,6 +24,7 @@ dap.adapters.lldb = {
 
 dap.my_custom_continue_function = function()
   -- vim.notify("Loading launch.json file configurations.")
+  print("Loading launch.json file configurations.")
   require('dap.ext.vscode').load_launchjs(".vscode/launch.json", { lldb = { "c", "cpp" } })
   dap.continue()
 end

@@ -35,6 +35,9 @@ vim.g.maplocalleader = " "
 --keymap("n", "<leader>e", ":Lexplore 20<cr>", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts, "NVIM Tree")
 
+-- show legendary.nvim palette
+keymap("n", "<leader>p", ":Legendary<cr>", opts, "Open Legendary Command Palette")
+
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<cr>", opts, "Resize up")
 keymap("n", "<C-Down>", ":resize -2<CR>", opts, "Resize down")
@@ -310,3 +313,26 @@ vim.cmd [[snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>]]
 -- " For changing choices in choiceNodes (not strictly necessary for a basic setup).
 vim.cmd [[imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']]
 vim.cmd [[smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']]
+
+
+
+-- Register keymaps to legendary.nvim
+-- this needs to be done after all keybindings are defined
+local status_ok, legendary = pcall(require, 'legendary')
+if not status_ok then
+  vim.notify('File legendary-nvim.lua: legendary-nvim not found.')
+  return
+end
+
+legendary.setup({
+    which_key = {
+        auto_register = true,
+        do_binding = false,
+    },
+    extensions = {
+        -- load keymaps and commands from nvim-tree.lua
+        nvim_tree = true,
+        -- load keymaps from diffview.nvim
+        diffview = true,
+    },
+})

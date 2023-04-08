@@ -63,7 +63,13 @@ M.bindings = {
 
 M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, bufnr)
   if not M.bindings[mode] then
-    vim.notify("Error: invalid mode (" .. mode .. ") for keybinding: " .. lhs .. " = " .. rhs)
+    local rhsText = ""
+    if type(rhs) == "string" then
+      rhsText = "<invalid rhs:" .. type(rhs) .. ">"
+    else
+      rhsText = "<invalid rhs:" .. type(rhs) .. ">"
+    end
+      vim.notify("Error: invalid mode (" .. mode .. ") for keybinding: " .. lhs .. " = " .. rhsText)
     return
   end
 
@@ -120,7 +126,7 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, b
     if bufnr ~= nil then
       vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
     else
-      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+      vim.keymap.set(mode, lhs, rhs, opts)
     end
   end
 end
