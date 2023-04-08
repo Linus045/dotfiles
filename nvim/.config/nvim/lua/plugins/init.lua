@@ -10,4 +10,5 @@ require("plugins.special")
 require("plugins.startup")
 require("plugins.telescope")
 require("plugins.text_utils")
+
 return {}

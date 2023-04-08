@@ -235,7 +235,7 @@ keymap("n", "<leader>w", nil, opts, "[VIMWIKI]", false, true)
 
 keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
 -- Zen mode
-keymap("n", "<leader><SPACE>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
+keymap("n", "<leader><Space>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
 
 -- Git Messenger (rhysd/git-messenger.vim)
 keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Message (? for keybindings)", false, false)

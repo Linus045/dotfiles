@@ -1,6 +1,4 @@
 return {
-
-
 	-- Shows current function scope/signature at the top of the screen
 	"nvim-treesitter/nvim-treesitter-context",
 
@@ -52,7 +50,7 @@ return {
 	},
 
 	-- git sings support on the sidebar
-	{ "lewis6991/gitsigns.nvim",  dependencies = { "nvim-lua/plenary.nvim" } },
+	require("plugins.interface.gitsigns_nvim"),
 
 	-- show git changes on the side (replaced with gitsigns)
 	-- use "airblade/vim-gitgutter"

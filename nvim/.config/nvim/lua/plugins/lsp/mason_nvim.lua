@@ -1,5 +1,3 @@
-local keymap = require("keybindings_util").keymap
-
 local function lsp_codelens(client, bufnr)
 	local opts = { noremap = true, silent = true }
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
@@ -17,6 +15,7 @@ local function lsp_codelens(client, bufnr)
 end
 
 local function lsp_keymaps(client, bufnr)
+	local keymap = require("keybindings_util").keymap
 	local opts = { noremap = true, silent = true }
 	-- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	keymap("n", "gq", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
@@ -127,7 +126,8 @@ return {
 		-- mason lsp config extension
 		"williamboman/mason-lspconfig.nvim",
 		"hrsh7th/cmp-nvim-lsp",
-		"nvim-lua/lsp-status.nvim"
+		"nvim-lua/lsp-status.nvim",
+		"folke/which-key.nvim"
 	},
 	config = function()
 		local mason = require("mason")
