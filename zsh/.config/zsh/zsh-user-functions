@@ -10,7 +10,8 @@ function zshstartup() {
   echo $orange_color "C-t" $reset_color "Search directory with fzf"
   echo $orange_color "C-r" $reset_color "Search command history with fzf"
   echo $orange_color "Alt-c" $reset_color "cd directory using fzf"
-  echo $orange_color "<TODO>" $reset_color "Print this help again"
+  echo $orange_color "C-?" $reset_color "Print this help again"
+  echo $orange_color "C-n" $reset_color "Start specific neovim configuration"
 
   echo $red_color "\nUseful stuff:"
   echo $orange_color "zshstartup" $reset_color "Print this help again"

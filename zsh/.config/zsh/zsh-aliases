@@ -80,6 +80,10 @@ alias psmem='ps auxf | sort -nr -k 4 | head -5'
 # get top process eating cpu ##
 alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 
+alias   ..='cd ..'
+alias  ...='cd ../../'
+alias ....='cd ../../../'
+
 # force vt100 when using ssh (sets terminal emulator so flashing/bell/etc is outputted correctly)
 # see: https://it.engineering.oregonstate.edu/book/what-does-term-network-or-term-vt100-mean
 #alias ssh='TERM=vt100 ssh' 
@@ -99,3 +103,20 @@ manpdf_helper() {
 alias manpdf=manpdf_helper
 # sets autocomplete for manpdf equal to man's autocomplete
 compdef manpdf=man
+
+
+alias nvim-clean="NVIM_APPNAME=nvim_clean nvim"
+
+function nvims() {
+  items=("default" "nvim_clean" )
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+
+bindkey -s "^n" "nvims\n"
