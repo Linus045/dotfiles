@@ -10,6 +10,7 @@ function zshstartup() {
   echo $orange_color "C-t" $reset_color "Search directory with fzf"
   echo $orange_color "C-r" $reset_color "Search command history with fzf"
   echo $orange_color "Alt-c" $reset_color "cd directory using fzf"
+  echo $orange_color "<TODO>" $reset_color "Print this help again"
 
   echo $red_color "\nUseful stuff:"
   echo $orange_color "zshstartup" $reset_color "Print this help again"
@@ -27,6 +28,7 @@ function zshstartup() {
   echo $orange_color "manpdf" $reset_color "View man page in PDF format"
   echo $orange_color "tmuxstart" $reset_color "Start tmux dev session with predefined windows (or attaches back to it)"
   echo $orange_color "tmuxstop" $reset_color "Kills running tmux dev session"
+  echo $orange_color "viu <image path>" $reset_color "Prints image in terminal"
 }
 zle -N zshstartup
 bindkey '^_' zshstartup
@@ -43,18 +45,6 @@ function install_package() {
 }
 zle -N install_package
 bindkey '^p' install_package
-
-# TODO: This does not work for yay, it still uses the pacman package list, find the right command to query AUR instead
-# List and install packages from AUR with C-o
-# function install_package_yay() {
-#   cmd="yay -Sqs | fzf --preview='yay -Si {}'"
-#   selected=$(eval $cmd)
-#   if [ -n "$selected" ]; then
-#     zle -U "yay -S $selected"
-#   fi
-# }
-# zle -N install_package_yay
-# bindkey '^o' install_package_yay
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line

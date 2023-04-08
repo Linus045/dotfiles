@@ -34,7 +34,9 @@ alias cat='bat'
 # Sort entries when using ls
 alias ls='ls --group-directories-first --color=auto'
 
-alias make="make -j $(nproc)"
+alias make="make -j 4"
+
+alias viu="viu -h 40"
 
 # https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
 #alias fzf='~/useful_scripts/fzfimg.sh'

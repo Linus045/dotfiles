@@ -160,6 +160,9 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 # curl -s --fail-early --connect-timeout 1 "https://wttr.in/?lang=de&format=%C+%t+%w" | cowsay -f stegosaurus
 # cowsay -f stegosaurus Good morning
 
+
+source "$ZDOTDIR/zoxide_init"
+
 ran=$((1 + RANDOM % 5))
 if [[ $ran == 1 ]]; then 
 printf "\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u28c0\u28e0\u28e4\u28f6\u28f6\u283f\u283f\u281b\u281b\u281b\u281b\u281b\u281b\u283f\u2837\u28f6\u28e6\u28e4\u28c0\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800\u2800
