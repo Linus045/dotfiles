@@ -34,7 +34,8 @@ return {
 			"rafamadriz/friendly-snippets",
 
 			-- show icons for entries in autocomplete menu
-			"onsails/lspkind.nvim"
+			"onsails/lspkind.nvim",
+			"L3MON4D3/LuaSnip"
 		},
 		config = function()
 			local cmp = require("cmp")
