@@ -6,6 +6,7 @@ alias zsh-update-plugins="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git
 alias nvimrc='nvim ~/.config/nvim/'
 alias nvimdot='nvim ~/dotfiles/'
 alias nvimjournal='nvim ~/.nvim_journal/.nvim_journal.md'
+alias nvimclean='NVIM_APPNAME=nvim_clean nvim'
 
 # command to retrieve current public ip
 alias myip="curl https://ipinfo.io"
