@@ -170,14 +170,80 @@ keymap("n", "<leader>dlx", ":Telescope dap commands<CR>", opts, "List commands")
 keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts, "List variables")
 keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts, "List frames")
 
-keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts, "[DEBUG] Step Over")
-keymap("n", "<F5>", ":lua require'dap'.my_custom_continue_function()<CR>", opts, "[DEBUG] Continue")
-keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts, "[DEBUG] Step Into")
-keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", opts, "[DEBUG] Step Out")
-keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", opts, "[DEBUG] Toggle Breakpoint")
-keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts,
+keymap("n", "<F10>", function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "rust" then
+		vim.cmd("Over")
+	else
+		require 'dap'.step_over()
+	end
+end, opts, "[DEBUG] Step Over")
+
+keymap("n", "<F5>", function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "rust" then
+		vim.cmd("Continue")
+	else
+		require 'dap'.my_custom_continue_function()
+	end
+end, opts, "[DEBUG] Continue")
+
+
+keymap("n", "<F11>", function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "rust" then
+		vim.cmd("Step")
+	else
+		require 'dap'.step_into()
+	end
+end, opts, "[DEBUG] Step Into")
+
+
+keymap("n", "<F12>", function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "rust" then
+		vim.cmd("Finish")
+	else
+		require 'dap'.step_out()
+	end
+end, opts, "[DEBUG] Step Out")
+
+keymap("n", "<leader>db", function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "rust" then
+		vim.cmd("Break")
+	else
+		require 'dap'.toggle_breakpoint()
+	end
+end, opts, "[DEBUG] Toggle Breakpoint")
+
+keymap("n", "<leader>dd", function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "rust" then
+		vim.cmd("Clear")
+	else
+		require 'dap'.toggle_breakpoint()
+	end
+end, opts, "[DEBUG] Clear Breakpoint")
+
+keymap("n", "<leader>dB", function()
+		local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+		if filetype == "rust" then
+			vim.cmd("Break")
+		else
+			require 'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))
+		end
+	end, opts,
 	"[DEBUG] Toggle Breakpoint (Conditioned)")
-keymap("n", "<leader>dp", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts,
+
+keymap("n", "<leader>dp", function()
+		local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+		if filetype == "rust" then
+			vim.cmd("Break")
+		else
+			require 'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+		end
+	end, opts,
 	"[DEBUG] Toggle Breakpoint (Log message)")
 keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Open REPL")
 keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts, "[DEBUG] Run last configuration")
@@ -268,6 +334,13 @@ keymap("n", "<leader>td", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUB
 keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location list")
 keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")
+
+keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts,
+	"Goto previous diagnostic result", nil, nil)
+keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts, "Goto next diagnostic result"
+, nil, nil)
+keymap("n", "[q", '<cmd>cprevious<CR>', opts, "Jump to previous quickfix entry", nil, nil)
+keymap("n", "]q", '<cmd>cnext<CR>', opts, "Jump to next quickfix entry", nil, nil)
 
 -- center cursor after scrolling up/down
 -- vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", { noremap = true })

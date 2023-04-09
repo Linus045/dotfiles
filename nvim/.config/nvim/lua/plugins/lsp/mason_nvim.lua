@@ -23,7 +23,16 @@ local function lsp_keymaps(client, bufnr)
 	keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts, "Goto Definition", nil, nil, bufnr)
 	-- TODO: Causes problems with :Man (jumping to references no longer works)
 	-- Workaround use Ctrl+] to jump
-	keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts, "HOVER INFO", nil, nil, bufnr)
+	keymap("n", "K", function()
+		local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+		if filetype == "rust" then
+			vim.cmd("Evaluate")
+		elseif filetype == "man" then
+			vim.notidy("TODO: put correct action here")
+		else
+			vim.lsp.buf.hover()
+		end
+	end, opts, "HOVER INFO", nil, nil, bufnr)
 	keymap("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts, "Signature Help", nil, nil, bufnr)
 	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	keymap("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts, "Goto Implementation [Telescope]", nil, nil, bufnr)
@@ -39,14 +48,7 @@ local function lsp_keymaps(client, bufnr)
 	keymap("n", "<leader>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens", nil, nil, bufnr)
 	keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, "Rename variable", nil, nil, bufnr)
 	keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts, "Diagnostics quickfix list", nil, nil, bufnr)
-	keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts,
-		"Goto previous diagnostic result", nil, nil,
-		bufnr)
-	keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts, "Goto next diagnostic result"
-		, nil, nil,
-		bufnr)
-	keymap("n", "[q", '<cmd>cprevious<CR>', opts, "Jump to previous quickfix entry", nil, nil, bufnr)
-	keymap("n", "]q", '<cmd>cnext<CR>', opts, "Jump to next quickfix entry", nil, nil, bufnr)
+
 
 	vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 end

@@ -7,6 +7,8 @@ vim.g.maplocalleader = " "
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.termdebug_wide = 1
+vim.g.termdebugger = "rust-gdb"
 
 vim.opt.backup = false            -- creates a backup file
 vim.opt.hidden = true             -- allow hidden buffers and don't unload them
