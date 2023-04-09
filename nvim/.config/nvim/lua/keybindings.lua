@@ -293,6 +293,10 @@ vim.cmd [[imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-nex
 vim.cmd [[smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']]
 
 
+-- keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format()<CR>", opts, "Format file", nil, nil, bufnr)
+vim.cmd([[:command! F lua vim.lsp.buf.format()]])
+
+
 -- Register keymaps to legendary.nvim
 -- this needs to be done after all keybindings are defined
 local legendary = require('legendary')

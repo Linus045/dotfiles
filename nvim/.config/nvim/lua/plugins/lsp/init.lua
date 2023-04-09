@@ -4,14 +4,6 @@ return {
 	-- LSP server configurations
 	"neovim/nvim-lspconfig",
 
-	-- autoformat on save (see :FormatDisable/Enable)
-	{
-		"lukas-reineke/lsp-format.nvim",
-		config = function()
-			require("lsp-format").setup({})
-		end
-	},
-
 	-- better diagnostics
 	{
 		"folke/trouble.nvim",

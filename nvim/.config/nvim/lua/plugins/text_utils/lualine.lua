@@ -4,7 +4,7 @@ return {
 		local lualine = require("lualine")
 
 		local function mycustomcomponent()
-			local lspFormat = require "lsp-format"
+			local lspFormat = require "formatter"
 			local lspDisabled = lspFormat.disabled or lspFormat.disabled_filetypes[vim.bo.filetype] or vim.b.format_saving
 			local autosaveText = ""
 			if lspDisabled then

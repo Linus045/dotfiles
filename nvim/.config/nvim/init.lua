@@ -14,6 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("options")
 require("utilities")
+require("formatter").setup()
+
 require("lazy").setup("plugins")
 
 vim.api.nvim_create_autocmd("User", {

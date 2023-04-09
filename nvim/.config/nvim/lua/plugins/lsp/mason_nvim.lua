@@ -45,10 +45,8 @@ local function lsp_keymaps(client, bufnr)
 	keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts, "Goto next diagnostic result"
 		, nil, nil,
 		bufnr)
-	keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format(nil, 1000)<CR>", opts, "Format file", nil, nil, bufnr)
 	keymap("n", "[q", '<cmd>cprevious<CR>', opts, "Jump to previous quickfix entry", nil, nil, bufnr)
 	keymap("n", "]q", '<cmd>cnext<CR>', opts, "Jump to next quickfix entry", nil, nil, bufnr)
-	vim.cmd([[:command! F lua vim.lsp.buf.format(nil, 1000)]])
 
 	vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 end
@@ -91,7 +89,7 @@ local lsp_server_on_attach = function(client, bufnr)
 	end
 
 	-- Register automatic formatting: lsp-format.nvim
-	require("lsp-format").on_attach(client)
+	-- require("lsp-format").on_attach(client)
 
 
 	lsp_codelens(client, bufnr)
