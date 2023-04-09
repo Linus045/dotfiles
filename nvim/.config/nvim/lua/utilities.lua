@@ -32,3 +32,17 @@ vim.cmd([[
 --     vim.api.nvim_buf_set_option(0, "shiftwidth", 4)
 --   end
 -- })
+
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+	-- pattern = { "term://*" },
+	callback = function()
+		vim.api.nvim_win_set_option(0, "spell", false)
+	end
+})
+
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	pattern = { "man://*" },
+	callback = function()
+		vim.api.nvim_win_set_option(0, "spell", false)
+	end
+})

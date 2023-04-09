@@ -10,16 +10,23 @@ return {
 
 			vim.cmd("colorscheme " .. colorscheme)
 
-			-- Fix spelling underline color
-			-- idk if this is the correct way but it works
-			vim.cmd("highlight clear SpellBad")
-			vim.cmd("highlight clear SpellCap")
-			vim.cmd("highlight clear SpellLocal")
-			vim.cmd("highlight clear SpellRare")
-			vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
-			vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
-			vim.cmd("highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
-			vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+			vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+				callback = function(ev)
+					-- Fix spelling underline color
+					-- idk if this is the correct way but it works
+					vim.cmd("highlight clear SpellBad")
+					vim.cmd("highlight clear SpellCap")
+					vim.cmd("highlight clear SpellLocal")
+					vim.cmd("highlight clear SpellRare")
+					vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+					vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+					vim.cmd("highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+					vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+
+					-- set color for :Termdebug
+					vim.cmd("highlight debugPC term=reverse ctermbg=4 guibg=darkblue")
+				end
+			})
 		end
 	},
 }
