@@ -117,4 +117,21 @@ return {
 			end
 		end
 	},
+
+	-- {
+	-- 	"tamton-aquib/zone.nvim",
+	-- 	config = function()
+	-- 		require("zone").setup({
+	-- 			style = "vanish",
+	-- 			after = 60,
+	-- 		})
+	-- 	end
+	-- },
+
+	-- :CellularAutomaton make_it_rain
+	-- :CellularAutomaton game_of_life
+	{
+		"eandrju/cellular-automaton.nvim"
+	}
+
 }
