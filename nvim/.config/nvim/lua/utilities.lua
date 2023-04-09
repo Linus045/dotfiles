@@ -11,18 +11,18 @@ vim.cmd(
 
 -- easier editing of binary files
 -- see :help using-xxd
-vim.cmd([[
-	augroup Binary
-	  au!
-	  au BufReadPre  *.bin let &bin=1
-	  au BufReadPost *.bin if &bin | %!xxd
-	  au BufReadPost *.bin set ft=xxd | endif
-	  au BufWritePre *.bin if &bin | %!xxd -r
-	  au BufWritePre *.bin endif
-	  au BufWritePost *.bin if &bin | %!xxd
-	  au BufWritePost *.bin set nomod | endif
-	augroup END
-]])
+-- vim.cmd([[
+-- 	augroup Binary
+-- 	  au!
+-- 	  au BufReadPre  *.bin let &bin=1
+-- 	  au BufReadPost *.bin if &bin | %!xxd
+-- 	  au BufReadPost *.bin set ft=xxd | endif
+-- 	  au BufWritePre *.bin if &bin | %!xxd -r
+-- 	  au BufWritePre *.bin endif
+-- 	  au BufWritePost *.bin if &bin | %!xxd
+-- 	  au BufWritePost *.bin set nomod | endif
+-- 	augroup END
+-- ]])
 
 
 -- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
