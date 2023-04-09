@@ -26,4 +26,10 @@ return {
 	require("plugins.text_utils.nvim-treesitter"),
 	require("plugins.text_utils.refactoring"),
 	require("plugins.text_utils.vim-visual-multi"),
+	{
+		"RaafatTurki/hex.nvim",
+		config = function()
+			require 'hex'.setup()
+		end
+	},
 }
