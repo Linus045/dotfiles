@@ -8,6 +8,7 @@ M.register_rust_cargo_check_autocommand = function()
 
 	vim.api.nvim_create_autocmd("BufWritePost", {
 		group = vim.api.nvim_create_augroup("rust_cargo_check_autocommand", { clear = true }),
+		pattern = "*.rs",
 		callback = function()
 			-- make sure this is a rust file
 			local filetype = vim.api.nvim_buf_get_option(0, "filetype")

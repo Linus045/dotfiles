@@ -25,10 +25,10 @@ local function lsp_keymaps(client, bufnr)
 	-- Workaround use Ctrl+] to jump
 	keymap("n", "K", function()
 		local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-		if filetype == "rust" then
+		if filetype == "rust" and require("termdebug_helper").in_debug_session then
 			vim.cmd("Evaluate")
 		elseif filetype == "man" then
-			vim.notidy("TODO: put correct action here")
+			vim.notify("TODO: put correct action here")
 		else
 			vim.lsp.buf.hover()
 		end
@@ -203,6 +203,7 @@ return {
 				-- print("[LSP-Installer] NO custom options for " .. server .. " found")
 			end
 			lspconfig[server].setup(opts)
+			-- vim.notify("[LSP-Installer] " .. server .. " loaded")
 		end
 
 

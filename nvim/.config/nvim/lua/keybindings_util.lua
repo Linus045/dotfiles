@@ -76,11 +76,9 @@ M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, b
 	end
 
 	if not dontRegister then
-		if bufnr ~= nil then
-			vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-		else
-			vim.keymap.set(mode, lhs, rhs, opts)
-		end
+		-- 0 means current buffer, vim.keymap.set() requires true instead
+		opts["buffer"] = (bufnr == 0) and true or bufnr
+		vim.keymap.set(mode, lhs, rhs, opts)
 	end
 end
 

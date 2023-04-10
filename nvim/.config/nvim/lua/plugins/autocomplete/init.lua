@@ -1,8 +1,10 @@
 return {
 	-- Faster autocompletion
+	require("plugins.autocomplete.copilot_vim"),
 	{
-		require("plugins.autocomplete.copilot_vim"),
 		"hrsh7th/nvim-cmp",
+		-- lost just before insert mode is entered, see :h InsertEnter
+		event = "InsertEnter",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
