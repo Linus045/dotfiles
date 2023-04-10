@@ -173,7 +173,11 @@ keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts, "List frames")
 keymap("n", "<F10>", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
-		vim.cmd("Over")
+		if require("termdebug_helper").in_debug_session then
+			vim.cmd("Over")
+		else
+			vim.notify("No Termdebug session running.")
+		end
 	else
 		require 'dap'.step_over()
 	end
@@ -182,7 +186,11 @@ end, opts, "[DEBUG] Step Over")
 keymap("n", "<F5>", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
-		vim.cmd("Continue")
+		if require("termdebug_helper").in_debug_session then
+			vim.cmd("Continue")
+		else
+			vim.notify("No Termdebug session running.")
+		end
 	else
 		require 'dap'.my_custom_continue_function()
 	end
@@ -192,7 +200,11 @@ end, opts, "[DEBUG] Continue")
 keymap("n", "<F11>", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
-		vim.cmd("Step")
+		if require("termdebug_helper").in_debug_session then
+			vim.cmd("Step")
+		else
+			vim.notify("No Termdebug session running.")
+		end
 	else
 		require 'dap'.step_into()
 	end
@@ -202,7 +214,11 @@ end, opts, "[DEBUG] Step Into")
 keymap("n", "<F12>", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
-		vim.cmd("Finish")
+		if require("termdebug_helper").in_debug_session then
+			vim.cmd("Finish")
+		else
+			vim.notify("No Termdebug session running.")
+		end
 	else
 		require 'dap'.step_out()
 	end
@@ -211,7 +227,11 @@ end, opts, "[DEBUG] Step Out")
 keymap("n", "<leader>db", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
-		vim.cmd("Break")
+		if require("termdebug_helper").in_debug_session then
+			vim.cmd("Break")
+		else
+			vim.notify("No Termdebug session running.")
+		end
 	else
 		require 'dap'.toggle_breakpoint()
 	end
@@ -220,7 +240,11 @@ end, opts, "[DEBUG] Toggle Breakpoint")
 keymap("n", "<leader>dd", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
-		vim.cmd("Clear")
+		if require("termdebug_helper").in_debug_session then
+			vim.cmd("Clear")
+		else
+			vim.notify("No Termdebug session running.")
+		end
 	else
 		require 'dap'.toggle_breakpoint()
 	end
@@ -229,7 +253,11 @@ end, opts, "[DEBUG] Clear Breakpoint")
 keymap("n", "<leader>dB", function()
 		local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 		if filetype == "rust" then
-			vim.cmd("Break")
+			if require("termdebug_helper").in_debug_session then
+				vim.cmd("Break")
+			else
+				vim.notify("No Termdebug session running.")
+			end
 		else
 			require 'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))
 		end
@@ -239,7 +267,11 @@ keymap("n", "<leader>dB", function()
 keymap("n", "<leader>dp", function()
 		local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 		if filetype == "rust" then
-			vim.cmd("Break")
+			if require("termdebug_helper").in_debug_session then
+				vim.cmd("Break")
+			else
+				vim.notify("No Termdebug session running.")
+			end
 		else
 			require 'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
 		end

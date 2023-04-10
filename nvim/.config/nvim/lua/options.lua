@@ -8,6 +8,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.g.termdebug_wide = 1
+-- vim.g.termdebugger = "gdb"
 vim.g.termdebugger = "rust-gdb"
 
 vim.opt.backup = false            -- creates a backup file

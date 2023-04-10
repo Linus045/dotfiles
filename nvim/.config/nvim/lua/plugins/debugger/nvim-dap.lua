@@ -3,8 +3,6 @@ return {
 	config = function()
 		local dap = require("dap")
 
-		vim.cmd("packadd termdebug")
-		vim.g.termdebugger = "gdb"
 
 		-- require('dap-python').setup('/usr/bin/python')
 
