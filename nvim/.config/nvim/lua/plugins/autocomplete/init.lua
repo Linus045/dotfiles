@@ -1,6 +1,7 @@
 return {
 	-- Faster autocompletion
 	{
+		require("plugins.autocomplete.copilot_vim"),
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
