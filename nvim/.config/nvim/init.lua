@@ -19,6 +19,7 @@ require("formatter").setup()
 require("lazy").setup("plugins")
 
 require("termdebug_helper").setup()
+require("rust_cargo_checker").setup()
 
 vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",

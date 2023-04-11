@@ -99,7 +99,7 @@ local lsp_server_on_attach = function(client, bufnr)
 
 	local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
 	if filetype == "rust" then
-		require("rust_chargo_checker").register_rust_cargo_check_autocommand()
+		require("rust_cargo_checker").register_rust_cargo_check_autocommand()
 	end
 	if filetype == "c" then
 		-- require("user.utilities").register_gcc_check_autocommand()
