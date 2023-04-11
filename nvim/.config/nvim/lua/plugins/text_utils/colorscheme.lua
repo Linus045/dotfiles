@@ -8,7 +8,6 @@ return {
 		config = function()
 			local colorscheme = "nord"
 
-			vim.cmd("colorscheme " .. colorscheme)
 
 			vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 				callback = function(ev)
@@ -18,15 +17,18 @@ return {
 					vim.cmd("highlight clear SpellCap")
 					vim.cmd("highlight clear SpellLocal")
 					vim.cmd("highlight clear SpellRare")
-					vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
-					vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
-					vim.cmd("highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
-					vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Red")
+					vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+					vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+					vim.cmd(
+					"highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+					vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 
 					-- set color for :Termdebug
 					vim.cmd("highlight debugPC term=reverse ctermbg=4 guibg=darkblue")
 				end
 			})
+
+			vim.cmd("colorscheme " .. colorscheme)
 		end
 	},
 }
