@@ -7,9 +7,10 @@ M.format = function()
 	print("Trying to format!")
 	local lspDisabled = M.disabled or M.disabled_filetypes[vim.bo.filetype] or
 			vim.b.format_saving
-	if not lspDisabled then
-		vim.lsp.buf.format()
+	if lspDisabled then
+		return
 	end
+	vim.lsp.buf.format()
 end
 
 M.setup = function()
