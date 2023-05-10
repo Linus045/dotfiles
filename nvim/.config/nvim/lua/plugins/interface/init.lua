@@ -22,6 +22,10 @@ return {
 		}
 	},
 
+	{
+		"nanotee/zoxide.vim"
+	},
+
 	-- popup notification windows
 	require("plugins.interface.notify"),
 

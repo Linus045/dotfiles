@@ -13,3 +13,5 @@ exec --no-startup-id i3-msg 'workspace 3; append_layout /home/linus/.config/i3/w
 exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird'
 
 exec --no-startup-id i3-msg 'exec sleep 20 && /bin/bash /home/linus/.config/polybar/scripts/set_random_background.sh'
+
+exec --no-startup-id i3-msg 'exec sleep 20 && /bin/bash /home/linus/.config/polybar/scripts/dbus_listen_flameshot.sh'

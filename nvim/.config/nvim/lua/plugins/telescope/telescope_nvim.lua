@@ -12,8 +12,9 @@ return {
 				selection_caret = " ",
 				path_display = { "smart" },
 				file_ignore_patterns = {
-					".git/",
-					".cache",
+					"node_modules",
+					"%.git/",
+					"%.cache",
 					"%.o",
 					"%.a",
 					"%.out",
@@ -23,18 +24,18 @@ return {
 					"%.mp4",
 					"%.zip",
 				},
-				vimgrep_arguments = {
-					"rg",
-					"--color=never",
-					"--no-heading",
-					"--with-filename",
-					"--line-number",
-					"--column",
-					"--smart-case",
-					"--trim",
-					-- '--hidden', -- include hidden files
-					-- '-u' -- single u includes .gitignore, 2 u's include gitignore and hidden files
-				},
+				-- vimgrep_arguments = {
+				-- 	"rg",
+				-- 	"--color=never",
+				-- 	"--no-heading",
+				-- 	"--with-filename",
+				-- 	"--line-number",
+				-- 	"--column",
+				-- 	"--smart-case",
+				-- 	"--trim",
+				-- 	-- '--hidden', -- include hidden files
+				-- 	-- '-u' -- single u includes .gitignore, 2 u's include gitignore and hidden files
+				-- },
 				mappings = {
 					i = {
 						["<C-n>"] = actions.cycle_history_next,
@@ -115,7 +116,11 @@ return {
 				},
 				lsp_references = {
 					trim_text = true,
-				}
+				},
+				live_grep = {
+					theme = "ivy",
+					winblend = 15,
+				},
 				-- Default configuration for builtin pickers goes here:
 				-- picker_name = {
 				--   picker_config_key = value,

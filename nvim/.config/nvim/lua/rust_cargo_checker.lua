@@ -44,27 +44,37 @@ end
 
 M.window_height = 30
 
-M.create_window = function()
-	local lines = vim.api.nvim_get_option("lines")
-	local columns = vim.api.nvim_get_option("columns")
-	local width = math.floor(columns / 2) - 5
-	local winId = vim.api.nvim_open_win(0, false,
-		{
-			relative = 'win',
-			anchor = 'SE',
-			row = lines - 5,
-			col = columns - 1,
-			width = width,
-			height = 30, -- gets updated later to reduce flickering
-			style = 'minimal',
-			border = 'rounded',
-		}
-	)
-	if winId == 0 then
-		vim.notify("Unable to create window")
-		return
+M.create_window = function(use_window)
+	if use_window == nil then
+		use_window = true
 	end
-	M.window_nr = winId
+
+	if use_window then
+		local lines = vim.api.nvim_get_option("lines")
+		local columns = vim.api.nvim_get_option("columns")
+		local width = math.floor(columns / 2) - 5
+		local winId = vim.api.nvim_open_win(0, false,
+			{
+				relative = 'win',
+				anchor = 'SE',
+				row = lines - 5,
+				col = columns - 1,
+				width = width,
+				height = 30, -- gets updated later to reduce flickering
+				style = 'minimal',
+				border = 'rounded',
+			}
+		)
+		if winId == 0 then
+			vim.notify("Unable to create window")
+			return
+		end
+		M.window_nr = winId
+	else
+		-- create split
+		vim.cmd("split")
+		M.window_nr = vim.api.nvim_get_current_win()
+	end
 
 	-- vim.api.nvim_win_set_option(winId, "number", false)
 	-- vim.api.nvim_win_set_option(winId, "relativenumber", false)
@@ -73,8 +83,69 @@ M.create_window = function()
 	-- vim.api.nvim_win_set_option(winId, "colorcolumn", "")
 end
 
+M.get_error_warning_count = function()
+	print("Cargo check...")
+	vim.cmd("make! check")
+	vim.cmd("redraw!")
+
+	local qflist = vim.fn.getqflist()
+	local error_count = 0
+	local warning_count = 0
+	if #qflist > 0 then
+		-- Check for type W
+		-- Ignore everything until we get an E
+		local collect_err = 0
+		-- local new_qf_list = {}
+		for k, v in pairs(qflist) do
+			-- Count number of warnings
+			if v.type == "W" and v.text ~= ".*generated\\s\\d*\\swarning" then
+				-- if v.type == "W"
+				warning_count = warning_count + 1
+				collect_err = 0
+			end
+
+			-- Count errors
+			if v.type == "E" then
+				collect_err = 1
+				error_count = error_count + 1
+			end
+
+			-- Add errors to the new quickfix list
+			-- if collect_err then
+			-- 	new_qf_list[#new_qf_list + 1] = v
+			-- end
+		end
+
+		-- vim.fn.setqflist(new_qf_list)
+	end
+
+	return { ["error_count"] = error_count,["warning_count"] = warning_count,["quickfix_list"] = qflist }
+end
+
+
+M.print_error_warning_count = function(error_count, warning_count)
+	local err_out = "echo 'E: " .. error_count .. "'"
+	if error_count > 0 then
+		err_out = "echohl ToggleRustErr | echo 'E: " .. error_count .. "' | echohl None"
+	end
+
+	local warn_out = " | echon ' | W: " .. warning_count .. "'"
+	if warning_count > 0 then
+		warn_out = "| echon ' | ' | echohl ToggleRustWarn | echon 'W: " .. warning_count .. "' | echohl None"
+	end
+
+	if error_count == 0 and warning_count == 0 then
+		err_out = "echo '- No errors/warnings 💖 -'"
+		warn_out = ''
+	end
+	vim.cmd(err_out .. warn_out)
+end
+
 
 M.register_rust_cargo_check_autocommand = function()
+	local use_window = false
+
+
 	vim.api.nvim_create_autocmd("BufWritePost", {
 		group = vim.api.nvim_create_augroup("rust_cargo_check_autocommand", { clear = true }),
 		pattern = "*.rs",
@@ -85,6 +156,9 @@ M.register_rust_cargo_check_autocommand = function()
 				return
 			end
 
+			-- make sure that cargo is set as the makeprg
+			vim.api.nvim_buf_set_option(0, "makeprg", "cargo")
+
 			if vim.api.nvim_buf_is_valid(M.buf_nr) then
 				vim.api.nvim_buf_delete(M.buf_nr, { force = true, unload = false })
 			end
@@ -93,7 +167,7 @@ M.register_rust_cargo_check_autocommand = function()
 				return
 			end
 
-			M.create_window()
+			M.create_window(use_window)
 
 			local oldwin = vim.api.nvim_get_current_win()
 			vim.api.nvim_set_current_win(M.window_nr)
@@ -116,30 +190,37 @@ M.register_rust_cargo_check_autocommand = function()
 				buffer = M.buf_nr,
 				callback = function(opts)
 					local exit_status = vim.v.event.status
+					-- retrieve the error and warning count before switching the window
 
 					local oldwin = vim.api.nvim_get_current_win()
-					vim.api.nvim_set_current_win(M.window_nr)
 
 					if exit_status == 0 then
 						local height = 1
 						-- delete old buffer
 						vim.cmd("bwipe " .. M.buf_nr)
 
-						-- create a new window and set text there
-						M.create_window()
-						vim.api.nvim_set_current_win(M.window_nr)
-						M.buf_nr = vim.api.nvim_create_buf(false, true)
-						vim.api.nvim_win_set_buf(M.window_nr, M.buf_nr)
-						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
-						vim.cmd("resize " .. height)
-						vim.api.nvim_buf_set_lines(M.buf_nr, 0, -1, false, { "No errors found." })
-						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", false)
+						-- create a new window and set "No errors found." text there
+						-- M.create_window(use_window)
+						-- vim.api.nvim_set_current_win(M.window_nr)
+						-- M.buf_nr = vim.api.nvim_create_buf(false, true)
+						-- vim.api.nvim_win_set_buf(M.window_nr, M.buf_nr)
+						-- vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
+						-- vim.cmd("resize " .. height)
+						-- vim.api.nvim_buf_set_lines(M.buf_nr, 0, -1, false, { "No errors found." })
+						-- vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", false)
 					else
 						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
 						vim.cmd("resize " .. M.window_height)
 						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", false)
 					end
 					vim.api.nvim_set_current_win(oldwin)
+
+					local error_warnings = M.get_error_warning_count()
+					if error_warnings.error_count > 0 then
+						vim.fn.setqflist(error_warnings.quickfix_list)
+						vim.cmd("cfirst")
+					end
+					M.print_error_warning_count(error_warnings.error_count, error_warnings.warning_count)
 				end,
 			})
 

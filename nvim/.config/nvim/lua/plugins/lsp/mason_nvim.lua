@@ -45,7 +45,9 @@ local function lsp_keymaps(client, bufnr)
 	-- e.g. lsp/configurations/clangd.lua which contains this command or a more advanced version that can search for implementations if used on a function signature etc.
 	-- https://github.com/neovim/nvim-lspconfig/blob/c5dae15c0c94703a0565e8ba35a9f5cb96ca7b8a/lua/lspconfig/server_configurations/clangd.lua#L52-L59
 	keymap("n", "gt", '<cmd>ClangdSwitchSourceHeader<CR>', opts, "Switch between source/header file", nil, nil, bufnr)
-	keymap("n", "<leader>gl", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens", nil, nil, bufnr)
+
+	keymap("n", "<leader>,", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens (uses DAP to Run|Debug)", nil, nil,
+	bufnr)
 	keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, "Rename variable", nil, nil, bufnr)
 	keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts, "Diagnostics quickfix list", nil, nil, bufnr)
 

@@ -4,7 +4,6 @@ M.disabled = false
 M.disabled_filetypes = {}
 
 M.format = function()
-	print("Trying to format!")
 	local lspDisabled = M.disabled or M.disabled_filetypes[vim.bo.filetype] or
 			vim.b.format_saving
 	if lspDisabled then

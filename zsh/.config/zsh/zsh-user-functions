@@ -4,7 +4,7 @@ function zshstartup() {
   orange_color="\e[38;5;214m"
   reset_color="\e[0m"
   red_color="\e[38;5;196m"
-  echo $red_color "\nKeybindings:"
+  echo $red_color "Keybindings:"
   echo $orange_color "C-p" $reset_color "Install pacman package"
   echo $orange_color "C-e" $reset_color "Edit current line in nvim"
   echo $orange_color "C-t" $reset_color "Search directory with fzf"

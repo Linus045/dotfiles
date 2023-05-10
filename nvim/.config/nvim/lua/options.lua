@@ -10,6 +10,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.termdebug_wide = 1
 -- vim.g.termdebugger = "gdb"
 vim.g.termdebugger = "rust-gdb"
+-- vim.g.termdebug_useFloatingHover = 0
 
 vim.opt.backup = false            -- creates a backup file
 vim.opt.hidden = true             -- allow hidden buffers and don't unload them
@@ -36,7 +37,7 @@ vim.opt.updatetime = 300          -- faster completion (4000ms default)
 vim.opt.writebackup = false       -- if a file is being edited by another program (or was written to file with another program), it is NOT allowed to be edited
 vim.opt.expandtab = false         -- converts tabs to spaces
 vim.opt.shiftwidth = 2            -- the number of spaces inserted for each indentation
-vim.opt.tabstop = 2               -- insert 2 spaces for a tab
+vim.opt.tabstop = 4               -- insert 2 spaces for a tab
 vim.opt.cursorline = true         -- hightlight the current line
 vim.opt.number = true             -- show numbered lines
 vim.opt.relativenumber = true     -- set relative numbered lines
@@ -54,6 +55,7 @@ vim.opt.colorcolumn = "80,100"    -- color columns
 vim.opt.foldlevel = 0             -- start with all folds open
 vim.opt.foldlevelstart = 99
 vim.opt.selection = "old"         -- prevents selecting of newline character in visual select mode
+vim.opt.splitkeep = "screen"      -- changes how the cursor behaves on split
 
 -- vim.g.transparent_enabled = true  -- disable transparent background
 

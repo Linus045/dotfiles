@@ -89,8 +89,11 @@ keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts, "Telescope buffers
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts, "Telescope help tags")
 keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts, "Telescope commands")
 keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope diagnostics")
-keymap("n", "<leader>fw", "<cmd>Telescope lsp_workspace_symbols<CR>", opts, "Telescope workspace symbols")
-keymap("n", "<leader>fs", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")
+
+keymap("n", "<leader>fs", nil, opts, "[LSP Symbols]", false, true)
+keymap("n", "<leader>fss", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fsw", "<cmd>Telescope lsp_workspace_symbols<CR>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fsd", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts, "Telescope workspace symbols")
 keymap("n", "<leader>?", "<cmd>Telescope keymaps<CR>", opts, "Telescope keymaps")
 
 -- default Live Grep
@@ -111,10 +114,14 @@ keymap("n", "<leader>gg",
 	"Telescope live_grep (without RegEx)")
 
 keymap("n", "<leader>gs",
-	[[<cmd>lua require 'telescope.builtin'.grep_string({ search = vim.fn.input('GREP>'), vimgrep_arguments ={ 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--fixed-strings', '--trim'} }) <CR>]]
-	,
+	[[<cmd>lua require 'telescope.builtin'.grep_string({ search = vim.fn.input('GREP>'), vimgrep_arguments ={ 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--fixed-strings', '--trim'} }) <CR>]],
 	opts,
 	"Telescope grep_string")
+
+keymap("n", "<leader>gl",
+	[[<cmd>lua require'plugins.telescope.telescope_custom'.live_grep_in_glob() <CR>]],
+	opts,
+	"Telescope live_grep_in_glob")
 
 keymap(
 	"n",
@@ -151,9 +158,9 @@ keymap("v", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code A
 keymap("n", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
 keymap("v", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
 keymap("n", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
-, "Code Actions [Telescope]")
+, "Refactor [Telescope]")
 keymap("v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
-, "Code Actions [Telescope]")
+, "Refactor [Telescope]")
 
 
 keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts, "Telescope diagnostics")
@@ -189,12 +196,12 @@ keymap("n", "<F5>", function()
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Continue")
 		else
-			vim.notify("No Termdebug session running.")
+			require("termdebug_helper").RunDebugAndBreak()
 		end
 	else
 		require 'dap'.my_custom_continue_function()
 	end
-end, opts, "[DEBUG] Continue")
+end, opts, "[DEBUG] Continue / Run and break at current line")
 
 
 keymap("n", "<F11>", function()

@@ -88,7 +88,7 @@ font-3 = FiraCode Nerd Font Mono:size=22:style=Bold;5
 font-4 = FiraCode Nerd Font Mono:size=18:style=Bold;5
 
 ; Modules
-modules-left   = background_swapper cpu spacerSmall temperature spacerBig memory spacerBig fs-root
+modules-left   = background_swapper keyboard_layout cpu spacerSmall temperature spacerBig memory spacerBig fs-root
 modules-center = time i3 date
 ; modules-right  = dunst safeeyes pulseaudio-control brightness battery wireless-network lock logout_i3 hibernate poweroff
 modules-right  = dunst pulseaudio-control brightness battery wireless-network hibernate spacerSmall
@@ -402,6 +402,15 @@ click-left = ~/.config/polybar/scripts/set_random_background.sh
 ; type = custom/script
 ; exec = ~/.config/polybar/scripts/set_random_background.sh 2> ~/.polybar_errorlog_background_swapper
 ; interval = 1800
+
+[module/keyboard_layout]
+type = custom/script
+label = %output%
+exec = setxkbmap -query | awk '/layout:\s+(.+)/{ print $2 }'
+interval = 10
+label-padding = 1
+format-underline = #ad3d87
+click-left = if setxkbmap -query | grep --quiet -oE '^layout:\s+(us)'; then setxkbmap de; else setxkbmap us; fi
 
 
 [module/brightness]

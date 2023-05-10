@@ -2,8 +2,12 @@
 set $inner_gaps 4px 
 set $outer_gaps 4px
 
+# colors
+# class                 border  backgr. text    indicator child_border
+client.focused          #ffaaaa #285577 #ffffff #2e9ef4   #ffee44
+
 # #---Gaps---# #
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 1
 gaps inner $inner_gaps
 gaps outer $outer_gaps
 

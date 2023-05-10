@@ -1,0 +1,3 @@
+dashboard -layout threads stack variables
+dashboard variables -style compact False
+dashboard stack -style limit 10

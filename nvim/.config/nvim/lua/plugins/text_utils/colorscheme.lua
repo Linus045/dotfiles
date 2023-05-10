@@ -20,11 +20,17 @@ return {
 					vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 					vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 					vim.cmd(
-					"highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+						"highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 					vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 
 					-- set color for :Termdebug
 					vim.cmd("highlight debugPC term=reverse ctermbg=4 guibg=darkblue")
+
+
+					-- vim.cmd("hi DiffAdd cterm=NONE ctermfg=NONE    gui=none    guifg=NONE          guibg=#bada9f")
+					-- vim.cmd("hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac ")
+					-- vim.cmd("hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0 ")
+					-- vim.cmd("hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2 ")
 				end
 			})
 
