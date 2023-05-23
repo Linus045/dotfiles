@@ -1,7 +1,8 @@
 # dotfiles
 A bunch of config files used with stow
 
-To add these configs, clone the repo into ~/dotfiles and cd into it and run `stow <directory name>` or `stow *\` to symlink all directories into the respective place.
+To add these configs, clone the repo into ~/dotfiles and cd into it and run `stow -t ~ <directory name>` or `stow -t ~ *\` to symlink all directories into the respective place.
+-t is required so it puts the files relative to the home directory /(where .config is located in my case).
 
 
 # Other repos
