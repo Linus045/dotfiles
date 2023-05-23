@@ -13,6 +13,7 @@ export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 # override this in zsh-exports.local if necessary
 export DOTFILES="$HOME/dotfiles"
+export USEFUL_SCRIPTS="$HOME/useful_scripts"
 export NVIMJOURNAL="$HOME/.nvim_journal"
 export DEV="$HOME/dev"
 
@@ -29,4 +30,4 @@ export ANSIBLE_NOCOWS=1
 #eval "$(zoxide init zsh)"
 # eval "`pip completion --zsh`"
 
-[-f "$ZDOTDIR/zsh-exports.local" ] && source "$ZDOTDIR/zsh-exports.local"
+[ -f "$ZDOTDIR/zsh-exports.local" ] && source "$ZDOTDIR/zsh-exports.local"
