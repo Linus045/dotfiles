@@ -24,7 +24,6 @@ return {
 			sources = {
 				-- diagnostics.mypy,
 				code_actions.refactoring,
-
 				-- latex support for formatting and linting
 				null_ls.builtins.formatting.latexindent,
 				-- null_ls.builtins.formatting.prettier.with({
@@ -43,7 +42,9 @@ return {
 				}),
 				-- null_ls.builtins.diagnostics.cppcheck,
 				-- formatting.black
-				-- diagnostics.eslint_d,
+				diagnostics.eslint.with({
+					filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "html" },
+				})
 				-- code_actions.eslint_d,
 				-- null_ls.builtins.code_actions.gitsigns,
 			}
