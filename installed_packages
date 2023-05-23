@@ -1,5 +1,6 @@
 Personal reference list of packages i use for various things:
 
+base-devel - equivalent for build-essentials (contains various build related tools e.g. make, gcc, etc.)
 alacritty - Terminal emulator
 ansible   - ansible playbooks, automate tasks
 anydesk-bin - teamviewer alternative
@@ -74,3 +75,15 @@ xournalpp - notetaking app
 xsane - scanner interface
 yay-bin - package manager for packages from AUR
 zathura - pdf viewer
+zoxide - improved cd command
+
+
+FONTS:
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+noto-fonts-extra
+
+nerd fonts are installed manually by using fontforge and the patching script
+Firacode Nerd Font
+DaddytimeMono Nerd Font
