@@ -1,0 +1,1 @@
+for_window [ class="Pardokin" instance="Godot_Engine" ] floating enable; resize set 1400 790; move position center
