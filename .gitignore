@@ -4,3 +4,4 @@ lazygit/.config/lazygit/state.yml
 tmux/.config/tmux/plugins/
 nvim/.config/nvim/nvim_prosession/
 nvim/.config/nvim/debug_adapter/
+i3/.config/i3/autostart.local
