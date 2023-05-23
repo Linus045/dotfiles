@@ -26,7 +26,7 @@ case "$1" in
       notify-send "Gromit" "Gromit is not running. Starting up..."
       gromit-mpx -a > /dev/null &
     else
-      notify-send "Gromit" "Gromit is running";
+	  notify-send "Gromit" "Gromit is running (SUPER+H for keybindings)";
       gromit-mpx -v
       gromit-mpx -t 0
     fi
@@ -54,6 +54,18 @@ case "$1" in
   pen)
     notify-send "Gromit" "Toggled pen"
     gromit-mpx -t 0
+    ;;
+  help)
+    notify-send "Gromit" "Keybindings:
+SUPER+N - Toggle Pen
+SUPER+C - Clear drawings
+SUPER+Z - Undo
+SUPER+Shift+Z - Redo
+Escape - Hide Drawing
+Return - Hide pen and leave \"drawing\" mode (keeps drawing on screen)
+SUPER+Q - Quit (and remove drawings)
+SUPER+h - Print Keybindings
+"
     ;;
   *) ;;
 esac
