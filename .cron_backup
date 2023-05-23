@@ -1,0 +1,8 @@
+# check battery status every minute
+* * * * * [ $(cat /sys/class/power_supply/BAT0/capacity) -lt 20 ] && [ "$(cat /sys/class/power_supply/BAT0/status)" = "Discharging" ] && DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -u critical "BATTERY LOW"
+
+# swap background every 30min
+*/30 * * * * $(DISPLAY=:0 /home/linus/.config/polybar/scripts/set_random_background.sh 2> /home/linus/.polybar_errorlog_background_swapper)
+
+# make a backup of the crontab
+0 0 * * * cp /var/spool/cron/linus /home/linus/dotfiles/.cron_backup >/dev/null 2>&1
