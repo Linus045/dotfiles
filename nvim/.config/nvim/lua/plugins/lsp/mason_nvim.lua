@@ -47,7 +47,7 @@ local function lsp_keymaps(client, bufnr)
 	keymap("n", "gt", '<cmd>ClangdSwitchSourceHeader<CR>', opts, "Switch between source/header file", nil, nil, bufnr)
 
 	keymap("n", "<leader>,", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens (uses DAP to Run|Debug)", nil, nil,
-	bufnr)
+		bufnr)
 	keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts, "Rename variable", nil, nil, bufnr)
 	keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts, "Diagnostics quickfix list", nil, nil, bufnr)
 
@@ -161,7 +161,7 @@ return {
 				"lua_ls",
 				"rust_analyzer",
 				"clangd",
-				"gopls",
+				-- "gopls",
 				-- "volar",
 				-- "tsserver",
 
