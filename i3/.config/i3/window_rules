@@ -1,1 +1,6 @@
+#Apply layout for godot engine play window
 for_window [ class="Pardokin" instance="Godot_Engine" ] floating enable; resize set 1400 790; move position center
+
+
+# Apply correct layout for `twitchchat` command 
+for_window [ class="firefox" Title="Linus045 - Chat - Twitch — Mozilla Firefox" ] fullscreen disable, floating enable, move position 2090px 40px, resize set 300px 1105px;
