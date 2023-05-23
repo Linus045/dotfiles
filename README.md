@@ -34,19 +34,17 @@ To add these configs, clone the repo into ~/dotfiles and cd into it and run `sto
 1. Install zsh (Arch: `sudo pacman -S zsh`)
 2. Clone repo: `git clone https://github.com/Linus045/dotfiles.git`
 3. `cd dotfiles`
-4. link zsh config into .config/zsh `stow zsh`
-5. Set zsh home directory in ~/.xprofile or similar: `export ZDOTDIR=$HOME/.config/zsh`
-6. Set zsh as default shell: `chsh -s /usr/zsh`
-7. (Consider changing it as default shell for tty console as well see 'chsh' command help)
-8. Log out and back in to see the change
+4. link zsh config into .config/zsh `stow -t ~ zsh`
+5. Set zsh as default shell: `chsh -s /usr/zsh`
+6. (Consider changing it as default shell for tty console as well see 'chsh' command help)
+7. Log out and back in to see the change
 
-# i3 setup
-1. Install i3-gaps (Arch: `sudo pacman -S i3-gaps`)
+# i3 setup (outdated)
+1. Install i3 (Arch: `sudo pacman -S i3`)
 2. Install rofi (Arch: `sudo pacman -S rofi`)
-3. Install autotiling (Arch: `yay -S autotiling-git` Note: Needs python-pip)
 4. Log out and change window manager to i3
 
-# Polybar setup
+# Polybar setup (outdated)
 1. Install polyabr (Arch: `sudo pacman -S polybar`)
 2. Configure polybar see ~/.config/polybar files
   - Set Network interface
@@ -71,6 +69,7 @@ Programs (partly used for polybar) and general other stuff
   - wal
   - cz-cli (https://github.com/commitizen/cz-cli)
 
+For additional programs see [Installed Packages](installed_packages)
 
 # Setup Preview
 ![Image](preview.png)
