@@ -1,17 +1,11 @@
-export TERMINAL="kitty"
-export TERM="kitty"
-# export TERMINAL="alacritty"
-# export TERM="alacritty"
-
-#zsh config dir
-export ZDOTDIR=$HOME/.config/zsh
-
 #Start safeeyes
-/usr/bin/safeeyes &
+#/usr/bin/safeeyes &
 
-xset r rate 210 50
+#xset r rate 210 50
+
 # Reload theme
-wal -R
+#wal -R
+
 # wal -e --theme base16-gruvbox-dark > /dev/null
 
 # xautolock -time 5 -locker "/home/linus/dotfiles/polybar/.config/polybar/scripts/lock_screen.sh" -detectsleep &
