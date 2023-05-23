@@ -24,7 +24,7 @@
 # export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-source /usr/share/nvm/init-nvm.sh
+[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 HISTFILE=~/.zsh_history
 HISTTIMEFORMAT="%d.%m.%y %T "
@@ -141,7 +141,7 @@ setxkbmap -option caps:escape
 
 # faster keys see "man xset" 
 # r rate <delay> <rate>
-xset r rate 210 50
+[ -x /bin/xset ] && xset r rate 210 50
 # xset r rate 210 5
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
