@@ -21,11 +21,12 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
   # use top_i3 bar if i3 is used (it has other logout config and stuff)
   if [ $I3ENABLED = 1 ]; then
 	if [ $m == "eDP" ]; then
-	  MONITOR=$m polybar --reload top_i3_main 2> ~/.polybar_errorlog_$m &
+	  MONITOR=$m polybar --reload top_i3_laptop
+	# TODO: set correct monitor for tower pc
 	elif [ $m == "HDMI-0" ]; then
-	  MONITOR=$m polybar --reload single_monitor
+	  MONITOR=$m polybar --reload top_i3_tower
 	else
-	  MONITOR=$m polybar --reload top_i3 2> ~/.polybar_errorlog_$m &
+	  MONITOR=$m polybar --reload top_i3_secondary_monitor
 	fi
   fi
 done
