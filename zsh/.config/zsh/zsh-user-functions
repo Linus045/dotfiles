@@ -41,7 +41,7 @@ function install_package() {
   cmd="pacman -Sqs | fzf --preview='pacman -Si {}'"
   selected=$(eval $cmd)
   if [ -n "$selected" ]; then
-    zle -U "sudo pacman -S $selected"
+    zle -U "sudo pacman -S $selected --needed"
   fi
 }
 zle -N install_package
@@ -50,3 +50,6 @@ bindkey '^p' install_package
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+# Alt+. to insert last argument of previous command
+bindkey '^[.' insert-last-word

@@ -14,7 +14,11 @@ return {
 				keymaps = {
 					view = {
 						{ "n", "<leader>e", actions.toggle_files, { desc = "Toggle the file panel." } },
-					}
+					},
+					file_panel = {
+						{ "n", "s", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
+						{ "n", "u", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
+					},
 				},
 			})
 		end
@@ -41,7 +45,19 @@ return {
 			require("neogit").setup({})
 		end
 	},
+
+
+	-- Useful short videos of how to use fugitive:
+	-- Links taken from: https://github.com/tpope/vim-fugitive#screencasts
+	-- 	## Screencasts
+	-- * [A complement to command line git](http://vimcasts.org/e/31)
+	-- * [Working with the git index](http://vimcasts.org/e/32)
+	-- * [Resolving merge conflicts with vimdiff](http://vimcasts.org/e/33)
+	-- * [Browsing the git object database](http://vimcasts.org/e/34)
+	-- * [Exploring the history of a git repository](http://vimcasts.org/e/35)
 	"tpope/vim-fugitive",
+
+	-- Github integration for fugitive (e.g. :Gbrowse)
 	"tpope/vim-rhubarb",
 
 	-- copy link to current line with <leader>gy into clipboard
