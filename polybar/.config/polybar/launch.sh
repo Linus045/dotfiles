@@ -16,6 +16,22 @@ if [ "i3" = "$XDG_CURRENT_DESKTOP" ]; then
   I3ENABLED=1
 fi
 
+# detects the default network interface (for the network module)
+# see: https://github.com/polybar/polybar/issues/339#issuecomment-447674287
+export DEFAULT_NETWORK_INTERFACE=$(ip route | grep '^default' | awk '{print $5}' | head -n1)
+
+# set the correct icon for the network module (idk if there is a better way to do this)
+#  󰈁 󰈂  󰖪
+if [[ $DEFAULT_NETWORK_INTERFACE =~ "enp" ]]; then
+  echo "wired"
+  export DEFAULT_NETWORK_INTERFACE_CONNECTED_ICON='<label-connected>󰈁'
+  export DEFAULT_NETWORK_INTERFACE_DISCONNECTED_ICON='<label-disconnected>󰈂'
+else
+  echo "wireless"
+  export DEFAULT_NETWORK_INTERFACE_CONNECTED_ICON='<label-connected>'
+  export DEFAULT_NETWORK_INTERFACE_DISCONNECTED_ICON='<label-disconnected>󰖪'
+fi
+
 # Manage multiple monitors
 for m in $(polybar --list-monitors | cut -d":" -f1); do
   # use top_i3 bar if i3 is used (it has other logout config and stuff)
