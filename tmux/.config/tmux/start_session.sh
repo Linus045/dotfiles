@@ -10,8 +10,8 @@ tmux new-session -s "dev" -d -n "terminal"
 # nvim in project directory
 tmux new-window -t dev -da -n "dev"
 tmux select-window -t dev:dev
-tmux send-keys -t dev:dev "cd ~/dev && nvim" Enter
-tmux move-window -t 2
+# tmux send-keys -t dev:dev "cd ~" Enter
+# tmux move-window -t 2
 
 # fun stuff
 # tmux new-window -t dev -da -n "aquarium" "asciiquarium"
