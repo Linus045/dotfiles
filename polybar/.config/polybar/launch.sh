@@ -6,6 +6,10 @@ killall -q --signal KILL polybar
 # Wait until bars have been terminated
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
+# TODO: find a better solution
+# kill all running pulseaudio-control.sh scripts (to prevent multiple instances)
+ps ux | grep "/[h]ome/linus/.config/polybar/scripts/pulseaudio-control.sh" | awk '{print $2}' | xargs kill -9
+
 # Launch Polybar
 # polybar top &)
 # i3 when i3 is used or xfce depending on the current window manager
