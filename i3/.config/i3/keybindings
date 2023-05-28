@@ -86,7 +86,8 @@ bindsym $mod+a focus parent
 # mute/unmute microphone
 # see `pactl list sources` for the correct source number
 # Note: See custom `[module/mute_mic]` module in polybar for a button to mute/unmute the mic
-bindsym $mod+m exec pactl set-source-mute 2 toggle
+bindsym $mod+m exec pactl set-source-mute alsa_input.usb-BLUE_MICROPHONE_Blue_Snowball_797_2019_05_09_
+55939-00.mono-fallback toggle
 
 # focus the child container
 #bindsym $mod+d focus child
