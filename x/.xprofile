@@ -9,3 +9,4 @@
 # wal -e --theme base16-gruvbox-dark > /dev/null
 
 # xautolock -time 5 -locker "/home/linus/dotfiles/polybar/.config/polybar/scripts/lock_screen.sh" -detectsleep &
+# ~/dotfiles/polybar/.config/polybar/scripts/set_random_background.sh

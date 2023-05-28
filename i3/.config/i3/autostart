@@ -2,8 +2,8 @@
 # -f for fading effect
 #exec --no-startup-id "picom -f &"
 exec --no-startup-id "picom &"
-exec --no-startup-id i3-msg 'exec sleep 20 && /bin/bash /home/linus/.config/polybar/scripts/set_random_background.sh'
-exec --no-startup-id i3-msg 'exec sleep 20 && /bin/bash /home/linus/.config/polybar/scripts/dbus_listen_flameshot.sh'
+exec --no-startup-id i3-msg 'exec sleep 5 && /bin/bash /home/linus/.config/polybar/scripts/set_random_background.sh'
+exec --no-startup-id i3-msg 'exec sleep 5 && /bin/bash /home/linus/.config/polybar/scripts/dbus_listen_flameshot.sh'
 
 
 # Autostart processes
