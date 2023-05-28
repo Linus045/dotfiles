@@ -39,7 +39,7 @@ alias make="make -j 4"
 
 alias viu="viu -h 40"
 
-alias twitchchat="firefox --new-window --kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\""
+alias twitchchat="firefox --new-window -P twitch --kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\""
 
 # https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
 #alias fzf='~/useful_scripts/fzfimg.sh'

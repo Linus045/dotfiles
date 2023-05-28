@@ -3,4 +3,9 @@ for_window [ class="Pardokin" instance="Godot_Engine" ] floating enable; resize 
 
 
 # Apply correct layout for `twitchchat` command 
-for_window [ class="firefox" Title="Linus045 - Chat - Twitch — Mozilla Firefox" ] fullscreen disable, floating enable, move position 2090px 40px, resize set 300px 1105px;
+# for_window [ class="firefox" Title="Linus045 - Chat - Twitch — Mozilla Firefox" ] fullscreen disable, sticky enable, border none, floating enable, move position 2091px 34, resize set 300px 1145px;
+# for_window [ class="Zathura" workspace="1" Title="/home/linus/dev/rust_seminar/.*\.pdf" ] floating enable, resize set 830 1397, move position 1255 34;
+# for_window [ class="kitty" workspace="1" Title="tmuxstart" ] floating enable, move position 9 34, resize set 1240 1397;
+# for_window [ class="firefox" workspace="2" Title="^(?!Linus045 - Chat - Twitch — Mozilla Firefox)" ] floating enable, move position 9 34, resize set 2070 1397;
+
+include window_rules.local

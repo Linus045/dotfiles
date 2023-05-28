@@ -16,6 +16,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # take screenshots and copy them into the clipboard
 # for more options see xfce4-screenshooter --help
+# NOTE: for some reason it also needs the correct path in the config file see `flameshot config` option "General > Save Path"
 bindsym Print exec flameshot gui -c -p ~/.screenshots
 
 # zoom into the screen
