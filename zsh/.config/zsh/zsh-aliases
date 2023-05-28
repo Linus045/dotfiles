@@ -32,6 +32,9 @@ alias vlcwithhttp="vlc -I http --http-host 0.0.0.0 --http-port 8081 --http-passw
 # see https://github.com/sharkdp/bat
 alias cat='bat'
 
+# open rust book locally
+alias rustbook='rustup docs --book'
+
 # Sort entries when using ls
 alias ls='ls --group-directories-first --color=auto'
 
