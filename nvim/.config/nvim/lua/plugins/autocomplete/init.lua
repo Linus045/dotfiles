@@ -38,7 +38,14 @@ return {
 
 			-- show icons for entries in autocomplete menu
 			"onsails/lspkind.nvim",
-			"L3MON4D3/LuaSnip"
+			"L3MON4D3/LuaSnip",
+			{
+				"zbirenbaum/copilot-cmp",
+				after = { "copilot.lua" },
+				config = function()
+					require("copilot_cmp").setup()
+				end
+			}
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -53,6 +60,14 @@ return {
 				return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
+
+			cmp.event:on("menu_opened", function()
+				vim.b.copilot_suggestion_hidden = true
+			end)
+
+			cmp.event:on("menu_closed", function()
+				vim.b.copilot_suggestion_hidden = false
+			end)
 
 			cmp.setup({
 				snippet = {
@@ -177,7 +192,11 @@ return {
 								calc = "[Calc]",
 								zsh = "[Zsh]",
 								latex_symbols = "[Latex]",
+								copilot = "[Copilot]",
 							},
+							symbol_map = {
+								Copilot = "",
+							}
 						})(entry, vim_item)
 						local strings = vim.split(kind.kind, "%s", { trimempty = true })
 						if strings[1] ~= "" then
@@ -205,6 +224,11 @@ return {
 							's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
 							'N', 'O',
 							'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_' }
+					},
+					{
+						name = "copilot",
+						priority = 100,
+						group_index = 1,
 					},
 					{
 						name = "nvim_lsp_signature_help",
@@ -252,7 +276,10 @@ return {
 					-- },
 				}),
 				sorting = {
+					priority_weight = 2,
 					comparators = {
+						require("copilot_cmp.comparators").prioritize,
+
 						cmp.config.compare.offset,
 						cmp.config.compare.exact,
 						cmp.config.compare.score,

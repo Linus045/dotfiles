@@ -26,6 +26,7 @@ return {
 					-- set color for :Termdebug
 					vim.cmd("highlight debugPC term=reverse ctermbg=4 guibg=darkblue")
 
+					vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#8cbee2" })
 
 					-- vim.cmd("hi DiffAdd cterm=NONE ctermfg=NONE    gui=none    guifg=NONE          guibg=#bada9f")
 					-- vim.cmd("hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac ")
