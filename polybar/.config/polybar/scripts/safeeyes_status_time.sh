@@ -1,6 +1,6 @@
 S="$(safeeyes --status)";
 if echo $S | grep -q Disabled; then
-  echo " Idle";
+  echo " Idle/Disabled";
 elif echo $S | grep -q "not running"; then
   echo " Off";
 else
