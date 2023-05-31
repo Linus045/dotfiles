@@ -86,12 +86,6 @@ local lsp_server_on_attach = function(client, bufnr)
 		-- vim.notify('File handlers.lua: folding not found.')
 	end
 
-	if client.name == "clangd" then
-		-- Fixes annoying warning
-		-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
-		-- client.offset_encoding = "utf-16"
-	end
-
 	-- Register automatic formatting: lsp-format.nvim
 	-- require("lsp-format").on_attach(client)
 
@@ -204,6 +198,13 @@ return {
 			else
 				-- print("[LSP-Installer] NO custom options for " .. server .. " found")
 			end
+
+			if server== "clangd" then
+				-- Fixes annoying warning
+				-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
+				opts.capabilities.offsetEncoding = 'utf-16'
+			end
+
 			lspconfig[server].setup(opts)
 			-- vim.notify("[LSP-Installer] " .. server .. " loaded")
 		end
