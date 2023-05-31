@@ -45,6 +45,7 @@ return {
 	-- Latex plugins
 	{
 		"lervag/vimtex",
+		lazy = false,
 		config = function()
 			-- This is necessary for VimTeX to load properly. The "indent" is optional.
 			-- Note that most plugin managers will do this automatically.
@@ -81,6 +82,16 @@ return {
 			-- Most VimTeX mappings rely on localleader and this can be changed with the
 			-- following line. The default is usually fine and is the symbol "\".
 			-- let maplocalleader = --,"
+
+
+			-- focus pdf viewer on sucessful compilation
+			-- vim.api.nvim_create_autocmd({ "User" }, {
+			-- 	pattern = { "VimtexEventCompileSuccess" },
+			-- 	callback = function(ev)
+			-- 		vim.cmd("VimtexView")
+			-- 		-- vim.cmd [[call b:vimtex.viewer.xdo_focus_vim()]]
+			-- 	end
+			-- })
 		end
 	},
 
