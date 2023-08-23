@@ -3,3 +3,4 @@ export TERMINAL=kitty
 export ZDOTDIR=$HOME/.config/zsh
 
 source ~/.config/zsh/.zshrc
+. "$HOME/.cargo/env"
