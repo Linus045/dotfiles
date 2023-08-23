@@ -96,6 +96,20 @@ keymap("n", "<leader>fsw", "<cmd>Telescope lsp_workspace_symbols<CR>", opts, "Te
 keymap("n", "<leader>fsd", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts, "Telescope workspace symbols")
 keymap("n", "<leader>?", "<cmd>Telescope keymaps<CR>", opts, "Telescope keymaps")
 
+keymap("n", "<leader>1", "1gt", opts, "Move to tab 1")
+keymap("n", "<leader>2", "2gt", opts, "Move to tab 2")
+keymap("n", "<leader>3", "3gt", opts, "Move to tab 3")
+keymap("n", "<leader>4", "4gt", opts, "Move to tab 4")
+keymap("n", "<leader>5", "5gt", opts, "Move to tab 5")
+keymap("n", "<leader>6", "6gt", opts, "Move to tab 6")
+keymap("n", "<leader>7", "7gt", opts, "Move to tab 7")
+keymap("n", "<leader>8", "8gt", opts, "Move to tab 8")
+-- 9 and 0 are already mapped
+-- keymap("n", "<leader>9", "9gt", opts, "Move to tab 9")
+
+keymap("n", "]t", "gt", opts, "Move to next tab")
+keymap("n", "[t", "gT", opts, "Move to previous tab")
+
 -- default Live Grep
 keymap("n", "<leader>g", nil, opts, "[GREP|Codelens]", false, true)
 -- Live Grep with regular Expression (default rg)
@@ -139,13 +153,13 @@ keymap(
 	"Open NvimJournal"
 )
 
-keymap(
-	"n",
-	"<leader>8",
-	"<CMD>lua require'plugins.telescope.telescope_custom'.list_sessions()<CR>",
-	opts,
-	"Prosessions List"
-)
+-- keymap(
+-- 	"n",
+-- 	"<leader>8",
+-- 	"<CMD>lua require'plugins.telescope.telescope_custom'.list_sessions()<CR>",
+-- 	opts,
+-- 	"Prosessions List"
+-- )
 
 keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts,
 	"Telescope Fuzzy Buffer")
