@@ -44,7 +44,7 @@ local function lsp_keymaps(client, bufnr)
 	-- Create own file/directory that allows custom commands/keybindings per language/lsp provider
 	-- e.g. lsp/configurations/clangd.lua which contains this command or a more advanced version that can search for implementations if used on a function signature etc.
 	-- https://github.com/neovim/nvim-lspconfig/blob/c5dae15c0c94703a0565e8ba35a9f5cb96ca7b8a/lua/lspconfig/server_configurations/clangd.lua#L52-L59
-	keymap("n", "gt", '<cmd>ClangdSwitchSourceHeader<CR>', opts, "Switch between source/header file", nil, nil, bufnr)
+	keymap("n", "gh", '<cmd>ClangdSwitchSourceHeader<CR>', opts, "Switch between source/header file", nil, nil, bufnr)
 
 	keymap("n", "<leader>,", "<cmd>lua vim.lsp.codelens.run()<CR>", opts, "Codelens (uses DAP to Run|Debug)", nil, nil,
 		bufnr)
@@ -199,7 +199,7 @@ return {
 				-- print("[LSP-Installer] NO custom options for " .. server .. " found")
 			end
 
-			if server== "clangd" then
+			if server == "clangd" then
 				-- Fixes annoying warning
 				-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
 				opts.capabilities.offsetEncoding = 'utf-16'
