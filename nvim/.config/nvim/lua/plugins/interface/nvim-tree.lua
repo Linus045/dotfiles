@@ -72,8 +72,6 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
 		local nvim_tree = require("nvim-tree")
-		local nvim_tree_config = require("nvim-tree.config")
-		local tree_cb = nvim_tree_config.nvim_tree_callback
 
 		-- automatically open nvim-tree when vim starts
 		local function open_nvim_tree(data)
