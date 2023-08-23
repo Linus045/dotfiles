@@ -76,7 +76,7 @@
   "trouble.nvim": { "branch": "main", "commit": "40aad004f53ae1d1ba91bcc5c29d59f07c5f01d3" },
   "undotree": { "branch": "master", "commit": "0e11ba7325efbbb3f3bebe06213afa3e7ec75131" },
   "vim-cmake": { "branch": "master", "commit": "6b7b18130c30e1d498c0ec8fca3c18951273e4ea" },
-  "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },
+  "vim-fugitive": { "branch": "master", "commit": "5f0d280b517cacb16f59316659966c7ca5e2bea2" },
   "vim-glsl": { "branch": "master", "commit": "bfd330a271933c3372fcfa8ce052970746c8e9dd" },
   "vim-magnum": { "branch": "master", "commit": "7a30761b935d72bada5bbe90162a6afdb77c858d" },
   "vim-radical": { "branch": "master", "commit": "95ad54adf048dfadf54a49ba1a0c906b689f89dd" },
