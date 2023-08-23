@@ -48,6 +48,11 @@ alias viu="viu -h 40"
 alias twitchchat="firefox --new-window -P twitch --kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\" >/dev/null 2>&1 & disown"
 alias firefox="firefox -P & disown"
 
+# dual-boot windows messes up network adapter. This command restarts it (idk if there is a better way but this works fine)
+# escaping single quotes is a mess, double quote could probably simplify this but then it might b
+# misinterpreted by the shell (see echo '$HOME' vs echo "$HOME"), not really relevant here but this way is more fun :)
+alias restart_network='sudo -i -- sh -c '\''ip link set enp42s0 down && echo '\''\'\'''\''Shutting down network adapter and waiting 5 seconds...'\''\'\'''\'' && sleep 5 && echo '\''\'\'''\''Restarting network adapter...'\''\'\'''\'' && ip link set enp42s0 up && echo '\''\'\'''\''Done'\''\'\'''\'''\'
+
 # https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
 #alias fzf='~/useful_scripts/fzfimg.sh'
 
