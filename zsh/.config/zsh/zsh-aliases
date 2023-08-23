@@ -46,6 +46,7 @@ alias viu="viu -h 40"
 # immediately disown it (so it doesn't close when the terminal closes)
 # and redirect all output to /dev/null
 alias twitchchat="firefox --new-window -P twitch --kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\" >/dev/null 2>&1 & disown"
+alias firefox="firefox -P & disown"
 
 # https://github.com/seebye/ueberzug/blob/master/examples/fzfimg.sh
 #alias fzf='~/useful_scripts/fzfimg.sh'
