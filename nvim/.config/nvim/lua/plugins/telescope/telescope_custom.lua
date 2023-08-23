@@ -170,6 +170,7 @@ local live_grep_in_glob = function(glob_pattern)
 			"--line-number",
 			"--column",
 			"--smart-case",
+			"--hidden",
 			"--glob=" .. (glob_pattern or ""),
 		}
 	})
