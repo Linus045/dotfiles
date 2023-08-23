@@ -32,4 +32,5 @@ return {
 			require 'hex'.setup()
 		end
 	},
+	require("plugins.text_utils.vim-glsl"),
 }
