@@ -194,7 +194,8 @@ M.register_rust_cargo_check_autocommand = function()
 
 					local oldwin = vim.api.nvim_get_current_win()
 
-					if exit_status == 0 then
+					local error_warnings = M.get_error_warning_count()
+					if (exit_status == 0) and (error_warnings.warning_count == 0) then
 						local height = 1
 						-- delete old buffer
 						vim.cmd("bwipe " .. M.buf_nr)
@@ -215,7 +216,6 @@ M.register_rust_cargo_check_autocommand = function()
 					end
 					vim.api.nvim_set_current_win(oldwin)
 
-					local error_warnings = M.get_error_warning_count()
 					if error_warnings.error_count > 0 then
 						vim.fn.setqflist(error_warnings.quickfix_list)
 						vim.cmd("cfirst")
