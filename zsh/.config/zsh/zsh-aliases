@@ -20,6 +20,12 @@ alias pacman-packages-upgradable="pacman -Qu | fzf --preview 'pacman -Qil {}' --
 alias aq="asciiquarium"
 alias feh='feh -d --scale-down'
 
+# put stuff into clipboard
+# e.g.
+# pwd | clip
+# echo "test" | clip
+alias clip="xclip -selection clipboard"
+
 # Tmux alias
 # alias tn='tmux new-session'
 # alias ta='tmux attach'
@@ -98,6 +104,7 @@ alias pscpu='ps auxf | sort -nr -k 3 | head -5'
 alias   ..='cd ..'
 alias  ...='cd ../../'
 alias ....='cd ../../../'
+alias cddot="cd $DOTFILES"
 
 # force vt100 when using ssh (sets terminal emulator so flashing/bell/etc is outputted correctly)
 # see: https://it.engineering.oregonstate.edu/book/what-does-term-network-or-term-vt100-mean
