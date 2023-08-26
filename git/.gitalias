@@ -1,0 +1,16 @@
+
+
+# Adds this to your ~/.gitconfig to include this file
+# if a relative path is given, it's relative to the .gitconfig file contains this include statement
+# [include]
+#     path = ~/.gitalias
+
+
+
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n 10
+	lga = lg --all
+	# https://www.reddit.com/r/commandline/comments/wf7oju/post_your_favorite_git_aliases/iitpemz
+	# paid = push 
+	diff-words = diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
+	s = status -sb
