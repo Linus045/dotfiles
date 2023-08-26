@@ -3,10 +3,13 @@ return {
 	-- { "joshdick/onedark.vim" },
 	-- { "sainnhe/gruvbox-material" },
 	{
-		"arcticicestudio/nord-vim",
+		"folke/tokyonight.nvim",
+		-- "arcticicestudio/nord-vim",
+		lazy = false,
 		priority = 1000,
 		config = function()
-			local colorscheme = "nord"
+			-- local colorscheme = "nord"
+			local colorscheme = "tokyonight-moon"
 
 
 			vim.api.nvim_create_autocmd({ "ColorScheme" }, {
@@ -36,6 +39,7 @@ return {
 			})
 
 			vim.cmd("colorscheme " .. colorscheme)
-		end
+		end,
+		opts = {},
 	},
 }
