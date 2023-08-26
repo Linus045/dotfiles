@@ -72,10 +72,12 @@ return {
 			--  vim.g.vimtex_compiler_progname = 'nvr'
 			-- vim.g.vimtex_compiler_method = 'latexrun'
 			vim.g.vimtex_compiler_latexrun = {
-				build_dir = 'build_latexrun',
+				out_dir = 'build_latexrun',
+				aux_dir = 'build_latexrun',
 			}
 			vim.g.vimtex_compiler_latexmk = {
-				build_dir = 'build_latexmk',
+				out_dir = 'build_latexmk',
+				aux_dir = 'build_latexmk',
 			}
 
 
