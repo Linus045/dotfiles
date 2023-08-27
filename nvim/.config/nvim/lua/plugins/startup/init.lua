@@ -16,11 +16,11 @@ return {
 	--     vim.g.startify_custom_header = 'startify#pad(startify#fortune#boxed())'
 	--   end })
 
-	{
-		'goolord/alpha-nvim',
-		dependencies = { 'nvim-tree/nvim-web-devicons' },
-		config = function()
-			require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
-		end
-	}
+	-- {
+	-- 	'goolord/alpha-nvim',
+	-- 	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	-- 	config = function()
+	-- 		require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
+	-- 	end
+	-- }
 }
