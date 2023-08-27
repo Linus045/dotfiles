@@ -51,6 +51,13 @@ vim.opt.guicursor = "a:block-blinkoff0"
 vim.opt.shortmess:append "c"      -- shorten messages
 vim.opt.autochdir = false
 vim.opt.spell = true              -- enable spell checking
+vim.opt.spelllang = { "en", "de" }
+
+-- Adds directory to runtime path so we can access the spell directory
+-- expands to /home/linus/.local/share/<nvim_profile>/site
+-- https://github.com/folke/lazy.nvim/issues/64
+vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site")
+
 vim.opt.colorcolumn = "80,100"    -- color columns
 vim.opt.foldlevel = 0             -- start with all folds open
 vim.opt.foldlevelstart = 99
