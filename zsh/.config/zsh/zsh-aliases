@@ -15,6 +15,7 @@ alias myip="curl https://ipinfo.io"
 # https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Browsing_packages
 alias pacman-packages="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias pacman-packages-upgradable="pacman -Qu | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+alias pacman-packages-by-size='pacman -Qi | gawk '\''/^Name/ { x = $3 }; /^Installed Size/ { sub(/Installed Size  *:/, ""); print x":" $0 }'\'' | sort -k2,3rn | head -n30 | gawk '\''BEGIN { print "\n""These are your 30 largest programs:""\n" }; { print }'\'''
 
 # ASCII aquarium art
 alias aq="asciiquarium"

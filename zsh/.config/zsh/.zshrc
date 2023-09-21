@@ -135,7 +135,7 @@ bindkey "^[[1;5D" backward-word
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
 # Bind caps to escape
-setxkbmap -option caps:escape
+setxkbmap de,us -variant us, -option caps:escape
 # swap escape and caps
 # setxkbmap -option caps:swapescape
 
