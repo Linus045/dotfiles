@@ -1,6 +1,6 @@
 return {
 	-- Faster autocompletion
-	require("plugins.autocomplete.copilot_vim"),
+	-- require("plugins.autocomplete.copilot_vim"),
 	{
 		"hrsh7th/nvim-cmp",
 		-- lost just before insert mode is entered, see :h InsertEnter
@@ -39,13 +39,13 @@ return {
 			-- show icons for entries in autocomplete menu
 			"onsails/lspkind.nvim",
 			"L3MON4D3/LuaSnip",
-			{
-				"zbirenbaum/copilot-cmp",
-				after = { "copilot.lua" },
-				config = function()
-					require("copilot_cmp").setup()
-				end
-			}
+			-- {
+			-- 	"zbirenbaum/copilot-cmp",
+			-- 	after = { "copilot.lua" },
+			-- 	config = function()
+			-- 		require("copilot_cmp").setup()
+			-- 	end
+			-- }
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -278,7 +278,7 @@ return {
 				sorting = {
 					priority_weight = 2,
 					comparators = {
-						require("copilot_cmp.comparators").prioritize,
+						-- require("copilot_cmp.comparators").prioritize,
 
 						cmp.config.compare.offset,
 						cmp.config.compare.exact,
