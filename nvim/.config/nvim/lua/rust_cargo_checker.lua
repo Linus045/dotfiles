@@ -42,7 +42,7 @@ M.close_window = function()
 	end
 end
 
-M.window_height = 30
+M.window_height = 10
 
 M.create_window = function(use_window)
 	if use_window == nil then
@@ -81,6 +81,7 @@ M.create_window = function(use_window)
 	-- vim.api.nvim_win_set_option(winId, "cursorline", false)
 	-- vim.api.nvim_win_set_option(winId, "spell", false)
 	-- vim.api.nvim_win_set_option(winId, "colorcolumn", "")
+	-- vim.api.nvim_buf_set_option(winId, "spell", false)
 end
 
 M.get_error_warning_count = function()
@@ -95,7 +96,7 @@ M.get_error_warning_count = function()
 		-- Check for type W
 		-- Ignore everything until we get an E
 		local collect_err = 0
-		-- local new_qf_list = {}
+		local new_qf_list = {}
 		for k, v in pairs(qflist) do
 			-- Count number of warnings
 			if v.type == "W" and v.text ~= ".*generated\\s\\d*\\swarning" then
@@ -111,15 +112,15 @@ M.get_error_warning_count = function()
 			end
 
 			-- Add errors to the new quickfix list
-			-- if collect_err then
-			-- 	new_qf_list[#new_qf_list + 1] = v
-			-- end
+			if collect_err then
+				new_qf_list[#new_qf_list + 1] = v
+			end
 		end
 
-		-- vim.fn.setqflist(new_qf_list)
+		vim.fn.setqflist(new_qf_list)
 	end
 
-	return { ["error_count"] = error_count,["warning_count"] = warning_count,["quickfix_list"] = qflist }
+	return { ["error_count"] = error_count, ["warning_count"] = warning_count, ["quickfix_list"] = qflist }
 end
 
 
@@ -171,6 +172,7 @@ M.register_rust_cargo_check_autocommand = function()
 
 			local oldwin = vim.api.nvim_get_current_win()
 			vim.api.nvim_set_current_win(M.window_nr)
+			vim.api.nvim_win_set_option(0, "spell", false)
 			-- local buf = vim.api.nvim_create_buf(false, true)
 			-- M.rust_cargo_check_buf_nr = buf
 
@@ -179,11 +181,13 @@ M.register_rust_cargo_check_autocommand = function()
 			-- vim.api.nvim_set_current_win(oldwin)
 
 			-- local args = { "cargo", "check", "--message-format", "human", "-q", "--color", "always" }
-			local args = { "cargo", "clippy", "--message-format", "human", "--color", "always", --[[ "--", "-Dwarnings" ]] }
+			local args = { "cargo", "clippy", "--message-format", "human", "--color",
+				"always", --[[ "--", "-Dwarnings" ]] }
 			vim.cmd("terminal " .. vim.fn.join(args, " "))
 			M.buf_nr = vim.api.nvim_get_current_buf()
 			vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
 			vim.api.nvim_set_current_win(oldwin)
+
 
 			vim.api.nvim_create_autocmd("TermClose", {
 				group = M.cmd_output_changed_group,
@@ -210,6 +214,9 @@ M.register_rust_cargo_check_autocommand = function()
 						-- vim.api.nvim_buf_set_lines(M.buf_nr, 0, -1, false, { "No errors found." })
 						-- vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", false)
 					else
+						vim.api.nvim_set_current_win(M.window_nr)
+						vim.api.nvim_win_set_buf(M.window_nr, M.buf_nr)
+
 						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
 						vim.cmd("resize " .. M.window_height)
 						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", false)
@@ -218,7 +225,7 @@ M.register_rust_cargo_check_autocommand = function()
 
 					if error_warnings.error_count > 0 then
 						vim.fn.setqflist(error_warnings.quickfix_list)
-						vim.cmd("cfirst")
+						-- vim.cmd("cfirst")
 					end
 					M.print_error_warning_count(error_warnings.error_count, error_warnings.warning_count)
 				end,
