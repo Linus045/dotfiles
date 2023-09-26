@@ -43,7 +43,17 @@ return {
 				-- null_ls.builtins.diagnostics.cppcheck,
 				-- formatting.black
 				diagnostics.eslint.with({
-					filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "html" },
+					filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
+					config = {
+						parserOptions = {
+							sourceType = "module",
+						},
+						ecmaFeatures = {
+							modules = true,
+							spread = true,
+							restParams = true
+						},
+					}
 				})
 				-- code_actions.eslint_d,
 				-- null_ls.builtins.code_actions.gitsigns,

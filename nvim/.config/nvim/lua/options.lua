@@ -36,7 +36,7 @@ vim.opt.undofile = true           -- enable persistent undo
 vim.opt.updatetime = 300          -- faster completion (4000ms default)
 vim.opt.writebackup = false       -- if a file is being edited by another program (or was written to file with another program), it is NOT allowed to be edited
 vim.opt.expandtab = false         -- converts tabs to spaces
-vim.opt.shiftwidth = 2            -- the number of spaces inserted for each indentation
+vim.opt.shiftwidth = 4            -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 4               -- insert 2 spaces for a tab
 vim.opt.cursorline = true         -- hightlight the current line
 vim.opt.number = true             -- show numbered lines
@@ -58,11 +58,11 @@ vim.opt.spelllang = { "en", "de" }
 -- https://github.com/folke/lazy.nvim/issues/64
 vim.opt.rtp:append(vim.fn.stdpath("data") .. "/site")
 
-vim.opt.colorcolumn = "80,100"    -- color columns
-vim.opt.foldlevel = 0             -- start with all folds open
+vim.opt.colorcolumn = "80,100" -- color columns
+vim.opt.foldlevel = 0          -- start with all folds open
 vim.opt.foldlevelstart = 99
-vim.opt.selection = "old"         -- prevents selecting of newline character in visual select mode
-vim.opt.splitkeep = "screen"      -- changes how the cursor behaves on split
+vim.opt.selection = "old"      -- prevents selecting of newline character in visual select mode
+vim.opt.splitkeep = "screen"   -- changes how the cursor behaves on split
 
 -- vim.g.transparent_enabled = true  -- disable transparent background
 
@@ -78,9 +78,9 @@ vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 
 -- characters to show
 vim.opt.listchars = {
-	tab = "> ",
-	eol = "↩",
-	nbsp = "+"
+    tab = "> ",
+    eol = "↩",
+    nbsp = "+"
 }
 
 -- vim.cmd "set path+=**" -- bad practice see: https://github.com/tpope/vim-apathy

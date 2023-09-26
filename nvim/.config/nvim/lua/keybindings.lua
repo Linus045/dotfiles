@@ -165,8 +165,8 @@ keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuz
 	"Telescope Fuzzy Buffer")
 
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
-keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
-keymap("v", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts, "Code Actions")
+keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR><Esc>", opts, "Code Actions")
+keymap("v", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR><Esc>", opts, "Code Actions")
 -- remap to open the Telescope refactoring menu in visual mode
 
 keymap("n", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
