@@ -62,7 +62,13 @@ return {
 	-- * [Resolving merge conflicts with vimdiff](http://vimcasts.org/e/33)
 	-- * [Browsing the git object database](http://vimcasts.org/e/34)
 	-- * [Exploring the history of a git repository](http://vimcasts.org/e/35)
-	"tpope/vim-fugitive",
+	{
+		"tpope/vim-fugitive",
+		config = function()
+			-- remap '=' to '<TAB>' so I can toggle the diff more easily
+			vim.cmd([[ let g:nremap = {'=': '<TAB>'}]])
+		end
+	},
 
 	-- Github integration for fugitive (e.g. :Gbrowse)
 	"tpope/vim-rhubarb",
