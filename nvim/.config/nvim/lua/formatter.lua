@@ -5,7 +5,7 @@ M.disabled_filetypes = {}
 
 M.format = function()
 	local lspDisabled = M.disabled or M.disabled_filetypes[vim.bo.filetype] or
-			vim.b.format_saving
+		vim.b.format_saving
 	if lspDisabled then
 		return
 	end
@@ -45,6 +45,17 @@ M.setup = function()
 		"FormatEnable",
 		function()
 			M.disabled = false
+		end,
+		{}
+	)
+
+	vim.api.nvim_create_user_command(
+		"WriteUnformatted",
+		function()
+			local old = M.disabled
+			M.disabled = true
+			vim.cmd("w")
+			M.disabled = old
 		end,
 		{}
 	)
