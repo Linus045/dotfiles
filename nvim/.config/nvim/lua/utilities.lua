@@ -9,6 +9,8 @@ vim.cmd(
 	"autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup=(vim.fn['hlexists']('HighlightedyankRegion') > 0 and 'HighlightedyankRegion' or 'IncSearch'), timeout=300}")
 
 -- https://unix.stackexchange.com/a/8296
+-- Used to paste vim command output into buffer (similar to r!ls for terminal commands)
+-- :put =Exec('ls')
 vim.cmd [[
 funct! Exec(command)
     redir =>output
@@ -25,7 +27,7 @@ local function Write_output(command)
 	vim.cmd(":call Exec('" .. command .. "')")
 end
 
-vim.api.nvim_create_user_command('WriteCommandOutput', function(args)
+vim.api.nvim_create_user_command('PrintVimCommandOutput', function(args)
 	local command = args.args -- vim.fn.input('Command: ')
 	Write_output(command)
 end, {
@@ -54,11 +56,11 @@ endfun
 ]])
 
 vim.api.nvim_create_user_command('PrintCppOutput', function(args)
-  if args.args == "20" or args.args == "17" or args.args == "14" or args.args == "11" then
-	Write_output("!g++ -std=c++"..args.args .." -Wall -Wextra -Wpedantic -Werror -o /tmp/a.out % && /tmp/a.out")
-  else
-	vim.cmd("echoerr 'Invalid C++ version'")
-  end
+	if args.args == "20" or args.args == "17" or args.args == "14" or args.args == "11" then
+		Write_output("!g++ -std=c++" .. args.args .. " -Wall -Wextra -Wpedantic -Werror -o /tmp/a.out % && /tmp/a.out")
+	else
+		vim.cmd("echoerr 'Invalid C++ version'")
+	end
 end, {
 	desc = "Compiles and run C++ file and prints output in buffer",
 	nargs = 1,
