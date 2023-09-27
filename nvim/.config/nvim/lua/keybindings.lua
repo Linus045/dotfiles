@@ -90,6 +90,7 @@ keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts, "Telescope help 
 keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts, "Telescope commands")
 keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope diagnostics")
 keymap("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts, "Telescope quickfix")
+keymap("n", "<leader>fw", "<cmd>Telescope git_worktree git_worktrees<CR>", opts, "Telescope git worktrees")
 
 keymap("n", "<leader>fs", nil, opts, "[LSP Symbols]", false, true)
 keymap("n", "<leader>fss", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")

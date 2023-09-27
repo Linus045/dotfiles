@@ -46,6 +46,13 @@ return {
 		end
 	},
 
+	{
+		"ThePrimeagen/git-worktree.nvim",
+		config = function()
+			require("git-worktree").setup()
+		end
+
+	},
 
 	-- Useful short videos of how to use fugitive:
 	-- Links taken from: https://github.com/tpope/vim-fugitive#screencasts
