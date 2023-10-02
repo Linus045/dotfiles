@@ -17,6 +17,7 @@ cpu-x - cpu-z alternative (shows hardware stats)
 ctags - generates tags to jump to (used in neovim with https://github.com/liuchengxu/vista.vim) 
 dateutils - contains some date functions i needed for some stuff
 difftastic - better git diff
+git-delta - better git pager
 digimend-kernel-drivers-dkms - drivers for drawing tablet
 discord - Discord
 dunst - notification popups
@@ -74,6 +75,7 @@ xclip - clipboard manager used for neovim
 xournalpp - notetaking app
 xsane - scanner interface
 yay-bin - package manager for packages from AUR
+paru - package manager for packages from AUR
 zathura - pdf viewer
 zoxide - improved cd command
 
