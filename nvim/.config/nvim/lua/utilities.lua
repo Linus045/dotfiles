@@ -103,3 +103,12 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 		vim.api.nvim_win_set_option(0, "spell", false)
 	end
 })
+
+-- https://strdr4605.com/typescript-errors-into-vim-quickfix
+-- use :make and :copen in typescript files to see errors
+local augroup = vim.api.nvim_create_augroup("strdr4605", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "typescript,typescriptreact",
+	group = augroup,
+	command = "compiler tsc | setlocal makeprg=npx\\ tsc",
+})
