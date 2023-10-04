@@ -353,6 +353,8 @@ keymap("n", "<leader>hgm", "<CMD>Git mergetool<CR>", opts, "[VIM-FUGITIVE] Git M
 keymap("n", "<leader>w", nil, opts, "[VIMWIKI]", false, true)
 
 keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
+keymap("n", "<leader>b", [[:lua require("nvim-navbuddy").open()<CR>]], opts, "Open NavBuddy")
+
 -- Zen mode
 keymap("n", "<leader><Space>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
 
