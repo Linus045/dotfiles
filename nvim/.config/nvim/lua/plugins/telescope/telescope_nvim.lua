@@ -95,14 +95,17 @@ return {
 					theme = "dropdown",
 					previewer = false,
 					winblend = 15,
+					initial_mode = "insert",
 				},
 				keymaps = {
 					theme = "ivy",
 					winblend = 15,
+					initial_mode = "normal",
 				},
 				buffers = {
 					theme = "ivy",
 					winblend = 15,
+					initial_mode = "normal",
 				},
 				current_buffer_fuzzy_find = {
 					theme = "dropdown",
@@ -116,10 +119,15 @@ return {
 				},
 				lsp_references = {
 					trim_text = true,
+					initial_mode = "normal",
 				},
 				live_grep = {
 					theme = "ivy",
 					winblend = 15,
+					initial_mode = "insert",
+				},
+				quickfix = {
+					initial_mode = "normal",
 				},
 				-- Default configuration for builtin pickers goes here:
 				-- picker_name = {
