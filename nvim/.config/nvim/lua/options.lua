@@ -83,6 +83,10 @@ vim.opt.listchars = {
     nbsp = "+"
 }
 
+if vim.fn.executable("rg") then
+	vim.opt.grepprg = 'rg --vimgrep'
+end
+
 -- vim.cmd "set path+=**" -- bad practice see: https://github.com/tpope/vim-apathy
 vim.cmd "set wildignore+=*/node_modules/*"
 vim.cmd "set whichwrap+=<,>,[,]"         -- which keys wrap to the next line
