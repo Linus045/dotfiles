@@ -63,8 +63,8 @@ keymap("v", "<leader>y", '"+y', opts, "Copy to system clipboard")
 
 -- Visual Block --
 -- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts, nil, true)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts, nil, true)
+-- keymap("x", "J", ":move '>+1<CR>gv-gv", opts, nil, true)
+-- keymap("x", "K", ":move '<-2<CR>gv-gv", opts, nil, true)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts, nil, true)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts, nil, true)
 
@@ -89,6 +89,7 @@ keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts, "Telescope buffers
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts, "Telescope help tags")
 keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts, "Telescope commands")
 keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope diagnostics")
+keymap("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts, "Telescope quickfix")
 
 keymap("n", "<leader>fs", nil, opts, "[LSP Symbols]", false, true)
 keymap("n", "<leader>fss", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")
