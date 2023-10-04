@@ -10,7 +10,8 @@ return {
 		config = function()
 			local trouble = require("trouble")
 			trouble.setup {
-				position = "right", -- position of the list can be: bottom, top, left, right
+				position = "bottom", -- position of the list can be: bottom, top, left, right
+				auto_fold = true,
 			}
 		end
 	},
