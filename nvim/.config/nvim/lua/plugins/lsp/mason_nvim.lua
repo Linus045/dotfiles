@@ -224,7 +224,10 @@ return {
 
 		local config = {
 			-- disable virtual text
-			virtual_text = true,
+			virtual_text = {
+				virt_text_pos = "eol",
+			},
+
 			-- show signs
 			signs = {
 				active = signs,
@@ -233,9 +236,9 @@ return {
 			underline = true,
 			severity_sort = true,
 			float = {
-				focusable = false,
+				focusable = true,
 				style = "minimal",
-				border = "rounded",
+				border = "none",
 				source = "always",
 				header = "",
 				prefix = "",
