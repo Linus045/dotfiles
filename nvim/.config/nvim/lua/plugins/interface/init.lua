@@ -1,6 +1,13 @@
 return {
 	-- Shows current function scope/signature at the top of the screen
-	"nvim-treesitter/nvim-treesitter-context",
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require 'treesitter-context'.setup {
+				mode = 'topline', -- Line used to calculate context. Choices: 'cursor', 'topline'
+			}
+		end
+	},
 
 	-- generates method/function list for the current file
 	-- use with :Vista
