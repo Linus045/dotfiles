@@ -27,3 +27,6 @@ vim.api.nvim_create_autocmd("User", {
 		-- do stuff after lazy initialized
 	end
 })
+
+
+require("load_project_config").setup()
