@@ -291,7 +291,7 @@ return {
 					},
 				},
 				experimental = {
-					ghost_text = true,
+					ghost_text = false,
 				},
 			})
 			-- Set configuration for specific filetype.
