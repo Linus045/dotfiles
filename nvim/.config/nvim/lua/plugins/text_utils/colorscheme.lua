@@ -31,6 +31,9 @@ return {
 
 					vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#8cbee2" })
 
+					vim.cmd("highlight CursorLineNr guifg=#E85D54")
+					vim.cmd("highlight LineNr guifg=#49807E")
+
 					-- vim.cmd("hi DiffAdd cterm=NONE ctermfg=NONE    gui=none    guifg=NONE          guibg=#bada9f")
 					-- vim.cmd("hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac ")
 					-- vim.cmd("hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0 ")
