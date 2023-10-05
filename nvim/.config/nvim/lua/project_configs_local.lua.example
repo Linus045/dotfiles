@@ -4,6 +4,7 @@ local M = {}
 -- Set project path as key and the configuration function as value
 -- This callback function will get called automatically when the current 
 -- working directory matches
+-- Paths will be compared with vim.startswith(cwd, <your path>)
 M.configs = {
 	["<Absolute project path>"] = function()
 		vim.opt.expandtab = true

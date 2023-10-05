@@ -29,4 +29,4 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 
-require("load_project_config").setup()
+require("load_project_config").load_custom_config_for_cwd()

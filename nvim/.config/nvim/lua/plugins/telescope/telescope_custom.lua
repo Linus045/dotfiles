@@ -220,7 +220,9 @@ M.list_projects = function(opts)
 		local selected_dir = selected.absolute_path
 		actions.close(prompt_bufnr)
 		vim.cmd("cd " .. selected_dir)
-		vim.notify("Changed directory to: " .. selected_dir)
+		vim.cmd("clearjumps")
+
+		require("load_project_config").load_custom_config_for_cwd()
 	end
 
 
