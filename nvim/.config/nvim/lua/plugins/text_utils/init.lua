@@ -33,4 +33,5 @@ return {
 		end
 	},
 	require("plugins.text_utils.vim-glsl"),
+	require("plugins.text_utils.json_schema"),
 }

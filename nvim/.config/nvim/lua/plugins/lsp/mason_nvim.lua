@@ -155,6 +155,8 @@ return {
 				"lua_ls",
 				"rust_analyzer",
 				"clangd",
+				"jsonls",
+				"yamlls",
 				-- "gopls",
 				-- "volar",
 				-- "tsserver",

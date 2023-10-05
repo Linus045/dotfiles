@@ -9,7 +9,14 @@ M.format = function()
 	if lspDisabled then
 		return
 	end
-	vim.lsp.buf.format()
+	vim.lsp.buf.format {
+		filter = function(client)
+			if client.name == "jsonls" then
+				return false
+			end
+			return true
+		end
+	}
 end
 
 M.setup = function()
@@ -25,7 +32,6 @@ M.setup = function()
 		pattern = "*",
 		callback = M.format,
 	})
-
 
 	vim.api.nvim_create_user_command(
 		"FormatToggle",
