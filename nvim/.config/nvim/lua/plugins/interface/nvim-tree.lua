@@ -106,6 +106,7 @@ return {
 			update_focused_file = {
 				enable = true,
 			},
+			sync_root_with_cwd = true,
 			view = {
 				side = "left",
 			},
