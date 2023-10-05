@@ -157,6 +157,8 @@ return {
 				"clangd",
 				"jsonls",
 				"yamlls",
+				"bashls",
+				"tsserver",
 				-- "gopls",
 				-- "volar",
 				-- "tsserver",
