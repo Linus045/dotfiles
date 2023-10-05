@@ -91,6 +91,8 @@ keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts, "Telescope comman
 keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope diagnostics")
 keymap("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts, "Telescope quickfix")
 keymap("n", "<leader>fw", "<cmd>Telescope git_worktree git_worktrees<CR>", opts, "Telescope git worktrees")
+keymap("n", "<leader>fp", [[<cmd>lua require'plugins.telescope.telescope_custom'.list_projects()<CR>]], opts,
+	"Telescope list project directories")
 
 keymap("n", "<leader>fs", nil, opts, "[LSP Symbols]", false, true)
 keymap("n", "<leader>fss", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")
