@@ -68,6 +68,13 @@ end, {
 })
 
 
+vim.api.nvim_create_user_command('Lazygit', function(args)
+	vim.cmd("tabnew | term lazygit")
+	vim.cmd("startinsert")
+end, {
+	desc = "Opens lazygit in a new buffer",
+})
+
 -- easier editing of binary files
 -- see :help using-xxd
 -- vim.cmd([[
