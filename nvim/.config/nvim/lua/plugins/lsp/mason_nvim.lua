@@ -2,15 +2,13 @@ local function lsp_codelens(client, bufnr)
 	local opts = { noremap = true, silent = true }
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if client.server_capabilities.codeLensProvider then
-		if filetype ~= "elm" then
-			vim.cmd([[
-        augroup lsp_document_codelens
-          au! * <buffer>
-          autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-          autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-        augroup END
-      ]])
-		end
+		vim.cmd([[
+		augroup lsp_document_codelens
+			au! * <buffer>
+			autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
+			autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
+		augroup END
+		]])
 	end
 end
 
