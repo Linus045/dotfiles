@@ -1,0 +1,19 @@
+-- Usage: Rename this file to "project_configs.local.lua" so it gets loaded
+local M = {}
+
+-- Set project path as key and the configuration function as value
+-- This callback function will get called automatically when the current 
+-- working directory matches
+M.configs = {
+	["<Absolute project path>"] = function()
+		vim.opt.expandtab = true
+		vim.opt.relativenumber = true
+	end,
+	["<Another absolute project path>"] = function()
+		vim.opt.expandtab = true
+		vim.opt.relativenumber = true
+		vim.opt.wrap = false
+	end,
+}
+
+return M

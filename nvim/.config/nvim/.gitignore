@@ -1,2 +1,3 @@
 # Directory for custom directory spellings
 spell/
+lua/project_configs.local.lua
