@@ -3,12 +3,7 @@ local M = {}
 M.disabled = false
 M.disabled_filetypes = {}
 
-M.format = function()
-	local lspDisabled = M.disabled or M.disabled_filetypes[vim.bo.filetype] or
-		vim.b.format_saving
-	if lspDisabled then
-		return
-	end
+M.format_function = function()
 	vim.lsp.buf.format {
 		filter = function(client)
 			if client.name == "jsonls" then
@@ -17,6 +12,15 @@ M.format = function()
 			return true
 		end
 	}
+end
+
+M.format = function()
+	local lspDisabled = M.disabled or M.disabled_filetypes[vim.bo.filetype] or
+		vim.b.format_saving
+	if lspDisabled then
+		return
+	end
+	M.format_function()
 end
 
 M.setup = function()
