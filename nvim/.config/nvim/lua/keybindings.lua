@@ -84,6 +84,8 @@ keymap("n", "<leader>X", ":bw!<cr>", opts, "Kill window (forced)")
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>f", nil, opts, "[FINDER]", false, true)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts, "Telescope find_files")
+keymap("n", "<leader>FF", [[<cmd>lua require'telescope.builtin'.find_files({hidden = true, no_ignore = true})<CR>]], opts,
+	"Telescope find_files (with hidden/ignored)")
 keymap("n", "<leader>fg", "<cmd>Telescope git_files<CR>", opts, "Telescope git_files")
 keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts, "Telescope buffers")
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts, "Telescope help tags")
