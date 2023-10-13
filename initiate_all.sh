@@ -45,14 +45,19 @@ if ! [[ -f ${SSH_KEYFILE} ]]; then
 
 
 	echo "Please add the following public SSH key to your GitHub"
+	echo "=========================================================="
+	cat "${SSH_KEYFILE}.pub"
+	echo "=========================================================="
+
+	echo "Opening browser in 5 seconds..."
+	sleep 5
 	xdg-open "https://github.com/settings/keys"
 
-Done=0
-
-while [[ ${Done} != "y" ]]; do
-	echo "Please enter 'y' when you're done to continue..."
-	read Done
-done
+	Done=0
+	while [[ ${Done} != "y" ]]; do
+		echo "Please enter 'y' when you're done to continue..."
+		read Done
+	done
 else
 	echo "Git SSH key for github already found. Assuming its installed in Github."
 fi
