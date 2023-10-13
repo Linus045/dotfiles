@@ -30,10 +30,10 @@ fi
 
 SSH_KEYFILE=~/.ssh/id_github
 if ! [[ -f ${SSH_KEYFILE} ]]; then
-echo ""
-echo "=========================================================="
+	echo ""
+	echo "=========================================================="
 	echo "Generating new SSH key for github"
-echo "=========================================================="
+	echo "=========================================================="
 	echo "Please enter your Email:"
 	read email
 	ssh-keygen -t ed25519 -C "${email}" -f "$SSH_KEYFILE"
