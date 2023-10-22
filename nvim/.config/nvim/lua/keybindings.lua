@@ -436,14 +436,14 @@ vim.cmd([[:command! F lua require("formatter").format_function()]])
 -- this needs to be done after all keybindings are defined
 local legendary = require('legendary')
 legendary.setup({
-	which_key = {
-		auto_register = true,
-		do_binding = false,
-	},
 	extensions = {
 		-- load keymaps and commands from nvim-tree.lua
 		nvim_tree = true,
 		-- load keymaps from diffview.nvim
 		diffview = true,
+		which_key = {
+			auto_register = true,
+			do_binding = false,
+		},
 	},
 })
