@@ -110,7 +110,11 @@ return {
 				current_buffer_fuzzy_find = {
 					theme = "dropdown",
 					previewer = false,
-					winblend = 15,
+					winblend = 0,
+					layout_config = {
+						width = 0.8,
+						height = 0.7
+					}
 				},
 				git_files = {
 					theme = "dropdown",
@@ -122,7 +126,10 @@ return {
 					initial_mode = "normal",
 				},
 				live_grep = {
-					theme = "ivy",
+					theme = "dropdown",
+					layout_config = {
+						width = 0.9
+					},
 					winblend = 15,
 					initial_mode = "insert",
 				},

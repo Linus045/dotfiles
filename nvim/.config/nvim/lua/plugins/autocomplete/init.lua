@@ -1,4 +1,6 @@
 return {
+
+	require("plugins.autocomplete.neogen"),
 	-- Faster autocompletion
 	-- require("plugins.autocomplete.copilot_vim"),
 	{
@@ -19,7 +21,7 @@ return {
 				"tamago324/cmp-zsh",
 				config = function()
 					require('cmp_zsh').setup {
-						zshrc = true,         -- Source the zshrc (adding all custom completions). default: false
+						zshrc = true, -- Source the zshrc (adding all custom completions). default: false
 						filetypes = { "sh", "zsh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
 					}
 				end
@@ -57,7 +59,8 @@ return {
 			-- See: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
 			local has_words_before = function()
 				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-				return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+				return col ~= 0 and
+					vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
 
@@ -219,11 +222,11 @@ return {
 						group_index = 1,
 						-- workaround for clangd's missing functions/cached results
 						-- see: https://github.com/hrsh7th/nvim-cmp/issues/1176
-						trigger_characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
-							'r',
-							's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-							'N', 'O',
-							'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_' }
+						trigger_characters = {
+							'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+							's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+							'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_'
+						}
 					},
 					{
 						name = "copilot",

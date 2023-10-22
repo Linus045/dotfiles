@@ -2,6 +2,7 @@ return {
 	"mfussenegger/nvim-dap",
 	config = function()
 		local dap = require("dap")
+		dap.set_log_level('TRACE');
 
 
 		-- require('dap-python').setup('/usr/bin/python')
@@ -19,10 +20,16 @@ return {
 			name = 'lldb'
 		}
 
-		dap.my_custom_continue_function = function()
+		dap.my_custom_continue_function = function(filetype)
 			-- vim.notify("Loading launch.json file configurations.")
 			print("Loading launch.json file configurations.")
-			require('dap.ext.vscode').load_launchjs(".vscode/launch.json", { lldb = { "c", "cpp" } })
+			-- map 'type' in launch.json to correct configuration
+			require('dap.ext.vscode').load_launchjs(".vscode/launch.json", {
+				lldb = { "c", "cpp" },
+				node = { "typescript" },
+				["pwa-node"] = { "typescript" }
+			})
+
 			dap.continue()
 		end
 
@@ -149,5 +156,143 @@ return {
     },
   },
 } ]]
+
+		-- DAP setup javascript/typescript
+		-- install dap-vscode-js via mason
+		local status_ok, vscode_js_dap = pcall(require, 'dap-vscode-js')
+		if not status_ok then
+			vim.notify('File nvim-dap.lua: dap-vscode-js not found.')
+		else
+			vscode_js_dap.setup({
+				debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
+				adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+				debugger_cmd = { 'js-debug-adapter' },
+			})
+
+			dap.adapters["node"] = function(cb, config)
+				P("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+				P(config)
+				cb({
+					type = "pwa-node",
+					port = "${port}"
+				})
+			end
+
+			-- custom adapter for running tasks before starting debug
+			-- local custom_adapter = 'pwa-node-custom'
+			-- dap.adapters[custom_adapter] = function(cb, config)
+			-- 	if config.preLaunchTask then
+			-- 		local async = require('plenary.async')
+			-- 		local notify = require('notify').async
+
+			-- 		async.run(function()
+			-- 			notify('Running [' .. config.preLaunchTask .. ']').events.close()
+			-- 		end, function()
+			-- 			vim.fn.system(config.preLaunchTask)
+			-- 			config.type = 'pwa-node'
+			-- 			dap.run(config)
+			-- 		end)
+			-- 	end
+			-- end
+
+			-- language config
+			for _, language in ipairs({ 'typescript', 'javascript' }) do
+				dap.configurations[language] = {
+					{
+						type = "pwa-node",
+						request = "launch",
+						name = "Launch file",
+						program = "${file}",
+						cwd = "${workspaceFolder}",
+					},
+					{
+						type = "pwa-node",
+						request = "attach",
+						name = "Attach",
+						processId = require 'dap.utils'.pick_process,
+						cwd = "${workspaceFolder}",
+					},
+					{
+						type = "pwa-node",
+						request = "launch",
+						name = "Debug Jest Tests",
+						-- trace = true, -- include debugger info
+						runtimeExecutable = "node",
+						runtimeArgs = {
+							"./node_modules/jest/bin/jest.js",
+							"--runInBand",
+						},
+						rootPath = "${workspaceFolder}",
+						cwd = "${workspaceFolder}",
+						console = "integratedTerminal",
+						internalConsoleOptions = "neverOpen",
+					},
+					-- {
+					-- 	name = 'Launch',
+					-- 	type = 'pwa-node',
+					-- 	request = 'launch',
+					-- 	program = '${file}',
+					-- 	rootPath = '${workspaceFolder}',
+					-- 	cwd = '${workspaceFolder}',
+					-- 	sourceMaps = true,
+					-- 	skipFiles = { '<node_internals>/**' },
+					-- 	protocol = 'inspector',
+					-- 	console = 'integratedTerminal',
+					-- },
+					-- {
+					-- 	name = 'Attach to node process',
+					-- 	type = 'pwa-node',
+					-- 	request = 'attach',
+					-- 	rootPath = '${workspaceFolder}',
+					-- 	processId = require('dap.utils').pick_process,
+					-- },
+					-- {
+					-- 	name = 'Debug Main Process (Electron)',
+					-- 	type = 'pwa-node',
+					-- 	request = 'launch',
+					-- 	program = '${workspaceFolder}/node_modules/.bin/electron',
+					-- 	args = {
+					-- 		'${workspaceFolder}/dist/index.js',
+					-- 	},
+					-- 	outFiles = {
+					-- 		'${workspaceFolder}/dist/*.js',
+					-- 	},
+					-- 	resolveSourceMapLocations = {
+					-- 		'${workspaceFolder}/dist/**/*.js',
+					-- 		'${workspaceFolder}/dist/*.js',
+					-- 	},
+					-- 	rootPath = '${workspaceFolder}',
+					-- 	cwd = '${workspaceFolder}',
+					-- 	sourceMaps = true,
+					-- 	skipFiles = { '<node_internals>/**' },
+					-- 	protocol = 'inspector',
+					-- 	console = 'integratedTerminal',
+					-- },
+					-- {
+					-- 	name = 'Compile & Debug Main Process (Electron)',
+					-- 	type = custom_adapter,
+					-- 	request = 'launch',
+					-- 	preLaunchTask = 'npm run build-ts',
+					-- 	program = '${workspaceFolder}/node_modules/.bin/electron',
+					-- 	args = {
+					-- 		'${workspaceFolder}/dist/index.js',
+					-- 	},
+					-- 	outFiles = {
+					-- 		'${workspaceFolder}/dist/*.js',
+					-- 	},
+					-- 	resolveSourceMapLocations = {
+					-- 		'${workspaceFolder}/dist/**/*.js',
+					-- 		'${workspaceFolder}/dist/*.js',
+					-- 	},
+					-- 	rootPath = '${workspaceFolder}',
+					-- 	cwd = '${workspaceFolder}',
+					-- 	sourceMaps = true,
+					-- 	skipFiles = { '<node_internals>/**' },
+					-- 	protocol = 'inspector',
+					-- 	console = 'integratedTerminal',
+					-- },
+				}
+			end
+		end
 	end,
 }

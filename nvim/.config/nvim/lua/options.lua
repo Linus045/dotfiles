@@ -67,7 +67,7 @@ vim.opt.splitkeep = "screen"   -- changes how the cursor behaves on split
 -- vim.g.transparent_enabled = true  -- disable transparent background
 
 -- use / to represent deleted lines in diff mode (see: https://github.com/sindrets/diffview.nvim#tips-and-faq)
-vim.opt.fillchars:append { diff = "╱" }
+vim.opt.fillchars:append { diff = "/" }
 
 -- Treesitter folding
 vim.wo.foldmethod = 'expr' -- use treesitter folding
@@ -78,9 +78,9 @@ vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 
 -- characters to show
 vim.opt.listchars = {
-    tab = "> ",
-    eol = "↩",
-    nbsp = "+"
+	tab = "> ",
+	eol = "↩",
+	nbsp = "+"
 }
 
 if vim.fn.executable("rg") then

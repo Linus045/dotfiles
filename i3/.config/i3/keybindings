@@ -27,6 +27,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # bindsym $mod+Shift+Return exec i3-sensible-terminal --working-directory $(xcwd)
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym $mod+Shift+e exec i3-msg exit
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec --no-startup-id dmenu_run

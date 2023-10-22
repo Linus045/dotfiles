@@ -10,12 +10,25 @@ return {
 	-- {"ggandor/lightspeed.nvim"},
 
 	-- surround text easier (e.g. with ", {. <, etc.)
-	{ "kylechui/nvim-surround" },
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end
+	},
+
+	"chrisbra/unicode.vim",
+
+
 	-- converts between the number representations encountered when programming,
 	-- that is in addition to decimal, hex, octal, and binary representation.
 	-- gA shows number under cursor in different formats
 	-- crd, crXm cro and crb will convert the number to the given format
-	{ "glts/vim-radical",      dependencies = { "glts/vim-magnum" } },
+	{ "glts/vim-radical", dependencies = { "glts/vim-magnum" } },
 
 	require("plugins.text_utils.colorscheme"),
 	require("plugins.text_utils.comment_nvim"),

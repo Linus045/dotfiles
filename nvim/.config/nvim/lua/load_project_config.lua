@@ -19,6 +19,7 @@ M.load_custom_config_for_cwd = function()
 	for path, config_func in pairs(project_configs.configs) do
 		if vim.startswith(cwd, path) then
 			-- apply default config
+			vim.notify("Loading config for: " .. cwd)
 			vim.opt = M.original_options
 			config_func()
 		end

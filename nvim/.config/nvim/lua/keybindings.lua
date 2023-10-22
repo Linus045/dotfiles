@@ -219,7 +219,7 @@ keymap("n", "<F5>", function()
 			require("termdebug_helper").RunDebugAndBreak()
 		end
 	else
-		require 'dap'.my_custom_continue_function()
+		require 'dap'.my_custom_continue_function(filetype)
 	end
 end, opts, "[DEBUG] Continue / Run and break at current line")
 
@@ -372,7 +372,7 @@ keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
 keymap("n", "<leader>U", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
 
 -- Turn editor transparent
-keymap("n", "<leader>P", ":TransparentToggle<CR>", opts, "Transparent Toggle")
+keymap("n", "<leader>P", ":TransparentToggle | colorscheme<CR>", opts, "Transparent Toggle")
 
 -- Remove search highlights
 keymap("n", "<leader>l", nil, opts, "Search-Highlight Options", false, true)
@@ -383,6 +383,7 @@ keymap("n", "<leader>ll", ":nohl<CR>:VMClear<CR>:lua print('Cleared search highl
 
 
 -- Unicode fuzzy search (see plugin unicode.vim)
+-- from chrisbra/unicode.vim
 keymap("i", "<C-G><C-F>", "<Plug>(UnicodeFuzzy)", opts, "[UNICODE] Insert Unicode Character")
 
 keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "[NEOGEN] Insert annotation")

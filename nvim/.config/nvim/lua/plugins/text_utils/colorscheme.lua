@@ -20,11 +20,14 @@ return {
 					vim.cmd("highlight clear SpellCap")
 					vim.cmd("highlight clear SpellLocal")
 					vim.cmd("highlight clear SpellRare")
-					vim.cmd("highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
-					vim.cmd("highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+					vim.cmd(
+						"highlight SpellBad cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+					vim.cmd(
+						"highlight SpellCap cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 					vim.cmd(
 						"highlight SpellLocal cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
-					vim.cmd("highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
+					vim.cmd(
+						"highlight SpellRare cterm=Underline ctermfg=NONE ctermbg=NONE term=Reverse gui=Undercurl guisp=Green")
 
 					-- set color for :Termdebug
 					vim.cmd("highlight debugPC term=reverse ctermbg=4 guibg=darkblue")
@@ -34,10 +37,17 @@ return {
 					vim.cmd("highlight CursorLineNr guifg=#E85D54")
 					vim.cmd("highlight LineNr guifg=#49807E")
 
-					-- vim.cmd("hi DiffAdd cterm=NONE ctermfg=NONE    gui=none    guifg=NONE          guibg=#bada9f")
-					-- vim.cmd("hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac ")
-					-- vim.cmd("hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0 ")
-					-- vim.cmd("hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2 ")
+					vim.cmd([[highlight clear DiffAdd]])
+					vim.cmd([[highlight clear DiffDelete]])
+					vim.cmd([[highlight clear DiffChange]])
+					vim.cmd([[highlight clear DiffText]])
+
+					vim.cmd([[highlight DiffAdd gui=bold guifg=None guibg=#062e27]])
+					vim.cmd([[highlight DiffDelete gui=none guifg=Red guibg=#06272e]])
+					vim.cmd([[highlight DiffChange gui=none guifg=SlateBlue guibg=#06272e]])
+					vim.cmd([[highlight DiffText gui=none guifg=None guibg=#0b4a57]])
+
+					vim.notify("Reloaded colorscheme: " .. colorscheme)
 				end
 			})
 
