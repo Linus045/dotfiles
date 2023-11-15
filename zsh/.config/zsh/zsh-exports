@@ -5,6 +5,9 @@ export SAVEHIST=1000000
 
 # Environment variables
 export EDITOR="nvim"
+export VISUAL="nvim"
+export SUDO_EDITOR="nvim"
+
 export PATH="$HOME/.local/bin":$PATH
 
 # use nvim for man pages
