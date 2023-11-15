@@ -91,14 +91,6 @@ end, {
 -- ]])
 
 
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
---   pattern = { "*.c", "*.h", "*.cpp" },
---   callback = function()
---     vim.api.nvim_buf_set_option(0, "tabstop", 4)
---     vim.api.nvim_buf_set_option(0, "shiftwidth", 4)
---   end
--- })
-
 vim.api.nvim_create_autocmd({ "TermOpen" }, {
 	-- pattern = { "term://*" },
 	callback = function()
