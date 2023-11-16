@@ -3,6 +3,27 @@ local keymap = require("keybindings_util").keymap
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
+
+
+-- Register keymaps to legendary.nvim
+-- this needs to be done before all keybindings are defined via require"which-key".register(...)
+local legendary = require('legendary')
+legendary.setup({
+	extensions = {
+		-- load keymaps and commands from nvim-tree.lua
+		nvim_tree = true,
+		-- load keymaps from diffview.nvim
+		diffview = true,
+		which_key = {
+			auto_register = true,
+			do_binding = false,
+		},
+	},
+})
+
+
+
+
 -- no mapping to apply to all. see :help map-modes
 keymap("", "<Space>", "<Nop>", opts)
 
@@ -26,7 +47,15 @@ keymap("", "<Space>", "<Nop>", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts, "NVIM Tree")
 
 -- show legendary.nvim palette
-keymap("n", "<leader>p", ":Legendary<cr>", opts, "Open Legendary Command Palette")
+keymap("n", "<leader>p",
+	"<cmd>lua require('legendary').find({ filters = { require('legendary.filters').current_mode() } })<cr>", opts,
+	"Open Legendary Command Palette")
+keymap("v", "<leader>p",
+	"<cmd>lua require('legendary').find({ filters = { require('legendary.filters').current_mode() } })<cr>", opts,
+	"Open Legendary Command Palette")
+keymap("x", "<leader>p",
+	"<cmd>lua require('legendary').find({ filters = { require('legendary.filters').current_mode() } })<cr>", opts,
+	"Open Legendary Command Palette")
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<cr>", opts, "Resize up")
@@ -430,20 +459,3 @@ vim.cmd [[smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-nex
 
 -- keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format()<CR>", opts, "Format file", nil, nil, bufnr)
 vim.cmd([[:command! F lua require("formatter").format_function()]])
-
-
--- Register keymaps to legendary.nvim
--- this needs to be done after all keybindings are defined
-local legendary = require('legendary')
-legendary.setup({
-	extensions = {
-		-- load keymaps and commands from nvim-tree.lua
-		nvim_tree = true,
-		-- load keymaps from diffview.nvim
-		diffview = true,
-		which_key = {
-			auto_register = true,
-			do_binding = false,
-		},
-	},
-})

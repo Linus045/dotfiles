@@ -4,6 +4,7 @@ vim.g.maplocalleader = " "
 
 -- disable netrw at the very start of your init.lua (strongly advised)
 -- set for nvim-tree
+-- comment these out temporarily if you need netrw enabled (e.g. to automatically download spell/dictionary files)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
