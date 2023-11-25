@@ -1,7 +1,10 @@
-disconnected_screens=$(xrandr | grep ' disconnected' | awk -F' ' '{ print $1 }')
+# since SDDM changed the Xauthority file location to /tmp we just search for it
+export XAUTHORITY="/tmp/"$(ls /tmp -1 | grep xauth)
+
+disconnected_screens=$(/bin/xrandr | grep ' disconnected' | awk -F' ' '{ print $1 }')
 disconnected_screens=($(echo $disconnected_screens | tr ' ' ' '))
 
-connected_screens=$(xrandr | grep ' connected' | awk -F' ' '{ print $1 }')
+connected_screens=$(/bin/xrandr | grep ' connected' | awk -F' ' '{ print $1 }')
 connected_screens=($(echo $connected_screens | tr ' ' ' '))
 
 
@@ -9,7 +12,7 @@ echo "connected_screens"
 l=${#connected_screens[@]}
 for (( i=1; i<${l}; i++ )); do
   echo ${connected_screens[i]}
-  xrandr --output ${connected_screens[i]} --auto --left-of ${connected_screens[0]}
+  /bin/xrandr --output ${connected_screens[i]} --auto --left-of ${connected_screens[0]}
 done
 echo ""
 
@@ -21,4 +24,4 @@ for (( i=0; i<${l}; i++ )); do
 done
 
 # restart i3 to reload polybar
-# sleep 2 && /bin/bash /home/linus/.config/polybar/launch.sh
+# sleep 3 && /bin/bash /home/linus/.config/polybar/launch.sh
