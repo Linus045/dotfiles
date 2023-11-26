@@ -18,7 +18,7 @@ return {
 
 		null_ls.setup({
 			debug = false,
-			log_level = "trace",
+			-- log_level = "trace",
 			on_attach = on_attach,
 			root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git"),
 			sources = {

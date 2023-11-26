@@ -182,35 +182,59 @@ end
 
 
 local function is_git_repo(path)
-	local git_path = vim.fn.resolve(path .. "/.git")
-	local git_repo_exists, err = vim.loop.fs_stat(git_path)
-	local utils = require("telescope.utils")
-	local branch_info = utils.get_os_command_output({ "git", "show-branch" }, path)[1]
-	return git_repo_exists, branch_info
+	local success, result = pcall(function()
+		local git_path = vim.fn.resolve(path .. "/.git")
+		local git_repo_exists, err = vim.loop.fs_stat(git_path)
+		local utils = require("telescope.utils")
+		local branch_info = utils.get_os_command_output({ "git", "show-branch" }, path)[1]
+		return { git_repo_exists, branch_info }
+	end)
+	if success then
+		return result[1], result[2]
+	else
+		return nil
+	end
 end
 
 M.list_projects = function(opts)
 	opts = opts or {}
 	local directories = {
-		"~/dev/",
-		"~/dev/github/",
-		"~/dev/github/external",
-		"~/dev/github/personal",
+		"~/dev",
+		"~/useful_scripts",
+		"~/dotfiles",
+		"~/OneDrive",
 	}
-
 	local project_directories = {}
+
+	local function add_directory_if_git_project(search_dir, rel_path)
+		local absolute_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fs.joinpath(search_dir, rel_path)), ":p")
+		local git_repo_exists, branch_info = is_git_repo(absolute_path)
+		if git_repo_exists == nil then
+			-- we have no access to this directory
+		elseif git_repo_exists then
+			table.insert(project_directories, {
+				rel_path = rel_path ~= "" and rel_path or search_dir,
+				absolute_path = absolute_path,
+				is_git_repo = git_repo_exists and branch_info or "-"
+			})
+		end
+	end
+
 	for _, search_dir in pairs(directories) do
-		for rel_path, type in vim.fs.dir(search_dir) do
+		add_directory_if_git_project(search_dir, "")
+
+		local dirs = vim.fs.dir(search_dir, {
+			depth = 3,
+			skip = function(dirname)
+				local absolute_path = vim.fn.fnamemodify(vim.fn.resolve(vim.fs.joinpath(search_dir, dirname)), ":p")
+				local git_repo_exists, _ = is_git_repo(absolute_path)
+				return not git_repo_exists
+			end
+		})
+
+		for rel_path, type in dirs do
 			if type == "directory" then
-				local absolute_path = vim.fn.fnamemodify(vim.fn.resolve(search_dir .. "/" .. rel_path), ":p")
-				local git_repo_exists, branch_info = is_git_repo(absolute_path)
-				if git_repo_exists then
-					table.insert(project_directories, {
-						rel_path = rel_path,
-						absolute_path = absolute_path,
-						is_git_repo = git_repo_exists and branch_info or "-"
-					})
-				end
+				add_directory_if_git_project(search_dir, rel_path)
 			end
 		end
 	end
