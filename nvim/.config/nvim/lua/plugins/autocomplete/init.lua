@@ -40,7 +40,10 @@ return {
 
 			-- show icons for entries in autocomplete menu
 			"onsails/lspkind.nvim",
-			"L3MON4D3/LuaSnip",
+			{
+				"L3MON4D3/LuaSnip",
+				version = "v2.*",
+			}
 			-- {
 			-- 	"zbirenbaum/copilot-cmp",
 			-- 	after = { "copilot.lua" },
@@ -92,9 +95,9 @@ return {
 					["<c-y>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.confirm({ select = true })
-							-- if luasnip.expand_or_jumpable() then
-							--   luasnip.expand_or_jump()
-							-- end
+							-- elseif luasnip.expandable() then
+							-- print("Expanding snippet...")
+							-- luasnip.expand_or_jump()
 						else
 							fallback()
 						end
@@ -161,6 +164,9 @@ return {
 				view = {
 					entries = "custom", -- can be "custom", "wildmenu" or "native"
 					selection_order = "near_cursor",
+					docs = {
+						auto_open = true,
+					},
 				},
 				window = {
 					completion = cmp.config.window.bordered(),
@@ -249,29 +255,33 @@ return {
 						name = "latex_symbols",
 						priority = 80,
 						group_index = 1,
+						-- https://github.com/kdheepak/cmp-latex-symbols#options
+						option = {
+							strategy = 2,
+						},
 					},
 					{
 						name = "luasnip",
 						priority = 90,
 						max_item_count = 5,
-						group_index = 2,
+						group_index = 1,
 					},
 					{
 						name = "buffer",
 						priority = 80,
-						group_index = 3,
+						group_index = 1,
 						max_item_count = 5,
 						--keyword_length = 3,
 					},
 					{
 						name = "path",
 						priority = 80,
-						group_index = 3,
+						group_index = 1,
 					},
 					{
 						name = "calc",
 						priority = 100,
-						group_index = 3,
+						group_index = 1,
 					},
 					-- {
 					--   name = "zsh",
@@ -339,6 +349,10 @@ return {
 			--   },
 			-- })
 		end
+	},
+
+	{
+		"evesdropper/luasnip-latex-snippets.nvim",
 	},
 
 }
