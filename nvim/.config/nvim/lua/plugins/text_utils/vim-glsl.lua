@@ -1,3 +1,3 @@
 return {
-	"tikhomirov/vim-glsl"
+	-- "tikhomirov/vim-glsl"
 }
