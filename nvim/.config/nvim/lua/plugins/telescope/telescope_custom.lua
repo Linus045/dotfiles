@@ -221,6 +221,8 @@ M.list_projects = function(opts)
 		end
 	end
 
+	print("Searching project directories...")
+	vim.cmd("redraw")
 	for _, search_dir in pairs(directories) do
 		add_directory_if_git_project(search_dir, "")
 
