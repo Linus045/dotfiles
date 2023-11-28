@@ -200,6 +200,7 @@ M.list_projects = function(opts)
 	opts = opts or {}
 	local directories = {
 		"~/dev",
+		"~/uni_privat",
 		"~/useful_scripts",
 		"~/dotfiles",
 		"~/OneDrive",
