@@ -1,5 +1,12 @@
 local M = {}
 
+M.include_warnings = true
+M.jump_to_first_error = true
+M.window_nr = -1
+M.buf_nr = -1
+M.enabled = true
+M.window_height = 15
+
 M.setup = function()
 	vim.api.nvim_create_user_command('CargoCheckEnable', function()
 			M.enabled = true
@@ -20,15 +27,21 @@ M.setup = function()
 		end,
 		{})
 
+	vim.api.nvim_create_user_command('CargoCheckWarningsToggle', function()
+			M.include_warnings = not M.include_warnings
+			vim.cmd("echo 'IncludeWarnings:" .. tostring(M.include_warnings) .. "'")
+		end,
+		{})
+
+	vim.api.nvim_create_user_command('CargoCheckJumpToFirstErrorToggle', function()
+			M.jump_to_first_error = not M.jump_to_first_error
+			vim.cmd("echo 'JumpToFirstError:" .. tostring(M.jump_to_first_error) .. "'")
+		end,
+		{})
+
 	M.cmd_output_changed_group = vim.api.nvim_create_augroup("rust_cargo_check_autocommand_output_changed",
 		{ clear = true })
 end
-
-M.window_nr = -1
-M.buf_nr = -1
-
-M.enabled = true
-
 
 M.current_buffer_filetype_is_rust = function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
@@ -42,7 +55,6 @@ M.close_window = function()
 	end
 end
 
-M.window_height = 10
 
 M.create_window = function(use_window)
 	if use_window == nil then
@@ -86,8 +98,13 @@ end
 
 M.get_error_warning_count = function()
 	print("Cargo check...")
-	vim.cmd("make! check")
+	vim.cmd("make! clippy")
 	vim.cmd("redraw!")
+
+	local status_ok, trouble = pcall(require, 'trouble')
+	if status_ok then
+		trouble.refresh()
+	end
 
 	local qflist = vim.fn.getqflist()
 	local error_count = 0
@@ -95,29 +112,29 @@ M.get_error_warning_count = function()
 	if #qflist > 0 then
 		-- Check for type W
 		-- Ignore everything until we get an E
-		local collect_err = 0
-		local new_qf_list = {}
+		-- local collect_err = false
+		-- local new_qf_list = {}
 		for k, v in pairs(qflist) do
 			-- Count number of warnings
 			if v.type == "W" and v.text ~= ".*generated\\s\\d*\\swarning" then
 				-- if v.type == "W"
 				warning_count = warning_count + 1
-				collect_err = 0
+				-- collect_err = false
 			end
 
 			-- Count errors
 			if v.type == "E" then
-				collect_err = 1
+				-- collect_err = true
 				error_count = error_count + 1
 			end
 
 			-- Add errors to the new quickfix list
-			if collect_err then
-				new_qf_list[#new_qf_list + 1] = v
-			end
+			-- if collect_err then
+			-- new_qf_list[#new_qf_list + 1] = v
+			-- end
 		end
 
-		vim.fn.setqflist(new_qf_list)
+		-- vim.fn.setqflist(new_qf_list)
 	end
 
 	return { ["error_count"] = error_count, ["warning_count"] = warning_count, ["quickfix_list"] = qflist }
@@ -158,6 +175,8 @@ M.register_rust_cargo_check_autocommand = function()
 			end
 
 			-- make sure that cargo is set as the makeprg
+			local old_makeprg = vim.api.nvim_buf_get_option(0, "makeprg")
+			P(old_makeprg)
 			vim.api.nvim_buf_set_option(0, "makeprg", "cargo")
 
 			if vim.api.nvim_buf_is_valid(M.buf_nr) then
@@ -173,21 +192,24 @@ M.register_rust_cargo_check_autocommand = function()
 			local oldwin = vim.api.nvim_get_current_win()
 			vim.api.nvim_set_current_win(M.window_nr)
 			vim.api.nvim_win_set_option(0, "spell", false)
-			-- local buf = vim.api.nvim_create_buf(false, true)
-			-- M.rust_cargo_check_buf_nr = buf
+			local buf = vim.api.nvim_create_buf(false, true)
+			M.rust_cargo_check_buf_nr = buf
 
 			-- vim.api.nvim_win_set_buf(M.window_nr, buf)
 			-- vim.cmd("AnsiEsc")
 			-- vim.api.nvim_set_current_win(oldwin)
 
 			-- local args = { "cargo", "check", "--message-format", "human", "-q", "--color", "always" }
-			local args = { "cargo", "clippy", "--message-format", "human", "--color",
-				"always", --[[ "--", "-Dwarnings" ]] }
+			local args = { "cargo", "clippy", "--message-format", "human", "--color", "always" }
+			-- if M.include_warnings then
+			-- 	args[#args + 1] = "--"
+			-- 	args[#args + 1] = "-Dwarnings"
+			-- end
+
 			vim.cmd("terminal " .. vim.fn.join(args, " "))
 			M.buf_nr = vim.api.nvim_get_current_buf()
 			vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
 			vim.api.nvim_set_current_win(oldwin)
-
 
 			vim.api.nvim_create_autocmd("TermClose", {
 				group = M.cmd_output_changed_group,
@@ -195,7 +217,6 @@ M.register_rust_cargo_check_autocommand = function()
 				callback = function(opts)
 					local exit_status = vim.v.event.status
 					-- retrieve the error and warning count before switching the window
-
 					local oldwin = vim.api.nvim_get_current_win()
 
 					local error_warnings = M.get_error_warning_count()
@@ -223,14 +244,22 @@ M.register_rust_cargo_check_autocommand = function()
 					end
 					vim.api.nvim_set_current_win(oldwin)
 
-					if error_warnings.error_count > 0 then
-						vim.fn.setqflist(error_warnings.quickfix_list)
-						-- vim.cmd("cfirst")
+					if (error_warnings.error_count > 0) then
+						-- vim.fn.setqflist(error_warnings.quickfix_list)
+						if M.jump_to_first_error then
+							vim.cmd("cfirst")
+						end
+
+						local status_ok, trouble = pcall(require, 'trouble')
+						if status_ok then
+							trouble.refresh()
+						end
 					end
 					M.print_error_warning_count(error_warnings.error_count, error_warnings.warning_count)
 				end,
 			})
 
+			vim.api.nvim_set_option_value("makeprg", old_makeprg, {})
 
 			-- local on_cargo_check = function(_, output_lines)
 			-- 	local lines_to_print = {}
