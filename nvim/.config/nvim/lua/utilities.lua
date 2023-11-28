@@ -113,3 +113,32 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = augroup,
 	command = "compiler tsc | setlocal makeprg=npx\\ tsc",
 })
+
+
+-- don't conceal when editing text
+vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+	pattern = {
+		"*:i", -- insert mode
+		"*:v", -- visual mode
+		"*:V", -- visual line mode
+		"*:\22" -- visual block mode (see print(mode()))
+	},
+	callback = function()
+		local filetype = vim.api.nvim_get_option_value("filetype", {})
+		if (filetype == "tex") or (filetype == "markdown") then
+			-- print("Disable conceallevel")
+			vim.opt_local.conceallevel = 0
+		end
+	end
+})
+
+vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+	pattern = { "*:n" },
+	callback = function()
+		local filetype = vim.api.nvim_get_option_value("filetype", {})
+		if (filetype == "tex") or (filetype == "markdown") then
+			-- print("Enable conceallevel")
+			vim.opt_local.conceallevel = vim.api.nvim_get_option_value("conceallevel", { scope = "global" })
+		end
+	end
+})
