@@ -105,6 +105,21 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	end
 })
 
+-- au BufEnter *.pdf exe "normal! \<c-o>"
+-- open pdf externally
+vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
+	pattern = { "*.pdf" },
+	callback = function(event)
+		-- print("Opening in external program...")
+		-- P(event)
+
+		vim.cmd("bw")
+		vim.cmd("doautocmd BufReadPost " .. event.file)
+		vim.cmd("silent! !xdg-open \"" .. event.file .. "\" &")
+	end
+})
+
+
 -- https://strdr4605.com/typescript-errors-into-vim-quickfix
 -- use :make and :copen in typescript files to see errors
 local augroup = vim.api.nvim_create_augroup("strdr4605", { clear = true })

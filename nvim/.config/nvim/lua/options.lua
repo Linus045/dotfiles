@@ -73,6 +73,7 @@ vim.opt.fillchars:append { diff = "/" }
 -- Treesitter folding
 vim.wo.foldmethod = 'expr' -- use treesitter folding
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldcolumn = '1'
 
 vim.g.snippets = "luasnip"
 vim.opt.list = true -- show specials characters for tab, end-of-line etc.
@@ -80,7 +81,7 @@ vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 -- characters to show
 vim.opt.listchars = {
 	tab = "> ",
-	eol = "↩",
+	eol = "\\u21b5",
 	nbsp = "+"
 }
 
