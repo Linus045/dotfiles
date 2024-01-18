@@ -47,7 +47,7 @@ return {
 					vim.cmd([[highlight DiffChange gui=none guifg=SlateBlue guibg=#06272e]])
 					vim.cmd([[highlight DiffText gui=none guifg=None guibg=#0b4a57]])
 
-					vim.notify("Reloaded colorscheme: " .. colorscheme)
+					-- vim.notify("Reloaded colorscheme: " .. colorscheme)
 				end
 			})
 
