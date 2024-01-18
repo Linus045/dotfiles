@@ -53,6 +53,7 @@ vim.opt.shortmess:append "c"      -- shorten messages
 vim.opt.autochdir = false
 vim.opt.spell = true              -- enable spell checking
 vim.opt.spelllang = { "en", "de" }
+vim.opt.spellsuggest = "best,10"
 
 -- Adds directory to runtime path so we can access the spell directory
 -- expands to /home/linus/.local/share/<nvim_profile>/site
