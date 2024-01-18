@@ -9,7 +9,7 @@ return {
 
 		gitsigns.setup({
 			signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-			numhl = false,  -- Toggle with `:Gitsigns toggle_numhl`
+			numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
 			linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
 			word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
 			watch_gitdir = {
@@ -44,10 +44,18 @@ return {
 				local keymap = require("keybindings_util").keymap
 				-- Navigation
 				-- &diff is true when in diff mode: https://neovim.io/doc/user/diff.html
-				keymap("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true }, "[GITSIGNS] Next Hunk", false,
-					false)
-				keymap("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true }, "[GITSIGNS] Previous Hunk",
-					false, false)
+				keymap("n", "]c", function()
+						if vim.wo.diff then return ']c' end
+						vim.schedule(function() gitsigns.next_hunk() end)
+						return '<Ignore>'
+					end,
+					{ expr = true }, "[GITSIGNS] Next Hunk", false, false)
+
+				keymap("n", "[c", function()
+					if vim.wo.diff then return '[c' end
+					vim.schedule(function() gitsigns.prev_hunk() end)
+					return '<Ignore>'
+				end, { expr = true }, "[GITSIGNS] Previous Hunk", false, false)
 
 				-- Actions
 				opts = { noremap = true, silent = true }
@@ -58,22 +66,28 @@ return {
 				keymap("v", "<leader>hs", ":Gitsigns stage_hunk<CR>", opts, "[GITSIGNS] Stage hunk", false, false)
 				keymap("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", opts, "[GITSIGNS] Reset hunk", false, false)
 				keymap("v", "<leader>hr", ":Gitsigns reset_hunk<CR>", opts, "[GITSIGNS] Reset hunk", false, false)
-				keymap("n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>", opts, "[GITSIGNS] Stage current buffer", false, false)
-				keymap("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>", opts, "[GITSIGNS] Undo stage hunk", false, false)
+				keymap("n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>", opts, "[GITSIGNS] Stage current buffer",
+					false, false)
+				keymap("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>", opts, "[GITSIGNS] Undo stage hunk", false,
+					false)
 				keymap("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<CR>", opts, "[GITSIGNS] Reset buffer", false, false)
 				keymap("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>", opts, "[GITSIGNS] Preview Hunk", false, false)
 				keymap("n", "<leader>hb", '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', opts,
 					"[GITSIGNS] Blame line (full)", false, false)
 				keymap("n", "<leader>htb", "<cmd>Gitsigns toggle_current_line_blame<CR>", opts,
 					"[GITSIGNS] Toggle current line blame", false, false)
-				keymap("n", "<leader>htl", "<cmd>Gitsigns toggle_linehl<CR>", opts, "[GITSIGNS] Toggle line highlights", false,
+				keymap("n", "<leader>htl", "<cmd>Gitsigns toggle_linehl<CR>", opts, "[GITSIGNS] Toggle line highlights",
+					false,
 					false)
-				keymap("n", "<leader>htw", "<cmd>Gitsigns toggle_word_diff<CR>", opts, "[GITSIGNS] Toggle word diff", false,
+				keymap("n", "<leader>htw", "<cmd>Gitsigns toggle_word_diff<CR>", opts, "[GITSIGNS] Toggle word diff",
+					false,
 					false)
 				keymap("n", "<leader>hd", "<cmd>Gitsigns diffthis<CR>", opts, "[GITSIGNS] Diff this file", false, false)
-				keymap("n", "<leader>hD", '<cmd>lua require"gitsigns".diffthis("~")<CR>', opts, "[GITSIGNS] Diff this file ",
+				keymap("n", "<leader>hD", '<cmd>lua require"gitsigns".diffthis("~")<CR>', opts,
+					"[GITSIGNS] Diff this file ",
 					false, false)
-				keymap("n", "<leader>htd", "<cmd>Gitsigns toggle_deleted<CR>", opts, "[GITSIGNS] Show/Hide deleted hunks", false,
+				keymap("n", "<leader>htd", "<cmd>Gitsigns toggle_deleted<CR>", opts, "[GITSIGNS] Show/Hide deleted hunks",
+					false,
 					false)
 				-- Text object
 				-- Visual-select inner hunk
