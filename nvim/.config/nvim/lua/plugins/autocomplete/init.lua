@@ -16,6 +16,7 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"hrsh7th/cmp-omni",
 			"f3fora/cmp-spell",
 			{
 				"tamago324/cmp-zsh",
@@ -66,7 +67,6 @@ return {
 					vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
-
 			cmp.event:on("menu_opened", function()
 				vim.b.copilot_suggestion_hidden = true
 			end)
@@ -74,6 +74,7 @@ return {
 			cmp.event:on("menu_closed", function()
 				vim.b.copilot_suggestion_hidden = false
 			end)
+
 
 			cmp.setup({
 				snippet = {
@@ -158,9 +159,9 @@ return {
 				--   completeopt = "menu,menuone,noselect,preview,noinsert",
 				-- },
 				confirmation = {
-					default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace,
+					-- default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace,
 				},
-				preselect = cmp.PreselectMode.Item,
+				-- preselect = cmp.PreselectMode.Item,
 				view = {
 					entries = "custom", -- can be "custom", "wildmenu" or "native"
 					selection_order = "near_cursor",
@@ -168,10 +169,10 @@ return {
 						auto_open = true,
 					},
 				},
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
+				-- window = {
+				-- 	completion = cmp.config.window.bordered(),
+				-- 	documentation = cmp.config.window.bordered(),
+				-- },
 				-- formatting = {
 				--   fields = { 'menu', 'abbr', 'kind' },
 				--   format = function(entry, item)
@@ -223,6 +224,11 @@ return {
 				},
 				sources = cmp.config.sources({
 					{
+						name = 'omni',
+						priority = 100,
+						group_index = 1
+					},
+					{
 						name = "nvim_lsp",
 						priority = 100,
 						group_index = 1,
@@ -271,6 +277,9 @@ return {
 						priority = 80,
 						group_index = 1,
 						max_item_count = 5,
+						option = {
+							keyword_pattern = [[\k\+]],
+						}
 						--keyword_length = 3,
 					},
 					{

@@ -74,10 +74,12 @@ vim.opt.fillchars:append { diff = "/" }
 -- Treesitter folding
 vim.wo.foldmethod = 'expr' -- use treesitter folding
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.wo.foldcolumn = '1'
+-- always use 3 columns to show folds
+vim.wo.foldcolumn = '3'
 
 vim.g.snippets = "luasnip"
 vim.opt.list = true -- show specials characters for tab, end-of-line etc.
+
 
 -- characters to show
 vim.opt.listchars = {

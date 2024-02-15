@@ -105,6 +105,20 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	end
 })
 
+
+-- store viewoptions (see :help viewoptions) on close and load on open again
+-- stores folds, cursor and current directory
+vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+	pattern = { "*.*" },
+	command = "mkview"
+})
+
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	pattern = { "*.*" },
+	command = "silent! loadview"
+})
+
+
 -- au BufEnter *.pdf exe "normal! \<c-o>"
 -- open pdf externally
 vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
@@ -118,6 +132,62 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {
 		vim.cmd("silent! !xdg-open \"" .. event.file .. "\" &")
 	end
 })
+
+
+-- Block large files from loading
+local function BlockReadingLargeFile(event)
+	-- 5MB
+	local MAX_FILE_SIZE = 1024 * 1024 * 5
+	local filesize = vim.fn.getfsize(event.file)
+	if filesize > MAX_FILE_SIZE then
+		local response = nil
+		repeat
+			response = vim.fn.input("File is large (" ..
+				vim.fn.printf('%.1fM', filesize / 1024 / 1024) .. "). Are you sure you wanna open it? [y/N]")
+		until response == "y" or response == "Y" or response == "" or response == "n" or response == "N"
+
+		if response ~= "y" and response ~= "Y" then
+			vim.cmd("silent bw")
+			vim.cmd("doautocmd BufReadPost " .. event.file)
+			return
+		else
+			repeat
+				response = vim.fn.input("Do you wanna disable unnecessary stuff to improve performance? [Y/n]")
+			until response == "y" or response == "Y" or response == "" or response == "n" or response == "N"
+
+			if response == "" or response == "y" or response == "Y" then
+				vim.cmd([[echo "Big file, disabling syntax, treesitter and folding" ]])
+				vim.notify("Big file, disabling syntax, treesitter and folding")
+
+				if vim.fn.exists(':TSBufDisable') then
+					vim.cmd('TSBufDisable indent')
+					vim.cmd('TSBufDisable rainbow')
+					vim.cmd('TSBufDisable highlight')
+					vim.cmd('TSBufDisable incremental_selection')
+				end
+
+				vim.o.foldmethod = "manual"
+				vim.cmd("syntax off")
+				vim.cmd("set foldmethod=manual")
+				vim.cmd("syntax clear")
+				vim.cmd("syntax off ")
+				vim.cmd("filetype off")
+				vim.cmd("set noundofile")
+				vim.cmd("set noswapfile")
+				vim.cmd("set noloadplugins")
+				vim.cmd("set nospell")
+			end
+		end
+	end
+	-- TODO: THIS CAUSES PROBLEMS
+	-- DONT READ FILE MANUALLY
+	vim.cmd("read " .. event.file)
+end
+
+-- vim.api.nvim_create_autocmd({ "BufReadCmd", "FileReadPre" }, {
+-- 	pattern = { "*" },
+-- 	callback = BlockReadingLargeFile,
+-- })
 
 
 -- https://strdr4605.com/typescript-errors-into-vim-quickfix
