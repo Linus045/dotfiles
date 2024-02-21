@@ -14,4 +14,4 @@
 # set us layout with german umlauts, comma at the end is necessary to parse as list
 setxkbmap de,us -variant us,
 
-[-f ~/.xprofile.local ] && source ~/.xprofile.local
+[ -f ~/.xprofile.local ] && source ~/.xprofile.local
