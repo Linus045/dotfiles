@@ -2,7 +2,7 @@
 echo "=========================================================="
 echo "Installing system dependencies"
 echo "=========================================================="
-sudo pacman -S --noconfirm --needed git openssh fzf ripgrep gum
+sudo pacman -S --noconfirm --needed git openssh fzf ripgrep gum xorg-xrandr polybar pulseaudio dunst feh rofi htop
 
 echo ""
 echo "=========================================================="
@@ -101,10 +101,21 @@ stow -R -t "${HOME}" tmux
 
 echo "Stowing git configuration"
 stow -R -t "${HOME}" git
-echo "Setting up git alias file"
-echo "Stowing nvim configuration"
 
+echo "Stowing nvim configuration"
 stow -R -t "${HOME}" nvim
+
+echo "Stowing i3 configuration"
+stow -R -t "${HOME}" i3
+
+# echo ""
+# echo "=========================================================="
+# echo "Setting up polybar dependencies"
+# echo "=========================================================="
+# sudo pacman -S --noconfirm --needed brightnessctl 
+
+echo "Stowing polybar configuration"
+stow -R -t "${HOME}" polybar
 
 echo ""
 echo "=========================================================="
@@ -147,3 +158,11 @@ sudo pacman -S --noconfirm --needed ttf-firacode-nerd ttf-noto-nerd
 
 echo "Reloading font cache"
 fc-cache
+
+
+echo ""
+echo "=========================NOTES============================"
+echo "Consider installing 'systemd-resolved' and enabling for faster DNS lookup"
+echo "Consider installing 'brightnessctl' (for polybar's brightness widget)"
+echo "=========================================================="
+
