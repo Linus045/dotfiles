@@ -68,10 +68,10 @@ bindsym $mod+minus scratchpad show
 
 
 # split in horizontal orientation
-bindsym $mod+$alt+h split h
+# bindsym $mod+$alt+h split h
 
-# split in vertical orientation
-bindsym $mod+$alt+v split v
+# # split in vertical orientation
+# bindsym $mod+$alt+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
