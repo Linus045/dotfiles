@@ -37,5 +37,4 @@ for m in $(polybar --list-monitors | cut -d":" -f1); do
   else
     MONITOR=$m polybar --reload top_i3_secondary_monitor &
   fi
-  fi
 done
