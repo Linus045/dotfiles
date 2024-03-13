@@ -23,5 +23,7 @@ for (( i=0; i<${l}; i++ )); do
   xrandr --output ${disconnected_screens[i]} --off
 done
 
+[ -f /home/linus/.polybar_current_wallpaper_path ] && "/home/linus/dev/dotfiles/polybar/.config/polybar/scripts/set_random_background.sh $(/bin/cat /home/linus/.polybar_current_wallpaper_path)"
+
 # restart i3 to reload polybar
 # sleep 3 && /bin/bash /home/linus/.config/polybar/launch.sh
