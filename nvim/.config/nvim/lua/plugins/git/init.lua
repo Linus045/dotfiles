@@ -41,6 +41,7 @@ return {
 	-- git inside nvim
 	{
 		"TimUntersberger/neogit",
+		branch = "nightly",
 		config = function()
 			require("neogit").setup({})
 		end
