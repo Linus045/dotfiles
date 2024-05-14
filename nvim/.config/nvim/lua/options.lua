@@ -83,8 +83,8 @@ vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 
 -- characters to show
 vim.opt.listchars = {
-	tab = "> ",
-	eol = "\\u21b5",
+	tab = "\\uf523 ",
+	eol = "\\uebea",
 	nbsp = "+"
 }
 
