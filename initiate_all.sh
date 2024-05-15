@@ -90,8 +90,8 @@ cd "${DOTFILES_DIR}"
 echo "Stowing starship configuration"
 stow -R -t "${HOME}" starship 
 
-echo "Stowing zoxide configuration"
-stow -R -t "${HOME}" zoxide
+# echo "Stowing zoxide configuration"
+# stow -R -t "${HOME}" zoxide
 
 echo "Stowing zsh configuration"
 stow -R -t "${HOME}" zsh
@@ -165,7 +165,7 @@ echo "=========================================================="
 echo "Setting correct datetime format for zsh fzf reverse search (Ctrl+R functionality)"
 echo "Make sure \$HISTTIMEFORMAT is set correctly. Current value: $HISTTIMEFORMAT"
 echo "=========================================================="
-grep 'fc -rl 1' /usr/share/fzf/key-bindings.zsh -q && sudo sed -i 's/fc -rl 1/fc -t $HISTTIMEFORMAT -rl 1/' /usr/share/fzf/key-bindings.zsh && echo "Successfully edited" || echo "Error: Specified code not found or already edited. See function fzf-history-widget() in /usr/share/fzf/key-bindings.zsh"
+grep 'fc -rl 1' -q -- /usr/share/fzf/key-bindings.zsh && sudo sed -i 's/fc -rl 1/fc -t $HISTTIMEFORMAT -rl 1/' -- /usr/share/fzf/key-bindings.zsh && echo "Successfully edited" || (echo "Error: Specified code not found or already edited. See function fzf-history-widget() in /usr/share/fzf/key-bindings.zsh" && grep 'fc ' -- /usr/share/fzf/key-bindings.zsh)
 
 echo ""
 echo "=========================NOTES============================"
