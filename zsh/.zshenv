@@ -7,3 +7,6 @@ source ~/.config/zsh/.zshrc
 
 # this is required for gpg signing (used for github)
 export GPG_TTY=$(tty)
+
+# add local stuff here wont be tracked in dotfiles)
+[ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"
