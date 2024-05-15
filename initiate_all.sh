@@ -154,11 +154,18 @@ echo ""
 echo "=========================================================="
 echo "Installing nerd font"
 echo "=========================================================="
-sudo pacman -S --noconfirm --needed ttf-firacode-nerd ttf-noto-nerd
+sudo pacman -S --noconfirm --needed ttf-firacode-nerd ttf-daddytime-mono-nerd
 
 echo "Reloading font cache"
 fc-cache
 
+
+echo ""
+echo "=========================================================="
+echo "Setting correct datetime format for zsh fzf reverse search (Ctrl+R functionality)"
+echo "Make sure \$HISTTIMEFORMAT is set correctly. Current value: $HISTTIMEFORMAT"
+echo "=========================================================="
+grep 'fc -rl 1' /usr/share/fzf/key-bindings.zsh -q && sudo sed -i 's/fc -rl 1/fc -t $HISTTIMEFORMAT -rl 1/' /usr/share/fzf/key-bindings.zsh && echo "Successfully edited" || echo "Error: Specified code not found or already edited. See function fzf-history-widget() in /usr/share/fzf/key-bindings.zsh"
 
 echo ""
 echo "=========================NOTES============================"
