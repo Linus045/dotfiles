@@ -38,9 +38,11 @@ bindkey '^_' zshstartup
 
 # List and install packages with C-p
 function install_package() {
-  cmd="pacman -Sqs | fzf --preview='pacman -Si {}'"
+  cmd="pacman -Sqs | fzf --multi --print0 --preview='pacman -Si {}'"
   selected=$(eval $cmd)
   if [ -n "$selected" ]; then
+    # insert spaces and remove trailing whitespace
+    selected=$(echo $selected | tr "\0" " " | sed 's/ $//')
     zle -U "sudo pacman -S $selected --needed"
   fi
 }
@@ -53,3 +55,15 @@ bindkey '^e' edit-command-line
 
 # Alt+. to insert last argument of previous command
 bindkey '^[.' insert-last-word
+
+
+function remove_pacman_package() {
+  cmd='pacman -Qe | awk '"'"'{ print $1 }'"'"' | fzf --preview='"'"'pacman -Qi {}'"'"''
+  selected=$(eval $cmd)
+  if [ -n "$selected" ]; then
+    zle -U "sudo pacman -Runs $selected"
+  fi
+}
+zle -N remove_pacman_package
+bindkey '^o' remove_pacman_package
+
