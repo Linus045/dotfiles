@@ -39,8 +39,17 @@ HISTFILE=~/.zsh_history
 HISTTIMEFORMAT="%T %d.%m.%Y"
 HISTSIZE=200000
 HISTFILESIZE=200000
+HISTCONTROL="ignoreboth:erasedups"
+
+# see options: https://zsh.sourceforge.io/Doc/Release/Options.html
+# append history to history file instead of replacing it (useful when multiple shells are running, sop the history gets combined)
 setopt appendhistory
+# store the date and time when the command was executed in history
 setopt extendedhistory
+# only keep the last command if there is already a duplicate in the history
+setopt hist_ignore_all_dups
+# dont save commands that begin with a space (for privacy)
+setopt HIST_IGNORE_SPACE
 
 
 
