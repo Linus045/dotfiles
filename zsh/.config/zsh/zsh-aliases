@@ -53,8 +53,8 @@ alias viu="viu -h 40"
 # start firefox process in background
 # immediately disown it (so it doesn't close when the terminal closes)
 # and redirect all output to /dev/null
-alias twitchchat="firefox --new-window -P twitch --kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\" >/dev/null 2>&1 & disown"
-alias firefox="firefox -P & disown"
+alias twitchchat="/bin/firefox -new-window -P twitch -kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\" >/dev/null 2>&1 & disown"
+alias firefox_start="/bin/firefox -P & disown"
 
 # dual-boot windows messes up network adapter. This command restarts it (idk if there is a better way but this works fine)
 # escaping single quotes is a mess, double quote could probably simplify this but then it might b
