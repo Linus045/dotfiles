@@ -2,7 +2,7 @@ local M = {}
 
 
 M.RunCurrentCFile = function(argsString)
-	-- make sure this is a rust file
+	-- make sure this is a c file
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype ~= "c" then
 		return
@@ -45,7 +45,7 @@ M.register_gcc_check_autocommand = function()
 
 	vim.api.nvim_create_autocmd("BufWritePost", {
 		group = vim.api.nvim_create_augroup("gcc_check_autocommand", { clear = true }),
-		callback = function(opts)
+		callback = function(_opts)
 			M.RunCurrentCFile()
 		end
 	})

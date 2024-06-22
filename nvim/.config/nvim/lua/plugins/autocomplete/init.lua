@@ -57,15 +57,15 @@ return {
 			local cmp = require("cmp")
 
 			local luasnip = require("luasnip")
-			local lspkind = require("lspkind")
+			-- local lspkind = require("lspkind")
 
 			-- Used for the TAB key mapping
 			-- See: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
-			local has_words_before = function()
-				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-				return col ~= 0 and
-					vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-			end
+			-- local has_words_before = function()
+			-- 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+			-- 	return col ~= 0 and
+			-- 		vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+			-- end
 
 			cmp.event:on("menu_opened", function()
 				vim.b.copilot_suggestion_hidden = true
@@ -79,7 +79,7 @@ return {
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
+						luasnip.lsp_expand(args.body)
 					end,
 				},
 				mapping = cmp.mapping.preset.insert({
@@ -104,7 +104,7 @@ return {
 						end
 					end, { "i", "c" }),
 					["<c-space>"] = cmp.mapping {
-						i = function(fallback)
+						i = function(_fallback)
 							if not cmp.visible() then
 								cmp.complete()
 							else

@@ -10,8 +10,6 @@ M.bindings = {
 	o = {}
 }
 
-
-
 M.keymap = function(mode, lhs, rhs, opts, description, dontShow, dontRegister, bufnr)
 	if not M.bindings[mode] then
 		local rhsText = ""

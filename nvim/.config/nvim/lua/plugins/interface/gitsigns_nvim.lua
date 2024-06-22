@@ -41,7 +41,7 @@ return {
 				enable = false,
 			},
 			on_attach = function()
-				local keymap = require("keybindings_util").keymap
+				local keymap = require("custom_tools.keybindings_util").keymap
 				-- Navigation
 				-- &diff is true when in diff mode: https://neovim.io/doc/user/diff.html
 				keymap("n", "]c", function()

@@ -23,8 +23,8 @@ return {
 		-- see https://github.com/L3MON4D3/LuaSnip/issues/258
 		function leave_snippet()
 			if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i') and
-					ls.session.current_nodes[vim.api.nvim_get_current_buf()] and
-					not ls.session.jump_active
+				ls.session.current_nodes[vim.api.nvim_get_current_buf()] and
+				not ls.session.jump_active
 			then
 				ls.unlink_current()
 			end

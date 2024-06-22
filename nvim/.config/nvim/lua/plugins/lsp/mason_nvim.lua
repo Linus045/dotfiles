@@ -1,5 +1,5 @@
 local function lsp_keymaps(_client, bufnr)
-	local keymap = require("keybindings_util").keymap
+	local keymap = require("custom_tools.keybindings_util").keymap
 	local opts = { noremap = true, silent = true }
 	-- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	keymap("n", "gq", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
@@ -9,7 +9,7 @@ local function lsp_keymaps(_client, bufnr)
 	-- Workaround use Ctrl+] to jump
 	keymap("n", "K", function()
 		local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-		if filetype == "rust" and require("termdebug_helper").in_debug_session then
+		if filetype == "rust" and require("custom_tools.termdebug_helper").in_debug_session then
 			vim.cmd("Evaluate")
 		elseif filetype == "man" then
 			vim.notify("TODO: put correct action here")
@@ -114,11 +114,11 @@ local lsp_server_on_attach = function(client, bufnr)
 
 	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 	if filetype == "rust" then
-		require("rust_cargo_checker").register_rust_cargo_check_autocommand()
+		require("custom_tools.rust_cargo_checker").register_rust_cargo_check_autocommand()
 	end
 	if filetype == "c" then
 		-- require("user.utilities").register_gcc_check_autocommand()
-		require("c_cpp_utilities").register_gcc_run_user_command()
+		require("custom_tools.c_cpp_utilities").register_gcc_run_user_command()
 	end
 
 	-- Attach nvim-navbuddy

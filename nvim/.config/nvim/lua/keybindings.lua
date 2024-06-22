@@ -1,4 +1,4 @@
-local keymap = require("keybindings_util").keymap
+local keymap = require("custom_tools.keybindings_util").keymap
 
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }

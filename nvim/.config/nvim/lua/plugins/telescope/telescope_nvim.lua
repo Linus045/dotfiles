@@ -4,7 +4,7 @@ return {
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
-		local trouble = require("trouble.providers.telescope")
+		local trouble = require("trouble.sources.telescope")
 
 		telescope.setup({
 			defaults = {
@@ -49,7 +49,7 @@ return {
 						["<C-x>"] = actions.select_horizontal,
 						["<C-v>"] = actions.select_vertical,
 						["<C-t>"] = actions.select_tab,
-						["<c-t>"] = trouble.open_with_trouble,
+						["<c-t>"] = trouble.open,
 						["<C-u>"] = actions.preview_scrolling_up,
 						["<C-d>"] = actions.preview_scrolling_down,
 						["<PageUp>"] = actions.results_scrolling_up,
@@ -67,7 +67,7 @@ return {
 						["<C-x>"] = actions.select_horizontal,
 						["<C-v>"] = actions.select_vertical,
 						["<C-t>"] = actions.select_tab,
-						["<c-t>"] = trouble.open_with_trouble,
+						["<c-t>"] = trouble.open,
 						["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
 						["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
 						["<C-q>"] = actions.send_to_qflist + actions.open_qflist,

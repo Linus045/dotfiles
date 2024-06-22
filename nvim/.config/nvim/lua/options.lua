@@ -109,4 +109,4 @@ vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 -- vim.cmd [[au BufEnter * highlight HIGHLIGHT_SPACES ctermbg=red guibg=red guifg=red]]
 -- vim.cmd [[au BufEnter * match HIGHLIGHT_SPACES /\s\+$/]]
 
-require("load_project_config").store_current_options()
+require("custom_tools.load_project_config").store_current_options()

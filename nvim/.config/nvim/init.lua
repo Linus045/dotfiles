@@ -1,33 +1,32 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
 
 require("options")
 require("utilities")
-require("formatter").setup()
 
 require("lazy").setup("plugins")
 
-require("termdebug_helper").setup()
-require("rust_cargo_checker").setup()
-
 vim.api.nvim_create_autocmd("User", {
-    pattern = "VeryLazy",
-    callback = function()
-        -- do stuff after lazy initialized
-    end
+	pattern = "VeryLazy",
+	callback = function()
+		-- do stuff after lazy initialized
+	end
 })
 
 
-require("load_project_config").load_custom_config_for_cwd()
-require("idle")
+require("custom_tools.formatter").setup()
+require("custom_tools.termdebug_helper").setup()
+require("custom_tools.rust_cargo_checker").setup()
+require("custom_tools.load_project_config").load_custom_config_for_cwd()
+require("custom_tools.idle")
