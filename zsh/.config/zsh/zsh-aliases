@@ -48,7 +48,8 @@ alias ls='ls --group-directories-first --color=auto'
 
 alias make="make -j 4"
 
-alias viu="viu -h 40"
+# This only works with kitty and only when its not inside TMUX
+alias viu="/bin/viu -h 25"
 
 # start firefox process in background
 # immediately disown it (so it doesn't close when the terminal closes)
@@ -108,8 +109,8 @@ alias  ...='cd ../../'
 alias ....='cd ../../../'
 alias cddot="cd $DOTFILES"
 
-alias vpn_up='sudo wg-quick up wg0'
-alias vpn_down='sudo wg-quick down wg0'
+alias vpn_up='sudo wg-quick up'
+alias vpn_down='sudo wg-quick down'
 
 # force vt100 when using ssh (sets terminal emulator so flashing/bell/etc is outputted correctly)
 # see: https://it.engineering.oregonstate.edu/book/what-does-term-network-or-term-vt100-mean
@@ -136,7 +137,7 @@ alias nvim-clean="NVIM_APPNAME=nvim_clean nvim"
 
 function nvims() {
   items=("default" "nvim_clean" )
-  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config" --height=~50% --layout=reverse --border --exit-0)
   if [[ -z $config ]]; then
     echo "Nothing selected"
     return 0

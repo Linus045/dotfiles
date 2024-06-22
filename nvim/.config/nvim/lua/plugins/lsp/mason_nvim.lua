@@ -1,18 +1,4 @@
-local function lsp_codelens(client, bufnr)
-	local opts = { noremap = true, silent = true }
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-	if client.server_capabilities.codeLensProvider then
-		vim.cmd([[
-		augroup lsp_document_codelens
-			au! * <buffer>
-			autocmd BufEnter ++once         <buffer> lua require"vim.lsp.codelens".refresh()
-			autocmd BufWritePost,CursorHold <buffer> lua require"vim.lsp.codelens".refresh()
-		augroup END
-		]])
-	end
-end
-
-local function lsp_keymaps(client, bufnr)
+local function lsp_keymaps(_client, bufnr)
 	local keymap = require("keybindings_util").keymap
 	local opts = { noremap = true, silent = true }
 	-- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
@@ -22,7 +8,7 @@ local function lsp_keymaps(client, bufnr)
 	-- TODO: Causes problems with :Man (jumping to references no longer works)
 	-- Workaround use Ctrl+] to jump
 	keymap("n", "K", function()
-		local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+		local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 		if filetype == "rust" and require("termdebug_helper").in_debug_session then
 			vim.cmd("Evaluate")
 		elseif filetype == "man" then
@@ -57,18 +43,52 @@ end
 
 local function lsp_highlight_document(client, bufnr)
 	-- Set autocommands conditional on server_capabilities
-	if client.server_capabilities.documentHighlightProvider then
-		vim.api.nvim_exec(
-			[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-			false
-		)
+	if client and client.server_capabilities.documentHighlightProvider then
+		local highlight_augroup = vim.api.nvim_create_augroup('custom-lsp-highlight', { clear = false })
+		vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+			buffer = bufnr,
+			group = highlight_augroup,
+			callback = vim.lsp.buf.document_highlight,
+		})
+
+		vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+			buffer = bufnr,
+			group = highlight_augroup,
+			callback = vim.lsp.buf.clear_references,
+		})
+
+		vim.api.nvim_create_autocmd('LspDetach', {
+			group = vim.api.nvim_create_augroup('custom-lsp-detach-codelens-highlight', { clear = true }),
+			callback = function(event)
+				vim.lsp.buf.clear_references()
+				vim.api.nvim_clear_autocmds { group = 'custom-lsp-highlight', buffer = event.buf }
+			end,
+		})
+	end
+end
+
+local function lsp_codelens(client, bufnr)
+	if client.server_capabilities.codeLensProvider then
+		local codelens_augroup = vim.api.nvim_create_augroup('custom-lsp-codelens', { clear = false })
+		vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+			buffer = bufnr,
+			once = true,
+			group = codelens_augroup,
+			callback = function() require "vim.lsp.codelens".refresh({ bufnr = bufnr }) end,
+		})
+
+		vim.api.nvim_create_autocmd({ 'BufWritePost', 'CursorHold' }, {
+			buffer = bufnr,
+			group = codelens_augroup,
+			callback = function() require "vim.lsp.codelens".refresh({ bufnr = bufnr }) end,
+		})
+
+		vim.api.nvim_create_autocmd('LspDetach', {
+			group = vim.api.nvim_create_augroup('custom-lsp-detach-codelens', { clear = true }),
+			callback = function(event)
+				vim.api.nvim_clear_autocmds { group = 'custom-lsp-codelens', buffer = event.buf }
+			end,
+		})
 	end
 end
 
@@ -76,12 +96,13 @@ local lsp_server_on_attach = function(client, bufnr)
 	-- vim.notify("Attaching LSP Client: " .. client.name .. " to buffer")
 	lsp_keymaps(client, bufnr)
 	lsp_highlight_document(client, bufnr)
+	lsp_codelens(client, bufnr)
 
 	require("lsp-status").on_attach(client)
 
 	-- Register folds for: pierreglaser/folding-nvim
-	local status_ok, folding = pcall(require, 'folding')
-	if status_ok then
+	local status_ok_folding, folding = pcall(require, 'folding')
+	if status_ok_folding then
 		folding.on_attach()
 	else
 		-- vim.notify('File handlers.lua: folding not found.')
@@ -91,10 +112,7 @@ local lsp_server_on_attach = function(client, bufnr)
 	-- require("lsp-format").on_attach(client)
 
 
-	lsp_codelens(client, bufnr)
-
-
-	local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 	if filetype == "rust" then
 		require("rust_cargo_checker").register_rust_cargo_check_autocommand()
 	end
@@ -104,17 +122,14 @@ local lsp_server_on_attach = function(client, bufnr)
 	end
 
 	-- Attach nvim-navbuddy
-	local status_ok, navbuddy = pcall(require, 'nvim-navbuddy')
-	if not status_ok then
+	local status_ok_navbuddy, navbuddy = pcall(require, 'nvim-navbuddy')
+	if not status_ok_navbuddy then
 		vim.notify('File handlers.lua: nvim-navbuddy not found.')
 		return
 	end
 	navbuddy.attach(client, bufnr)
 end
 
-
-local make_capabilities = function()
-end
 
 -- autoinstall lsp server
 return {

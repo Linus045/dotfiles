@@ -5,7 +5,8 @@ function zshstartup() {
   reset_color="\e[0m"
   red_color="\e[38;5;196m"
   echo $red_color "Keybindings:"
-  echo $orange_color "C-p" $reset_color "Install pacman package"
+  echo $orange_color "C-p" $reset_color "Install multiple  pacman package (TAB to select)"
+  echo $orange_color "C-o" $reset_color "Remove pacman package"
   echo $orange_color "C-e" $reset_color "Edit current line in nvim"
   echo $orange_color "C-t" $reset_color "Search directory with fzf"
   echo $orange_color "C-r" $reset_color "Search command history with fzf"
@@ -29,7 +30,7 @@ function zshstartup() {
   echo $orange_color "manpdf" $reset_color "View man page in PDF format"
   echo $orange_color "tmuxstart" $reset_color "Start tmux dev session with predefined windows (or attaches back to it)"
   echo $orange_color "tmuxstop" $reset_color "Kills running tmux dev session"
-  echo $orange_color "viu <image path>" $reset_color "Prints image in terminal"
+  echo $orange_color "viu <image path>" $reset_color "Prints image in terminal (only works in kitty terminal)"
 }
 zle -N zshstartup
 bindkey '^_' zshstartup
