@@ -1,6 +1,6 @@
 local M = {}
 
-M.include_warnings = true
+M.include_warnings = false
 M.jump_to_first_error = true
 M.window_nr = -1
 M.buf_nr = -1
@@ -44,7 +44,7 @@ M.setup = function()
 end
 
 M.current_buffer_filetype_is_rust = function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	return filetype == "rust"
 end
 
@@ -109,35 +109,44 @@ M.get_error_warning_count = function()
 	local qflist = vim.fn.getqflist()
 	local error_count = 0
 	local warning_count = 0
+	local new_qf_list = {}
+	local new_qf_list_errors = {}
+	local new_qf_list_warnings = {}
 	if #qflist > 0 then
 		-- Check for type W
 		-- Ignore everything until we get an E
 		-- local collect_err = false
-		-- local new_qf_list = {}
-		for k, v in pairs(qflist) do
+		for k, v in ipairs(qflist) do
 			-- Count number of warnings
 			if v.type == "W" and v.text ~= ".*generated\\s\\d*\\swarning" then
-				-- if v.type == "W"
 				warning_count = warning_count + 1
-				-- collect_err = false
+				new_qf_list_warnings[#new_qf_list_warnings + 1] = v
 			end
 
 			-- Count errors
 			if v.type == "E" then
 				-- collect_err = true
 				error_count = error_count + 1
+				new_qf_list_errors[#new_qf_list_errors + 1] = v
 			end
 
 			-- Add errors to the new quickfix list
-			-- if collect_err then
-			-- new_qf_list[#new_qf_list + 1] = v
-			-- end
+			new_qf_list[#new_qf_list + 1] = v
 		end
-
-		-- vim.fn.setqflist(new_qf_list)
 	end
 
-	return { ["error_count"] = error_count, ["warning_count"] = warning_count, ["quickfix_list"] = qflist }
+	if not M.include_warnings then
+		-- Sort qf list new, first show errors, then warnings
+		new_qf_list = {}
+		for _, v in ipairs(new_qf_list_errors) do
+			new_qf_list[#new_qf_list + 1] = v
+		end
+		for _, v in ipairs(new_qf_list_warnings) do
+			new_qf_list[#new_qf_list + 1] = v
+		end
+	end
+
+	return { ["error_count"] = error_count, ["warning_count"] = warning_count, ["quickfix_list"] = new_qf_list }
 end
 
 
@@ -163,21 +172,19 @@ end
 M.register_rust_cargo_check_autocommand = function()
 	local use_window = false
 
-
 	vim.api.nvim_create_autocmd("BufWritePost", {
 		group = vim.api.nvim_create_augroup("rust_cargo_check_autocommand", { clear = true }),
 		pattern = "*.rs",
 		callback = function()
 			-- make sure this is a rust file
-			local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+			local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 			if filetype ~= "rust" then
 				return
 			end
 
 			-- make sure that cargo is set as the makeprg
-			local old_makeprg = vim.api.nvim_buf_get_option(0, "makeprg")
-			P(old_makeprg)
-			vim.api.nvim_buf_set_option(0, "makeprg", "cargo")
+			local old_makeprg = vim.api.nvim_get_option_value("makeprg", { buf = 0 })
+			vim.api.nvim_set_option_value("makeprg", "cargo", { buf = 0 })
 
 			if vim.api.nvim_buf_is_valid(M.buf_nr) then
 				vim.api.nvim_buf_delete(M.buf_nr, { force = true, unload = false })
@@ -191,7 +198,7 @@ M.register_rust_cargo_check_autocommand = function()
 
 			local oldwin = vim.api.nvim_get_current_win()
 			vim.api.nvim_set_current_win(M.window_nr)
-			vim.api.nvim_win_set_option(0, "spell", false)
+			vim.api.nvim_set_option_value("spell", false, {})
 			local buf = vim.api.nvim_create_buf(false, true)
 			M.rust_cargo_check_buf_nr = buf
 
@@ -208,7 +215,7 @@ M.register_rust_cargo_check_autocommand = function()
 
 			vim.cmd("terminal " .. vim.fn.join(args, " "))
 			M.buf_nr = vim.api.nvim_get_current_buf()
-			vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
+			vim.api.nvim_set_option_value("modifiable", true, { buf = M.buf_nr })
 			vim.api.nvim_set_current_win(oldwin)
 
 			vim.api.nvim_create_autocmd("TermClose", {
@@ -220,7 +227,8 @@ M.register_rust_cargo_check_autocommand = function()
 					local oldwin = vim.api.nvim_get_current_win()
 
 					local error_warnings = M.get_error_warning_count()
-					if (exit_status == 0) and (error_warnings.warning_count == 0) then
+					if (exit_status == 0) and
+						((error_warnings.warning_count == 0) or not M.include_warnings) then
 						local height = 1
 						-- delete old buffer
 						vim.cmd("bwipe " .. M.buf_nr)
@@ -238,14 +246,16 @@ M.register_rust_cargo_check_autocommand = function()
 						vim.api.nvim_set_current_win(M.window_nr)
 						vim.api.nvim_win_set_buf(M.window_nr, M.buf_nr)
 
-						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", true)
+						vim.api.nvim_set_option_value("modifiable", true, { buf = M.buf_nr })
 						vim.cmd("resize " .. M.window_height)
-						vim.api.nvim_buf_set_option(M.buf_nr, "modifiable", false)
+						vim.cmd("0")
+						vim.cmd("redraw")
+						vim.api.nvim_set_option_value("modifiable", false, { buf = M.buf_nr })
 					end
 					vim.api.nvim_set_current_win(oldwin)
 
 					if (error_warnings.error_count > 0) then
-						-- vim.fn.setqflist(error_warnings.quickfix_list)
+						vim.fn.setqflist(error_warnings.quickfix_list)
 						if M.jump_to_first_error then
 							vim.cmd("cfirst")
 						end
