@@ -108,6 +108,8 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 
 -- store viewoptions (see :help viewoptions) on close and load on open again
 -- stores folds, cursor and current directory
+-- WARNING: can cause problems with current working directory :pwd to be changed
+-- use :lcd- to reset the local directory for that  window
 vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
 	pattern = { "*.*" },
 	command = "mkview"
@@ -117,6 +119,20 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	pattern = { "*.*" },
 	command = "silent! loadview"
 })
+
+-- vim.api.nvim_create_autocmd({ "DirChangedPre" }, {
+-- 	callback = function(event)
+-- 		P("The directory before changing is: ")
+-- 		P(event)
+-- 	end
+-- })
+
+-- vim.api.nvim_create_autocmd({ "DirChanged" }, {
+-- 	callback = function(event)
+-- 		P("The directory has changed to: ")
+-- 		P(event)
+-- 	end
+-- })
 
 
 -- au BufEnter *.pdf exe "normal! \<c-o>"
