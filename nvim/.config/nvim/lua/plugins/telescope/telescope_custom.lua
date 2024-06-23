@@ -249,8 +249,8 @@ M.list_projects = function(opts)
 		vim.cmd("cd " .. selected_dir)
 		vim.cmd("clearjumps")
 
-		require("load_project_config").load_custom_config_for_cwd()
-		print("Opening ".. selected_dir)
+		require("custom_tools.load_project_config").load_custom_config_for_cwd()
+		print("Opening " .. selected_dir)
 	end
 
 
