@@ -9,3 +9,4 @@ i3/.config/i3/autostart.local
 zsh/.config/zsh/zsh-exports.local
 i3/.config/i3/window_rules.local
 x/.xprofile.local
+kitty/.config/kitty/kitty.local.conf
