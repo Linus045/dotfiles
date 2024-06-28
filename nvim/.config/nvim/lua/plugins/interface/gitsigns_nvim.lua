@@ -37,9 +37,6 @@ return {
 				row = 0,
 				col = 1,
 			},
-			yadm = {
-				enable = false,
-			},
 			on_attach = function()
 				local keymap = require("custom_tools.keybindings_util").keymap
 				-- Navigation
