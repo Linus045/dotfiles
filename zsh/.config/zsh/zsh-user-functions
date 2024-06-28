@@ -69,10 +69,19 @@ zle -N remove_pacman_package
 bindkey '^o' remove_pacman_package
 
 function find_and_open_file() {
-	local t=$(FZF_DEFAULT_COMMAND='' fzf --no-multi <"$TTY" --walker=file,dir,follow --preview "bat --style=numbers --color=always {}") || return
-	if [[ ! -z $t ]]; then
-		$(nohup xdg-open $t &>/dev/null &)
-	fi
+	local SKIP_DIRS=".git,node_modules"
+	local file=$(FZF_DEFAULT_COMMAND='' fzf --no-multi <"$TTY" --walker-skip=$SKIP_DIRS --walker=file,follow --preview "bat --style=numbers --color=always {}") || return
+
+	local filetype=$(xdg-mime query filetype "$file" > /dev/null 2>&1) || return
+	case "$filetype" in
+		text/*)
+			BUFFER="nvim $file";
+			zle accept-line;
+			;;
+		*)
+			$(>/dev/null nohup xdg-open "$file" 2>&1 &);
+			;;
+	esac
 }
 zle -N find_and_open_file 
 bindkey "^f" find_and_open_file
