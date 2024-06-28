@@ -68,3 +68,12 @@ function remove_pacman_package() {
 zle -N remove_pacman_package
 bindkey '^o' remove_pacman_package
 
+function find_and_open_file() {
+	local t=$(FZF_DEFAULT_COMMAND='' fzf --no-multi <"$TTY" --walker=file,dir,follow --preview "bat --style=numbers --color=always {}") || return
+	if [[ ! -z $t ]]; then
+		$(nohup xdg-open $t &>/dev/null &)
+	fi
+}
+zle -N find_and_open_file 
+bindkey "^f" find_and_open_file
+
