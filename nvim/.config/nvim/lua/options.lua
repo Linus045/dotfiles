@@ -92,7 +92,8 @@ if vim.fn.executable("rg") then
 	vim.opt.grepprg = 'rg --vimgrep'
 end
 
-vim.opt.viewoptions = "folds,cursor,curdir"
+-- vim.opt.viewoptions = "folds,cursor,curdir"
+vim.opt.viewoptions = "folds,cursor"
 
 -- vim.cmd "set path+=**" -- bad practice see: https://github.com/tpope/vim-apathy
 vim.cmd "set wildignore+=*/node_modules/*"

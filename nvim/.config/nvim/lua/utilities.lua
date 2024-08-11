@@ -107,6 +107,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 
 
 -- store viewoptions (see :help viewoptions) on close and load on open again
+-- see viewoptions in options.lua
 -- stores folds, cursor and current directory
 -- WARNING: can cause problems with current working directory :pwd to be changed
 -- use :lcd- to reset the local directory for that  window
