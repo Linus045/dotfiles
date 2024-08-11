@@ -39,7 +39,7 @@ bindkey '^_' zshstartup
 
 # List and install packages with C-p
 function install_package() {
-  cmd="pacman -Sqs | fzf --multi --print0 --preview='pacman -Si {}'"
+  cmd="{ pacman -Sqs &&  pacman -Sg;} | fzf --multi --print0 --preview='pacman -Si {} || { echo "'"'"\nInterpreting as group name and listing packages::"'"'" && pacman -Sg {}; }'"
   selected=$(eval $cmd)
   if [ -n "$selected" ]; then
     # insert spaces and remove trailing whitespace
