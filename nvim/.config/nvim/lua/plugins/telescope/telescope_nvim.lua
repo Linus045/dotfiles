@@ -1,6 +1,22 @@
 return {
 	-- telescope.
 	"nvim-telescope/telescope.nvim",
+
+	dependencies = {
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+			config = function()
+				require("telescope").load_extension("fzf")
+			end,
+		},
+		{
+			"nvim-telescope/telescope-ui-select.nvim",
+			config = function()
+				require("telescope").load_extension("ui-select")
+			end,
+		},
+	},
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
@@ -157,13 +173,20 @@ return {
 						winblend = 15
 					}
 				},
-				require("telescope").load_extension("refactoring")
+				require("telescope").load_extension("refactoring"),
+				fzf = {
+					fuzzy = true,    -- false will only do exact matching
+					override_generic_sorter = true, -- override the generic sorter
+					override_file_sorter = true, -- override the file sorter
+					-- or "ignore_case" or "respect_case"
+					--	the default case_mode is "smart_case"
+					case_mode = "smart_case",
+				}
 			},
 		})
 
 		-- load debugger extension
 		telescope.load_extension("dap")
-		telescope.load_extension("ui-select")
 		telescope.load_extension("git_worktree")
 	end
 }
