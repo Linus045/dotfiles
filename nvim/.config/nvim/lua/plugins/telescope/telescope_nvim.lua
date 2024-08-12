@@ -92,7 +92,7 @@ return {
 			pickers = {
 				find_files = {
 					hidden = true,
-					theme = "dropdown",
+					theme = "ivy",
 					previewer = false,
 					winblend = 15,
 					initial_mode = "insert",

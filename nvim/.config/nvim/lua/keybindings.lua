@@ -48,13 +48,19 @@ keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts, "NVIM Tree")
 
 -- show legendary.nvim palette
 keymap("n", "<leader>p",
-	"<cmd>lua require('legendary').find({ filters = { require('legendary.filters').current_mode() } })<cr>", opts,
-	"Open Legendary Command Palette")
+	function()
+		require('legendary').find({ filters = { require('legendary.filters').current_mode() } })
+	end,
+	opts, "Open Legendary Command Palette")
 keymap("v", "<leader>p",
-	"<cmd>lua require('legendary').find({ filters = { require('legendary.filters').current_mode() } })<cr>", opts,
+	function()
+		require('legendary').find({ filters = { require('legendary.filters').current_mode() } })
+	end, opts,
 	"Open Legendary Command Palette")
 keymap("x", "<leader>p",
-	"<cmd>lua require('legendary').find({ filters = { require('legendary.filters').current_mode() } })<cr>", opts,
+	function()
+		require('legendary').find({ filters = { require('legendary.filters').current_mode() } })
+	end, opts,
 	"Open Legendary Command Palette")
 
 -- Resize with arrows
@@ -70,32 +76,32 @@ keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts, "Resize right")
 
 -- Insert --
 -- Press jk fast to escape
-keymap("i", "jk", "<ESC>", opts, nil, true)
+-- keymap("i", "jk", "<ESC>", opts, nil, true)
+vim.keymap.set("i", "jk", "<ESC>", { noremap = true, silent = true })
+
 
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts, nil, true)
 keymap("v", ">", ">gv", opts, nil, true)
 
-
 -- Move text up and down
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>", opts, nil, true)
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>", opts, nil, true)
-keymap("v", "<A-j>", ":m .+1<CR>", opts, nil, true)
-keymap("v", "<A-k>", ":m .-2<CR>", opts, nil, true)
+-- https://vim.fandom.com/wiki/Moving_lines_up_or_down
+-- Normal --
+keymap("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true }, nil, true, false, nil, false)
+keymap("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true }, nil, true, false, nil, false)
+
+-- Visual Block --
+keymap("x", "<A-j>", ":move '>+1<CR>gv=gv", { noremap = true, silent = true }, nil, true, false, nil, false)
+keymap("x", "<A-k>", ":move '<-2<CR>gv=gv", { noremap = true, silent = true }, nil, true, false, nil, false)
+
+
 -- when pasting, don't override the register
---keymap("v", "<leader>p", '"_dP', opts, "Better Paste (won't override the register)")
-keymap("x", "p", '"_dP', opts, nil, true)
+-- keymap("v", "<leader>p", '"_dP', opts, "Better Paste (won't override the register)")
+-- keymap("x", "p", '"_dP', opts, nil, true)
 
 keymap("n", "<leader>y", '"+y', opts, "Copy to system clipboard")
 keymap("v", "<leader>y", '"+y', opts, "Copy to system clipboard")
-
--- Visual Block --
--- Move text up and down
--- keymap("x", "J", ":move '>+1<CR>gv-gv", opts, nil, true)
--- keymap("x", "K", ":move '<-2<CR>gv-gv", opts, nil, true)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts, nil, true)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts, nil, true)
 
 -- Terminal --
 -- Better terminal navigation
@@ -113,8 +119,11 @@ keymap("n", "<leader>X", ":bw!<cr>", opts, "Kill window (forced)")
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>f", nil, opts, "[FINDER]", false, true)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts, "Telescope find_files")
-keymap("n", "<leader>FF", [[<cmd>lua require'telescope.builtin'.find_files({hidden = true, no_ignore = true})<CR>]], opts,
-	"Telescope find_files (with hidden/ignored)")
+keymap("n", "<leader>FF", function()
+		require 'telescope.builtin'.find_files({ hidden = true, no_ignore = true })
+	end, opts,
+	"Telescope find_files (with hidden/ignored)"
+)
 keymap("n", "<leader>fg", "<cmd>Telescope git_files<CR>", opts, "Telescope git_files")
 keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts, "Telescope buffers")
 keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts, "Telescope help tags")
@@ -122,7 +131,9 @@ keymap("n", "<leader>fc", "<cmd>Telescope commands<CR>", opts, "Telescope comman
 keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope diagnostics")
 keymap("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts, "Telescope quickfix")
 keymap("n", "<leader>fw", "<cmd>Telescope git_worktree git_worktrees<CR>", opts, "Telescope git worktrees")
-keymap("n", "<leader>fp", [[<cmd>lua require'plugins.telescope.telescope_custom'.list_projects()<CR>]], opts,
+keymap("n", "<leader>fp", function()
+		require 'plugins.telescope.telescope_custom'.list_projects()
+	end, opts,
 	"Telescope list project directories")
 
 keymap("n", "<leader>fs", nil, opts, "[LSP Symbols]", false, true)
@@ -151,31 +162,41 @@ keymap("n", "<leader>g", nil, opts, "[GREP|Codelens]", false, true)
 keymap("n", "<leader>ge", "<cmd>Telescope live_grep<CR>", opts, "Telescope live_grep (with RegEx)")
 -- Live Grep with hidden hiles
 keymap("n", "<leader>gh",
-	"<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim'}})<cr>"
+	function()
+		require 'telescope.builtin'.live_grep({ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--hidden', '--trim' } })
+	end
 	, opts, "Telescope live_grep (with hidden files)"
 )
 
 -- Live Grep without regular Expression
 keymap("n", "<leader>gg",
-	"<cmd>lua require'telescope.builtin'.live_grep({vimgrep_arguments={'rg','--color=never','--no-heading','--with-filename','--line-number','--column','--smart-case','--fixed-strings', '--trim'}})<cr>"
+	function()
+		require 'telescope.builtin'.live_grep({ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--fixed-strings', '--trim' } })
+	end
 	,
 	opts,
 	"Telescope live_grep (without RegEx)")
 
 keymap("n", "<leader>gs",
-	[[<cmd>lua require 'telescope.builtin'.grep_string({ search = vim.fn.input('GREP>'), vimgrep_arguments ={ 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--fixed-strings', '--trim'} }) <CR>]],
+	function()
+		require 'telescope.builtin'.grep_string({ search = vim.fn.input('GREP>'), vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '--fixed-strings', '--trim' } })
+	end,
 	opts,
 	"Telescope grep_string")
 
 keymap("n", "<leader>gl",
-	[[<cmd>lua require'plugins.telescope.telescope_custom'.live_grep_in_glob() <CR>]],
+	function()
+		require 'plugins.telescope.telescope_custom'.live_grep_in_glob()
+	end,
 	opts,
 	"Telescope live_grep_in_glob")
 
 keymap(
 	"n",
 	"<leader>0",
-	"<cmd>lua require'plugins.telescope.telescope_custom'.dot_files()<CR>",
+	function()
+		require 'plugins.telescope.telescope_custom'.dot_files()
+	end,
 	opts,
 	"Telescope find_files (Dotfiles)"
 )
@@ -196,23 +217,35 @@ keymap(
 -- 	"Prosessions List"
 -- )
 
-keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>", opts,
+keymap("n", "<leader>s", function()
+		require 'telescope.builtin'.current_buffer_fuzzy_find()
+	end, opts,
 	"Telescope Fuzzy Buffer")
 
 -- keymap("n", "<leader>s", "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols()<cr>", opts)
-keymap("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR><Esc>", opts, "Code Actions")
-keymap("v", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<CR><Esc>", opts, "Code Actions")
+keymap("n", "<leader>.", function()
+	vim.lsp.buf.code_action()
+end, opts, "Code Actions")
+keymap("v", "<leader>.", function()
+	vim.lsp.buf.code_action()
+end, opts, "Code Actions")
 -- remap to open the Telescope refactoring menu in visual mode
 
 keymap("n", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
 keymap("v", "<leader>r", nil, opts, "[REFACTOR|RENAME]", false, true)
-keymap("n", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
+keymap("n", "<leader>rr", function()
+	require('telescope').extensions.refactoring.refactors()
+end, { noremap = true }
 , "Refactor [Telescope]")
-keymap("v", "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", { noremap = true }
+keymap("v", "<leader>rr", function()
+	require('telescope').extensions.refactoring.refactors()
+end, { noremap = true }
 , "Refactor [Telescope]")
 
 
-keymap("n", "<leader>dld", "<cmd>lua require'telescope.builtin'.diagnostics()<cr>", opts, "Telescope diagnostics")
+keymap("n", "<leader>dld", function()
+	require 'telescope.builtin'.diagnostics()
+end, opts, "Telescope diagnostics")
 
 -- Telescope DAP
 keymap("n", "<leader>d", nil, opts, "[DEBUG]", false, true)
@@ -391,7 +424,9 @@ keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
 keymap("n", "<leader>b", [[:lua require("nvim-navbuddy").open()<CR>]], opts, "Open NavBuddy")
 
 -- Zen mode
-keymap("n", "<leader><Space>", "<cmd>lua require'zen-mode'.toggle()<CR>", opts, "Zen-Mode")
+keymap("n", "<leader><Space>", function()
+	require 'zen-mode'.toggle()
+end, opts, "Zen-Mode")
 
 -- Git Messenger (rhysd/git-messenger.vim)
 keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Message (? for keybindings)", false, false)
@@ -426,9 +461,13 @@ keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location 
 keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")
 
-keymap("n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts,
+keymap("n", "[d", function()
+		vim.diagnostic.goto_prev({ border = "rounded" })
+	end, opts,
 	"Goto previous diagnostic result", nil, nil)
-keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts, "Goto next diagnostic result"
+keymap("n", "]d", function()
+	vim.diagnostic.goto_next({ border = "rounded" })
+end, opts, "Goto next diagnostic result"
 , nil, nil)
 keymap("n", "[q", '<cmd>cprevious<CR>', opts, "Jump to previous quickfix entry", nil, nil)
 keymap("n", "]q", '<cmd>cnext<CR>', opts, "Jump to next quickfix entry", nil, nil)
