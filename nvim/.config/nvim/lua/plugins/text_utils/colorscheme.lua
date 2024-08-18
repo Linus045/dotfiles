@@ -11,6 +11,17 @@ return {
 			-- local colorscheme = "nord"
 			local colorscheme = "tokyonight-moon"
 
+			require("tokyonight").setup({
+				-- Change the "hint" color to the "orange" color, and make the "error" color bright red
+				style = "moon",
+				on_colors = function(colors)
+				end,
+				on_highlights = function(hl, c)
+					-- original color: #444a73
+					-- override with a more readable color (highlights unused variables)
+					hl.DiagnosticUnnecessary = { fg = "#6E8096" }
+				end
+			})
 
 			vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 				callback = function(ev)
