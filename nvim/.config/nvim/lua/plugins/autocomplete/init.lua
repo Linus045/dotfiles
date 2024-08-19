@@ -37,7 +37,6 @@ return {
 			require("plugins.autocomplete.luasnip"),
 
 			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
 
 			-- show icons for entries in autocomplete menu
 			"onsails/lspkind.nvim",

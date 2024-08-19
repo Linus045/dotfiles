@@ -1,5 +1,8 @@
 return {
 	"L3MON4D3/LuaSnip",
+	dependencies = { "rafamadriz/friendly-snippets" },
+	version = "v2.3",
+	build = "make install_jsregexp",
 	config = function()
 		local ls = require("luasnip")
 		local types = require("luasnip.util.types")
@@ -16,8 +19,6 @@ return {
 			}
 		}
 
-		-- load friendly snippets
-		require("luasnip/loaders/from_vscode").lazy_load()
 
 		-- prevent jumping back to snippet when placeholders are skipped
 		-- see https://github.com/L3MON4D3/LuaSnip/issues/258
@@ -73,5 +74,8 @@ return {
 				t({ "", "end" }),
 			}, { stored = { module_name = i(1, "module_name") } }),
 		})
+
+		-- load friendly snippets
+		require("luasnip/loaders/from_vscode").lazy_load()
 	end
 }
