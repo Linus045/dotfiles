@@ -78,6 +78,11 @@ function changetheme() {
   wal --theme | fzf --preview='$SHELL $ZDOTDIR/print_colors.sh; printf "\n\n\nUsage: Press ENTER to change"' --bind 'enter:execute(wal -e --theme $(echo {} | sed -r "s/ - ([a-zA-Z0-9_-]+).*/\1/") > /dev/null)'
 }
 
+# watch the process of io sync
+watchSync() {
+  watch -n1 'grep -E "(Dirty|Write)" /proc/meminfo; echo; ls /sys/block/ | while read device; do awk "{ print \"$device: \"  \$9 }" "/sys/block/$device/stat"; done'
+}
+
 # get fastest mirrors
 # alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
 # alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
