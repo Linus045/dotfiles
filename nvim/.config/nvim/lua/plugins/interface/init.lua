@@ -1,4 +1,9 @@
 return {
+	{
+		"chrisgrieser/nvim-lsp-endhints",
+		event = "LspAttach",
+		opts = {}, -- required, even if empty
+	},
 	-- Shows current function scope/signature at the top of the screen
 	{
 		"nvim-treesitter/nvim-treesitter-context",

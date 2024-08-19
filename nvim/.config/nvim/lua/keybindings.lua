@@ -445,6 +445,12 @@ keymap("n", "<leader>lt", ":set hls!<CR>", opts, "Toggle highlighting (:set hls!
 keymap("n", "<leader>ll", ":nohl<CR>:VMClear<CR>:lua print('Cleared search highlights')<CR>", opts,
 	"Clear highlighting (:nohl)")
 
+keymap("n", "<leader>li",
+	function()
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+	end
+	, opts,
+	"Toggle inlay hints")
 
 -- Unicode fuzzy search (see plugin unicode.vim)
 -- from chrisbra/unicode.vim
