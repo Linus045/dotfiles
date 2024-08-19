@@ -42,6 +42,7 @@ alias cal='cal -m'
 
 # open rust book locally
 alias rustbook='rustup docs --book'
+alias neofetch='echo "Using fastfetch instead!" && fastfetch'
 
 # Sort entries when using ls
 alias ls='ls --group-directories-first --color=auto'
