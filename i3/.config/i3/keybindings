@@ -187,6 +187,9 @@ bindsym $mod+b mode "drawing"; exec "$DOTFILES/polybar/.config/polybar/scripts/g
 
 bindsym $mod+r mode "resize"
 
+bindsym $mod+Shift+t exec "$DOTFILES/i3/.config/i3/move_workspaces.sh"
+
+
 #dmenu which contains all programs
 #bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
 

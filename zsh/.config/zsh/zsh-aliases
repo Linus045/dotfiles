@@ -55,6 +55,18 @@ alias viu="/bin/viu -h 25"
 # start firefox process in background
 # immediately disown it (so it doesn't close when the terminal closes)
 # and redirect all output to /dev/null
+
+twitchstart ()
+{
+	pkill -TERM firefox
+	sleep 1
+	/bin/firefox -new-window -P linus_private >/dev/null 2>&1 & disown
+	sleep 1
+	/bin/firefox -new-window -P twitch_browser >/dev/null 2>&1 & disown
+	sleep 1
+	/bin/firefox -new-window -P twitch -kiosk 'https://www.twitch.tv/popout/linus045/chat?popout=' >/dev/null 2>&1 & disown
+}
+
 alias twitchchat="/bin/firefox -new-window -P twitch -kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\" >/dev/null 2>&1 & disown"
 alias firefox_start="/bin/firefox -P & disown"
 
