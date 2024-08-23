@@ -17,7 +17,13 @@ fi
 
 
 # change background
-feh --bg-fill "$background_path$wallpaper"
+if [[ $XDG_SESSION_TYPE = "wayland" ]]; then
+	swww-daemon
+	swww img --transition-type random "$background_path$wallpaper"
+else
+	feh --bg-fill "$background_path$wallpaper"
+fi
+
 if [[ $? == 0 ]]; then
 	echo "$background_path$wallpaper" > ~/.polybar_current_wallpaper_path
 	/usr/bin/notify-send --app-name="Wallpaper Changer" "Wallpaper: $wallpaper"
