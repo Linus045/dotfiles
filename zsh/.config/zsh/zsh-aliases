@@ -59,12 +59,24 @@ alias viu="/bin/viu -h 25"
 twitchstart ()
 {
 	pkill -TERM firefox
+
 	sleep 1
-	/bin/firefox -new-window -P linus_private >/dev/null 2>&1 & disown
+	i3-msg workspace 4
+	sleep 5
+	i3-msg exec -- /bin/firefox -new-window -P linus_private >/dev/null 2>&1 & disown
+
 	sleep 1
-	/bin/firefox -new-window -P twitch_browser >/dev/null 2>&1 & disown
+	i3-msg workspace 2
+	sleep 5
+	i3-msg exec -- /bin/firefox -new-window -P twitch_browser >/dev/null 2>&1 & disown
+
 	sleep 1
-	/bin/firefox -new-window -P twitch -kiosk 'https://www.twitch.tv/popout/linus045/chat?popout=' >/dev/null 2>&1 & disown
+	i3-msg exec -- /bin/firefox -new-window -P twitch -kiosk 'https://www.twitch.tv/popout/linus045/chat?popout=' >/dev/null 2>&1 & disown
+
+	i3-msg workspace 1
+
+	sleep 1
+	sh ~/.config/i3/move_workspaces.sh
 }
 
 alias twitchchat="/bin/firefox -new-window -P twitch -kiosk \"https://www.twitch.tv/popout/linus045/chat?popout=\" >/dev/null 2>&1 & disown"
