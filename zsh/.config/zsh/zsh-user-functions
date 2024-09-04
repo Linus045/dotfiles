@@ -57,11 +57,27 @@ bindkey '^e' edit-command-line
 # Alt+. to insert last argument of previous command
 bindkey '^[.' insert-last-word
 
-
 function remove_pacman_package() {
-  cmd='pacman -Qe | awk '"'"'{ print $1 }'"'"' | fzf --preview='"'"'pacman -Qi {}'"'"''
+  local tmp_file="/tmp/old_packages_file.tmp"
+  local tmp_file2="/tmp/old_packages_file_2.tmp"
+  local tmp_file3="/tmp/old_packages_file_3.tmp"
+
+  # grab all explicitly installed packages
+  pacman -Qe | awk '{ print $1 }' > $tmp_file
+  # search for the original install date and print that along with the name
+  xargs < $tmp_file -I{} grep '{}' /var/log/pacman.log | awk '/\[ALPM\] installed/ { system("date +'"'%T %d.%m.%Y'"' -d $(echo "$1" | tr -d '"[]"') | tr '"'\n'"' '"' '"'"); printf "\t%s",$4; print "" }' > $tmp_file2
+
+  # sort list by date
+  # -k defines the start and end character (starting at 1)
+  # example line: 21:10:08 23.09.2023 	lsof
+  #               |||               |
+  #               123    ...        20
+  sort -r -b -k1.16,1.20 -k1.13,1.14 -k1.10,1.11 -k1.7,1.8 -k1.7,1.8 -k1.4,1.5 -k1.1,1.2 < $tmp_file2 > $tmp_file3
+
+  cmd=$'fzf --preview=\'pacman -Qi {3}\' < $tmp_file3'
   selected=$(eval $cmd)
   if [ -n "$selected" ]; then
+	selected=$(echo $selected | awk '{ print $(NF) }')
     zle -U "sudo pacman -Runs $selected"
   fi
 }
