@@ -57,6 +57,9 @@ bindkey '^e' edit-command-line
 # Alt+. to insert last argument of previous command
 bindkey '^[.' insert-last-word
 
+# Alt+Z to run fg command (open background process in foreground)
+bindkey -s '^Z' 'fg\n'
+
 function remove_pacman_package() {
   local tmp_file="/tmp/old_packages_file.tmp"
   local tmp_file2="/tmp/old_packages_file_2.tmp"
