@@ -1,6 +1,5 @@
 # swap background every 30min
-*/30 * * * * $(DISPLAY=:0 /home/linus/.config/polybar/scripts/set_random_background.sh 2> /home/linus/.polybar_errorlog_background_swapper)
-
+*/30 * * * * $(DISPLAY=:1 /home/linus/.config/polybar/scripts/set_random_background.sh 2> /home/linus/.polybar_errorlog_background_swapper)
 
 # make a backup of the crontab
 0 * * * * /bin/cp /var/spool/cron/linus /home/linus/dev/dotfiles/.cron_backup_tower >/dev/null 2>&1
