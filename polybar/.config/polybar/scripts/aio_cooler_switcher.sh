@@ -33,6 +33,11 @@ case "$1" in
 	  set_mode_performance
 	fi
     ;;
-  *) ;;
+  status)
+	 liquidctl status
+	;;
+  *)
+	echo "use 'aio_cooler_switcher.sh <status | performance | balanced | quiet>"
+	;;
 esac
 
