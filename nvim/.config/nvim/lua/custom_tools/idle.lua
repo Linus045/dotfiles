@@ -57,6 +57,8 @@ local function idle()
 	idle_timer = vim.fn.timer_start(IDLE_TIME_SEC * 1000, test)
 end
 
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-	callback = idle
-})
+-- Uncomment to enable
+-- noticed the CPU load was quite high on CellularAutomaton which i disliked
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+-- 	callback = idle
+-- })
