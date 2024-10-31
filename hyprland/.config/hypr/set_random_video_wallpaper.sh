@@ -20,7 +20,7 @@ do
 	# change background
 	if [[ $XDG_SESSION_TYPE = "wayland" ]]; then
 		current_id=$(pkill -f "mpvpaper.+$random_display")
-		mpvpaper -o "no-audio --loop-playlist shuffle" $random_display "$background_path$wallpaper" &
+		mpvpaper -o "no-audio hwdec=auto --loop-playlist shuffle" $random_display "$background_path$wallpaper" &
 	else
 		notify-send "Failed to set live wallpaper. Not on wayland"
 	fi
