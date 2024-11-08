@@ -22,6 +22,7 @@
         "idle_inhibitor",
         "pulseaudio",
         "network",
+		"custom/background",
 		"temperature",
         "power-profiles-daemon",
         "tray",
@@ -208,6 +209,10 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
+	"custom/background":{
+		"format": "󰸉",
+		"on-click": "pkill -SIGUSR1 --full set_random_vide"
+	},
     "custom/power": {
         "format" : "⏻ ",
 		"tooltip": false,

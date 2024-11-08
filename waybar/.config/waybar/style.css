@@ -152,6 +152,14 @@ button:hover {
 	animation-direction: alternate;
 }
 
+#custom-background {
+	background-color: #dddddd;
+	color: #000000;
+	min-width: 20px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 #power-profiles-daemon {
 	padding-right: 15px;
 }

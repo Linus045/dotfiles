@@ -1,10 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 background_path="${HOME}/.wallpapers/videos/"
 DELAY=600
 
-while true
-do
+
+# Send a USR1 signal to trigger wallpaper change
+# e.g. 'pkill -SIGUSR1 set_random_vide' (this file is called set_random_video_wallpaper.sh)
+
+change_wallpaper() {
 	wallpaper=$1
 	if [ -z $wallpaper ] || [ ! -f $wallpaper ]; then
 		wallpaper=$(ls $background_path | grep '\.mp4$' | shuf -n 1)
@@ -32,7 +35,16 @@ do
 	else
 		/usr/bin/notify-send --app-name="Wallpaper Changer" "Error setting wallpaper!"
 	fi
+}
+
+trap change_wallpaper USR1
 
 
-	sleep $DELAY
+while true; do
+	change_wallpaper
+
+	sleep $DELAY &
+	wait $!
 done
+
+trap USR1
