@@ -112,6 +112,7 @@ return {
 					previewer = false,
 					winblend = 15,
 					initial_mode = "insert",
+					path_display = { "absolute" },
 				},
 				keymaps = {
 					theme = "ivy",
