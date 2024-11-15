@@ -1,5 +1,11 @@
 return {
 	"mfussenegger/nvim-dap",
+	dependencies = {
+		{
+			"Joakker/lua-json5",
+			build = "./install.sh",
+		}
+	},
 	config = function()
 		local dap = require("dap")
 
@@ -63,18 +69,40 @@ return {
 			if dap.session() then
 				dap.continue()
 			else
-				if filetype == "cpp" then
-					cwd_picker()
+				-- Try to load launch.jsonc/launch.json file with json5 which allows comments and trailing commas
+				local status, json5 = pcall(require, 'json5')
+				if status then
+					require('dap.ext.vscode').json_decode = json5.parse
 				else
 					print(
-						"Note: No custom launch function for filetype. Please add to dap.my_custom_continue_function. Trying to load launch.json file instead")
+						"Error loading json5. Comments and trailing commas will not work in launch.json or launch.jsonc")
+				end
 
-					-- map 'type' in launch.json to correct configuration
-					require('dap.ext.vscode').load_launchjs(".vscode/launch.json", {
-						codelldb = { "c", "cpp" },
-						node = { "typescript" },
-						["pwa-node"] = { "typescript" }
-					})
+				local mapping = {
+					codelldb = { "c", "cpp" },
+					node = { "typescript" },
+					["pwa-node"] = { "typescript" }
+				}
+
+				-- map 'type' in launch.json to correct configuration
+				if vim.fn.filereadable(".vscode/launch.jsonc") == 1 then
+					print("Loading .vscode/launch.jsonc")
+					require('dap.ext.vscode').load_launchjs(".vscode/launch.jsonc", mapping)
+					dap.continue()
+				elseif vim.fn.filereadable(".vscode/launch.json") == 1 then
+					print("Loading .vscode/launch.json")
+					require('dap.ext.vscode').load_launchjs(".vscode/launch.json", mapping)
+					dap.continue()
+				else
+					print("No launch.json or launch.jsonc/launch.json file found")
+
+					if filetype == "cpp" then
+						print("Starting C++ debugging session interactively")
+						cwd_picker()
+					else
+						print(
+							"No filetype specific configuration found. Please add one to my_custom_continue_function in nvim-dap.lua")
+					end
 				end
 			end
 		end
@@ -193,6 +221,9 @@ return {
     program = function()
       local selected = ""
       -- TODO: MAKE THIS WORK
+	  -- Might be possible to copy this setup here:
+	  --https://github.com/mfussenegger/nvim-dap/blob/6bf4de67dbe90271608e1c81797e5edc79ec6335/lua/dap/utils.lua#L167-L178
+	  -- to have a synchrounous call to the telescope picker and wait for it to close
       vim.notify("THIS DOESNT WORK YET")
       require "user.telescope-custom".custom_selection_menu_files("Executable to debug",
         vim.fn.getcwd(),
