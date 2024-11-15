@@ -2,10 +2,6 @@ return {
 	"mfussenegger/nvim-dap",
 	config = function()
 		local dap = require("dap")
-		dap.set_log_level('TRACE');
-
-
-		-- require('dap-python').setup('/usr/bin/python')
 
 		dap.defaults.fallback.external_terminal = {
 			command = '/usr/bin/kitty',
@@ -14,31 +10,101 @@ return {
 
 		dap.defaults.fallback.terminal_win_cmd = '50vsplit new'
 
-		dap.adapters.lldb = {
-			type = 'executable',
-			command = '/usr/bin/lldb-vscode', -- adjust as needed, must be absolute path
-			name = 'lldb'
+
+		-- opens a picker to select an executable in the current working directory
+		-- starts lldb debug session upon selection
+		local executables_picker = function(selected_cwd)
+			local cwd = vim.fn.getcwd()
+			require("plugins.telescope.telescope_custom")
+				.custom_selection_menu_files(
+					"Executable to debug",
+					cwd,
+					{
+						'--no-ignore', '--absolute-path', '--type', 'x'
+					},
+					function(selected_entry)
+						vim.notify("Selected entry: " .. selected_entry)
+						dap.run(
+							{
+								name = "Launch process [with custom args]",
+								type = "lldb-dap",
+								request = "launch",
+								stopOnEntry = false,
+								program = selected_entry,
+								cwd = selected_cwd,
+								args = function()
+									return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+								end,
+							}
+						)
+					end)
+		end
+
+		-- opens a picker to select a working directory
+		-- opens executables_picker upon selection
+		local cwd_picker = function()
+			local cwd = vim.fn.getcwd()
+			require("plugins.telescope.telescope_custom")
+				.custom_selection_menu_files(
+					"Pick working directory for executable",
+					cwd,
+					{
+						'--no-ignore', '--absolute-path', '--type', 'd'
+					},
+					function(selected_entry)
+						vim.notify("Selected entry: " .. selected_entry)
+						executables_picker(selected_entry)
+					end)
+		end
+
+		-- "smart" continue function that will either continue the current session
+		-- or open the picker to select a working directory and executable
+		dap.my_custom_continue_function = function(filetype)
+			if dap.session() then
+				dap.continue()
+			else
+				if filetype == "cpp" then
+					cwd_picker()
+				else
+					print(
+						"Note: No custom launch function for filetype. Please add to dap.my_custom_continue_function. Trying to load launch.json file instead")
+
+					-- map 'type' in launch.json to correct configuration
+					require('dap.ext.vscode').load_launchjs(".vscode/launch.json", {
+						codelldb = { "c", "cpp" },
+						node = { "typescript" },
+						["pwa-node"] = { "typescript" }
+					})
+				end
+			end
+		end
+
+		local bin_locations = vim.fn.stdpath("data") .. "/mason/bin/"
+		dap.adapters.codelldb = {
+			type = 'server',
+			port = "${port}",
+			executable = {
+				command = bin_locations .. 'codelldb', -- adjust as needed, must be absolute path
+				args = { "--port", "${port}" },
+			},
 		}
 
-		dap.my_custom_continue_function = function(filetype)
-			-- vim.notify("Loading launch.json file configurations.")
-			print("Loading launch.json file configurations.")
-			-- map 'type' in launch.json to correct configuration
-			require('dap.ext.vscode').load_launchjs(".vscode/launch.json", {
-				lldb = { "c", "cpp" },
-				node = { "typescript" },
-				["pwa-node"] = { "typescript" }
-			})
-
-			dap.continue()
-		end
+		dap.adapters["codelldb-attach"] = {
+			type = 'server',
+			port = "${port}",
+			executable = {
+				command = bin_locations .. 'codelldb', -- adjust as needed, must be absolute path
+				args = { "--port", "${port}" },
+			},
+		}
 
 		-- https://github.com/mfussenegger/nvim-dap/discussions/93
 		-- https://marketplace.visualstudio.com/items?itemName=lanza.lldb-vscode#launch-configuration-settings
-		dap.adapters["lldb-vscode"] = function(cb, config)
-			local adapter = dap.adapters.lldb
+		dap.adapters["lldb-dap"] = function(cb, config)
+			-- grab config from codelldb adapter
+			local adapter = dap.adapters.codelldb
 
-			-- only do this on attach
+			-- only do this on attach to run in external terminal
 			if config.request == 'attach' and config.program then
 				local terminal = dap.defaults[config.type].external_terminal
 				local full_args = {}
@@ -47,6 +113,7 @@ return {
 				vim.list_extend(full_args, config.args or {})
 				local opts = {
 					args = full_args,
+					cwd = config.cwd,
 					detached = true
 				}
 
@@ -71,29 +138,39 @@ return {
 		end
 
 		dap.configurations.cpp = {
-			{
-				name = "Attach to process",
-				type = "lldb",
-				request = "attach",
-				pid = require('dap.utils').pick_process
-			},
+			-- TODO: Attach to process is not working
 			-- {
-			--   name = "Start process extern and attach [with custom args]",
-			--   type = "lldb-vscode",
-			--   request = "attach",
-			--   stopOnEntry = false,
-			--   waitFor = true,
-			--   program = function()
-			--     return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-			--   end,
-			--   args = function()
-			--     return vim.fn.split(vim.fn.input("Args: ", ""), " ")
-			--   end,
+			-- 	name = "Attach to process",
+			-- dont use lldb-dap type here because that does special things for
+			-- external terminals
+			-- 	type = "codelldb",
+			-- 	request = "attach",
+			-- 	pid = require('dap.utils').pick_process,
+			-- 	args = {},
 			-- },
 			{
+				name = "Start process extern and attach [with custom args]",
+				type = "lldb-dap",
+				request = "attach",
+				stopOnEntry = false,
+				waitFor = true,
+				cwd = function()
+					return vim.fn.input('Working directory for executable: ', vim.fn.getcwd() .. '/', 'dir')
+				end,
+				program = function()
+					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+				args = function()
+					return vim.fn.split(vim.fn.input("Args: ", ""), " ")
+				end,
+			},
+			{
 				name = "Launch process [with custom args]",
-				type = "lldb-vscode",
+				type = "lldb-dap",
 				request = "launch",
+				cwd = function()
+					return vim.fn.input('Working directory for executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
 				stopOnEntry = false,
 				program = function()
 					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
@@ -105,9 +182,10 @@ return {
 		}
 
 		dap.configurations.c = dap.configurations.cpp
-
 		dap.configurations.rust = dap.configurations.cpp
-		--[[ dap.configurations.rust = {
+
+		--[[
+		dap.configurations.rust = {
   {
     name = "Launch Rust file [DEBUG]",
     type = "cppdbg",
@@ -155,8 +233,10 @@ return {
       },
     },
   },
-} ]]
+}
+]]
 
+		--[[
 		-- DAP setup javascript/typescript
 		-- install dap-vscode-js via mason
 		local status_ok, vscode_js_dap = pcall(require, 'dap-vscode-js')
@@ -294,5 +374,6 @@ return {
 				}
 			end
 		end
+]]
 	end,
 }

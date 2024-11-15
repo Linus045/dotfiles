@@ -70,7 +70,7 @@ M.custom_selection_menu_files = function(title, cwd, fd_parameter, on_select_cal
 			width = 0.8,
 			prompt_position = "bottom",
 		},
-		function(prompt_bufnr, map)
+		attach_mappings = function(prompt_bufnr, map)
 			map("i", "<CR>", enter)
 			map("n", "<CR>", enter)
 			return true
