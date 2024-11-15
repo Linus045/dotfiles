@@ -137,9 +137,10 @@ keymap("n", "<leader>fp", function()
 	"Telescope list project directories")
 
 keymap("n", "<leader>fs", nil, opts, "[LSP Symbols]", false, true)
-keymap("n", "<leader>fss", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fss", "<cmd>Telescope lsp_document_symbols<CR>", opts, "Telescope document symbols")
 keymap("n", "<leader>fsw", "<cmd>Telescope lsp_workspace_symbols<CR>", opts, "Telescope workspace symbols")
-keymap("n", "<leader>fsd", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts, "Telescope workspace symbols")
+keymap("n", "<leader>fsd", "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", opts,
+	"Telescope dynamic workspace symbols")
 keymap("n", "<leader>?", "<cmd>Telescope keymaps<CR>", opts, "Telescope keymaps")
 
 keymap("n", "<leader>1", "1gt", opts, "Move to tab 1")
@@ -367,13 +368,13 @@ keymap("n", "<leader>dp", function()
 	end, opts,
 	"[DEBUG] Toggle Breakpoint (Log message)")
 keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Open REPL")
-keymap("n", "<F6>", ":lua require'dap'.run_last()<CR>", opts, "[DEBUG] Run last configuration")
+keymap("n", "<F6>", ":lua require'dap'.terminate()<CR>", opts, "[DEBUG] Terminate debugging session and process")
 
 keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts, "[DEBUG] Toggle UI")
 keymap("n", "<leader>dii", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
 keymap("v", "<leader>dii", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
--- keymap("n", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr', nil)<CR>", opts, "[DEBUG] Hover")
--- keymap("v", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr>', nil)<CR>", opts, "[DEBUG] Hover")
+keymap("n", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr', nil)<CR>", opts, "[DEBUG] Hover")
+keymap("v", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr>', nil)<CR>", opts, "[DEBUG] Hover")
 keymap('n', '<Leader>die', ":lua require'dapui'.eval(vim.fn.input('[Expression] > '))<CR>", opts,
 	"[DEBUG] Evaluate Expression")
 -- require("dapui").eval(<expression>)
@@ -429,7 +430,8 @@ keymap("n", "<leader><Space>", function()
 end, opts, "Zen-Mode")
 
 -- Git Messenger (rhysd/git-messenger.vim)
-keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Message (? for keybindings)", false, false)
+keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Message (? for keybindings)", false,
+	false)
 
 -- Undotree
 keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
