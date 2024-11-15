@@ -1,8 +1,19 @@
+local Copilot_Complete = {}
+if ENABLE_COPILOT then
+	Copilot_Complete = {
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup()
+		end
+	}
+end
+
 return {
 
 	require("plugins.autocomplete.neogen"),
 	-- Faster autocompletion
-	-- require("plugins.autocomplete.copilot_vim"),
+	require("plugins.autocomplete.copilot_vim"),
 	{
 		"hrsh7th/nvim-cmp",
 		-- lost just before insert mode is entered, see :h InsertEnter
@@ -43,14 +54,8 @@ return {
 			{
 				"L3MON4D3/LuaSnip",
 				version = "v2.*",
-			}
-			-- {
-			-- 	"zbirenbaum/copilot-cmp",
-			-- 	after = { "copilot.lua" },
-			-- 	config = function()
-			-- 		require("copilot_cmp").setup()
-			-- 	end
-			-- }
+			},
+			Copilot_Complete
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -66,13 +71,29 @@ return {
 			-- 		vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			-- end
 
-			cmp.event:on("menu_opened", function()
-				vim.b.copilot_suggestion_hidden = true
-			end)
+			local cmp_comparators = {
+				cmp.config.compare.offset,
+				cmp.config.compare.exact,
+				cmp.config.compare.score,
+				cmp.config.compare.kind,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
+				require "cmp-under-comparator".under,
+			}
 
-			cmp.event:on("menu_closed", function()
-				vim.b.copilot_suggestion_hidden = false
-			end)
+
+			if ENABLE_COPILOT then
+				cmp.event:on("menu_opened", function()
+					vim.b.copilot_suggestion_hidden = true
+				end)
+
+				cmp.event:on("menu_closed", function()
+					vim.b.copilot_suggestion_hidden = false
+				end)
+
+				table.insert(cmp_comparators, 0, require("copilot_cmp.comparators").prioritize)
+			end
 
 
 			cmp.setup({
@@ -298,18 +319,7 @@ return {
 				}),
 				sorting = {
 					priority_weight = 2,
-					comparators = {
-						-- require("copilot_cmp.comparators").prioritize,
-
-						cmp.config.compare.offset,
-						cmp.config.compare.exact,
-						cmp.config.compare.score,
-						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
-						cmp.config.compare.length,
-						cmp.config.compare.order,
-						require "cmp-under-comparator".under,
-					},
+					comparators = cmp_comparators,
 				},
 				experimental = {
 					ghost_text = false,
