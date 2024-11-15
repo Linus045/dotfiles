@@ -92,9 +92,8 @@ return {
 					vim.b.copilot_suggestion_hidden = false
 				end)
 
-				table.insert(cmp_comparators, 0, require("copilot_cmp.comparators").prioritize)
+				table.insert(cmp_comparators, 1, require("copilot_cmp.comparators").prioritize)
 			end
-
 
 			cmp.setup({
 				snippet = {
@@ -262,7 +261,7 @@ return {
 					},
 					{
 						name = "copilot",
-						priority = 100,
+						priority = 101,
 						group_index = 1,
 					},
 					{
