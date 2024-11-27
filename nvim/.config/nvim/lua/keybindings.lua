@@ -367,15 +367,21 @@ keymap("n", "<leader>dp", function()
 		end
 	end, opts,
 	"[DEBUG] Toggle Breakpoint (Log message)")
-keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", opts, "[DEBUG] Open REPL")
-keymap("n", "<F6>", ":lua require'dap'.terminate()<CR>", opts, "[DEBUG] Terminate debugging session and process")
+keymap("n", "<leader>dr", function() require 'dap'.repl.open() end, opts, "[DEBUG] Open REPL")
+keymap("n", "<F6>", function()
+	require 'dap'.terminate()
+	require 'dapui'.close()
+end, opts, "[DEBUG] Terminate debugging session and process")
 
-keymap("n", "<F4>", ":lua require'dapui'.toggle()<CR>", opts, "[DEBUG] Toggle UI")
-keymap("n", "<leader>dii", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
-keymap("v", "<leader>dii", ":lua require'dapui'.eval(nil, {enter = true})<CR>", opts, "[DEBUG] Evaluate")
-keymap("n", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr', nil)<CR>", opts, "[DEBUG] Hover")
-keymap("v", "<leader>diw", ":lua require'dap.ui.widgets'.hover('<cexpr>', nil)<CR>", opts, "[DEBUG] Hover")
-keymap('n', '<Leader>die', ":lua require'dapui'.eval(vim.fn.input('[Expression] > '))<CR>", opts,
+keymap("n", "<leader>dj", function() require 'dap'.down() end, opts, "[DEBUG] Move down in callstack")
+keymap("n", "<leader>dk", function() require 'dap'.up() end, opts, "[DEBUG] Move up in callstack")
+
+keymap("n", "<F4>", function() require 'dapui'.toggle() end, opts, "[DEBUG] Toggle UI")
+keymap("n", "<leader>dii", function() require 'dapui'.eval(nil, { enter = true }) end, opts, "[DEBUG] Evaluate")
+keymap("v", "<leader>dii", function() require 'dapui'.eval(nil, { enter = true }) end, opts, "[DEBUG] Evaluate")
+keymap("n", "<leader>diw", function() require 'dap.ui.widgets'.hover('<cexpr', nil) end, opts, "[DEBUG] Hover")
+keymap("v", "<leader>diw", function() require 'dap.ui.widgets'.hover('<cexpr>', nil) end, opts, "[DEBUG] Hover")
+keymap('n', '<Leader>die', function() require 'dapui'.eval(vim.fn.input('[Expression] > '), { enter = true }) end, opts,
 	"[DEBUG] Evaluate Expression")
 -- require("dapui").eval(<expression>)
 -- Cheatsheet
