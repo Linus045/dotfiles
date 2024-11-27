@@ -61,7 +61,7 @@ return {
 		end
 	},
 
-	'jbyuki/instant.nvim',
+	-- 'jbyuki/instant.nvim',
 
 	-- Latex plugins
 	{
