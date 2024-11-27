@@ -126,6 +126,27 @@ return {
 			},
 		}
 
+		-- vscode-cpptools
+		dap.adapters.cppdbg = function(cb, config)
+			-- run custom command before launching debug session (similar to vscodes preLaunchTasks)
+			if config.nvim_preLaunchTask then
+				vim.notify("Running nvim_preLaunchTask: '" .. config.nvim_preLaunchTask .. "'")
+				vim.fn.system(config.nvim_preLaunchTask)
+			end
+
+			local adapter = {
+				id      = 'cppdbg',
+				type    = "executable",
+				command = bin_locations .. 'OpenDebugAD7', -- adjust as needed, must be absolute path
+				-- only for windows
+				-- options = {
+				-- 	detached = false,
+				-- }
+			}
+
+			cb(adapter)
+		end
+
 		-- https://github.com/mfussenegger/nvim-dap/discussions/93
 		-- https://marketplace.visualstudio.com/items?itemName=lanza.lldb-vscode#launch-configuration-settings
 		dap.adapters["lldb-dap"] = function(cb, config)
@@ -177,7 +198,7 @@ return {
 			-- 	args = {},
 			-- },
 			{
-				name = "Start process extern and attach [with custom args]",
+				name = "Start process extern and attach [with custom args] (codelldb)",
 				type = "lldb-dap",
 				request = "attach",
 				stopOnEntry = false,
@@ -207,6 +228,42 @@ return {
 					return vim.fn.split(vim.fn.input("Args: ", ""), " ")
 				end,
 			},
+			{
+				name = "Launch file (vscode-cpptools)",
+				type = "cppdbg",
+				request = "launch",
+				program = function()
+					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+				cwd = function()
+					return vim.fn.input('Working directory for executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+				stopAtEntry = true,
+				-- Enable pretty printing gdb
+				-- https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)#enable-pretty-printing
+				setupCommands = {
+					{
+						text = '-enable-pretty-printing',
+						description = 'enable pretty printing',
+						ignoreFailures = false
+					},
+				},
+			},
+			{
+				name = 'Attach to gdbserver :1234 (cpptools)',
+				type = 'cppdbg',
+				request = 'launch',
+				MIMode = 'gdb',
+				miDebuggerServerAddress = 'localhost:1234',
+				miDebuggerPath = '/usr/bin/gdb',
+				cwd = function()
+					return vim.fn.input('Working directory for executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+				program = function()
+					return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				end,
+			},
+
 		}
 
 		dap.configurations.c = dap.configurations.cpp
