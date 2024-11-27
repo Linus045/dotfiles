@@ -174,7 +174,7 @@ return {
 				"jsonls",
 				"yamlls",
 				"bashls",
-				"tsserver",
+				"ts_ls",
 				-- "gopls",
 				-- "volar",
 				-- "tsserver",
