@@ -69,13 +69,10 @@ return {
 					{
 						elements = {
 							-- Provide as ID strings or tables with "id" and "size" keys
-							{
-								id = "scopes",
-								size = 0.25, -- Can be float or integer > 1
-							},
-							{ id = "breakpoints", size = 0.25 },
-							{ id = "stacks",      size = 0.25 },
 							{ id = "watches",     size = 0.25 },
+							{ id = "breakpoints", size = 0.1 },
+							-- 'size' can be float or integer > 1
+							{ id = "scopes",      size = 0.25, },
 						},
 						size = 40,
 						position = "left", -- Can be "left", "right", "top", "bottom"
@@ -84,6 +81,11 @@ return {
 						elements = { "repl", "console" },
 						size = 10,
 						position = "bottom", -- Can be "left", "right", "top", "bottom"
+					},
+					{
+						elements = { "stacks", },
+						size = 5,
+						position = "top", -- Can be "left", "right", "top", "bottom"
 					},
 				},
 				floating = {
