@@ -7,16 +7,36 @@ local function lsp_keymaps(_client, bufnr)
 	keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts, "Goto Definition", nil, nil, bufnr)
 	-- TODO: Causes problems with :Man (jumping to references no longer works)
 	-- Workaround use Ctrl+] to jump
-	keymap("n", "K", function()
+
+	local hover_func = function(text)
 		local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 		if filetype == "rust" and require("custom_tools.termdebug_helper").in_debug_session then
 			vim.cmd("Evaluate")
 		elseif filetype == "man" then
 			vim.notify("TODO: put correct action here")
+		elseif require("dap").session() then
+			-- not sure which i like better
+			--require 'dap.ui.widgets'.hover('<cexpr>', nil)
+			-- OR:
+			require 'dapui'.eval(nil, {
+				enter = true,
+				context = "hover",
+			})
 		else
 			vim.lsp.buf.hover()
 		end
+	end
+
+	keymap("n", "K", function()
+		hover_func(vim.fn.expand('<cexpr>'))
 	end, opts, "HOVER INFO", nil, nil, bufnr)
+
+
+	keymap("v", "K", function()
+		hover_func(vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'), { type = vim.fn.mode() }))
+	end, opts, "HOVER INFO", nil, nil, bufnr)
+
+
 	keymap("n", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts, "Signature Help", nil, nil, bufnr)
 	keymap("i", "<C-K>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts, "Signature Help", nil, nil, bufnr)
 	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
