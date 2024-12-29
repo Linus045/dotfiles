@@ -119,7 +119,7 @@ keymap("n", "<leader>X", ":bw!<cr>", opts, "Kill window (forced)")
 --keymap("n", "<leader>f", "<cmd>Telescope find_files<CR>", opts)
 keymap("n", "<leader>f", nil, opts, "[FINDER]", false, true)
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts, "Telescope find_files")
-keymap("n", "<leader>FF", function()
+keymap("n", "<leader>fa", function()
 		require 'telescope.builtin'.find_files({ hidden = true, no_ignore = true })
 	end, opts,
 	"Telescope find_files (with hidden/ignored)"

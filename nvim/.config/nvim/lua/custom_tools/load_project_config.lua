@@ -9,7 +9,8 @@ M.store_current_options = function()
 end
 
 M.load_custom_config_for_cwd = function()
-	local cwd = vim.fn.getcwd()
+	-- Trailing slash is important to match the path due to the vim.stratswith function
+	local cwd = vim.fn.getcwd() .. '/'
 
 	local status_ok, project_configs = pcall(require, 'project_configs_local')
 	if not status_ok then
