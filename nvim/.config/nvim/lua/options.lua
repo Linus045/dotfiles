@@ -80,6 +80,8 @@ vim.wo.foldcolumn = '3'
 vim.g.snippets = "luasnip"
 vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 
+-- hide whitespace changes in diff
+vim.opt.diffopt:append("iwhite")
 
 -- characters to show
 vim.opt.listchars = {
