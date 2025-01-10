@@ -12,6 +12,6 @@ return {
 			"Time", -- measure how long it takes to run some stuff.
 		},
 	},
-	{ "folke/neodev.nvim", opts = {} }
+	{ "folke/lazydev.nvim" }
 
 }

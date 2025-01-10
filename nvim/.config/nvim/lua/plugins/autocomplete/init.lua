@@ -10,7 +10,6 @@ if ENABLE_COPILOT then
 end
 
 return {
-
 	require("plugins.autocomplete.neogen"),
 	-- Faster autocompletion
 	require("plugins.autocomplete.copilot_vim"),
@@ -309,6 +308,10 @@ return {
 					{
 						name = "calc",
 						priority = 100,
+						group_index = 1,
+					},
+					{
+						name = "lazydev",
 						group_index = 1,
 					},
 					-- {
