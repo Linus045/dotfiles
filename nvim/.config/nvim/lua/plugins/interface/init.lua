@@ -1,106 +1,109 @@
 return {
-    {
-        "chrisgrieser/nvim-lsp-endhints",
-        event = "LspAttach",
-        opts = {}, -- required, even if empty
-    },
-    -- Shows current function scope/signature at the top of the screen
-    {
-        "nvim-treesitter/nvim-treesitter-context",
-        config = function()
-            require 'treesitter-context'.setup {
-                mode = 'topline', -- Line used to calculate context. Choices: 'cursor', 'topline'
-            }
-        end
-    },
+	{
+		"chrisgrieser/nvim-lsp-endhints",
+		event = "LspAttach",
+		opts = {}, -- required, even if empty
+	},
+	-- Shows current function scope/signature at the top of the screen
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require 'treesitter-context'.setup {
+				mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
+				multiwindow = true, -- Enable multiwindow support.
+				max_lines = 2,
+				trim_scope = 'outer',
+			}
+		end
+	},
 
-    -- generates method/function list for the current file
-    -- use with :Vista
-    {
-        "liuchengxu/vista.vim",
-        cmd = "Vista",
-        config = function()
-            vim.g.vista_default_executive = 'nvim_lsp'
-        end
-    },
+	-- generates method/function list for the current file
+	-- use with :Vista
+	{
+		"liuchengxu/vista.vim",
+		cmd = "Vista",
+		config = function()
+			vim.g.vista_default_executive = 'nvim_lsp'
+		end
+	},
 
-    -- Vista alternative to list methods/functions in the file
-    {
-        "SmiteshP/nvim-navbuddy",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-            "SmiteshP/nvim-navic",
-            "MunifTanjim/nui.nvim"
-        }
-    },
+	-- Vista alternative to list methods/functions in the file
+	{
+		"SmiteshP/nvim-navbuddy",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+			"SmiteshP/nvim-navic",
+			"MunifTanjim/nui.nvim"
+		}
+	},
 
-    {
-        "nanotee/zoxide.vim"
-    },
+	{
+		"nanotee/zoxide.vim"
+	},
 
-    -- popup notification windows
-    require("plugins.interface.notify"),
+	-- popup notification windows
+	require("plugins.interface.notify"),
 
-    -- show keyboard shortcuts
-    require("plugins.interface.which-key_nvim"),
+	-- show keyboard shortcuts
+	require("plugins.interface.which-key_nvim"),
 
-    -- smooth scrolling (eg. using PageUp/PageDown)
-    "psliwka/vim-smoothie",
+	-- smooth scrolling (eg. using PageUp/PageDown)
+	"psliwka/vim-smoothie",
 
-    -- better file explorer sidebar
-    require("plugins.interface.nvim-tree"),
+	-- better file explorer sidebar
+	require("plugins.interface.nvim-tree"),
 
-    -- shows undo/redo tree structure
-    "mbbill/undotree",
+	-- shows undo/redo tree structure
+	"mbbill/undotree",
 
-    -- floating terminal in nvim
-    {
-        "akinsho/toggleterm.nvim",
-        config = function()
-            local toggleterm = require("toggleterm")
-            toggleterm.setup({
-                open_mapping = [[<c-\>]],
-                close_on_exit = true, -- close the terminal window when the process exits
-            })
-        end
-    },
+	-- floating terminal in nvim
+	{
+		"akinsho/toggleterm.nvim",
+		config = function()
+			local toggleterm = require("toggleterm")
+			toggleterm.setup({
+				open_mapping = [[<c-\>]],
+				close_on_exit = true, -- close the terminal window when the process exits
+			})
+		end
+	},
 
-    -- git sings support on the sidebar
-    require("plugins.interface.gitsigns_nvim"),
+	-- git sings support on the sidebar
+	require("plugins.interface.gitsigns_nvim"),
 
-    -- show git changes on the side (replaced with gitsigns)
-    -- use "airblade/vim-gitgutter"
+	-- show git changes on the side (replaced with gitsigns)
+	-- use "airblade/vim-gitgutter"
 
-    -- allow transparent code
-    {
-        "xiyaowong/nvim-transparent",
-        config = function()
-            local transparent = require("transparent")
-            transparent.setup({
-                extra_groups = {},
-                exclude_groups = {}, -- table: groups you don't want to clear
-            })
-        end
-    },
+	-- allow transparent code
+	{
+		"xiyaowong/nvim-transparent",
+		config = function()
+			local transparent = require("transparent")
+			transparent.setup({
+				extra_groups = {},
+				exclude_groups = {}, -- table: groups you don't want to clear
+			})
+		end
+	},
 
-    -- rainbow brackets
-    { "hiphish/rainbow-delimiters.nvim", dependencies = { "nvim-treesitter/nvim-treesitter" } },
-
-
-    -- -- If i ever use Sql
-    -- tools to manage SQL stuff
-    -- use("tpope/vim-dadbod")
-    -- use({ "kristijanhusak/vim-dadbod-completion" })
-    -- use({ "kristijanhusak/vim-dadbod-ui" })
+	-- rainbow brackets
+	{ "hiphish/rainbow-delimiters.nvim", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 
 
-    -- {
-    --     "luukvbaal/statuscol.nvim",
-    --     config = function()
-    --         require("statuscol").setup({
-    --             setopt = true
-    --         })
-    --     end
-    -- },
+	-- -- If i ever use Sql
+	-- tools to manage SQL stuff
+	-- use("tpope/vim-dadbod")
+	-- use({ "kristijanhusak/vim-dadbod-completion" })
+	-- use({ "kristijanhusak/vim-dadbod-ui" })
+
+
+	-- {
+	--     "luukvbaal/statuscol.nvim",
+	--     config = function()
+	--         require("statuscol").setup({
+	--             setopt = true
+	--         })
+	--     end
+	-- },
 
 }

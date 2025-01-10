@@ -435,6 +435,12 @@ keymap("n", "<leader><Space>", function()
 	require 'zen-mode'.toggle()
 end, opts, "Zen-Mode")
 
+
+-- treesitter-context jump to context
+keymap("n", "<leader>q", function()
+	require("treesitter-context").go_to_context(vim.v.count1)
+end, opts, "[Treesitter-Context] Go to context")
+
 -- Git Messenger (rhysd/git-messenger.vim)
 keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Message (? for keybindings)", false,
 	false)
