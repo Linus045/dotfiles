@@ -244,6 +244,14 @@ end, { noremap = true }
 , "Refactor [Telescope]")
 
 
+
+keymap("n", "<leader>dld", function()
+	require 'telescope.builtin'.diagnostics()
+end, opts, "Telescope diagnostics")
+
+
+
+
 keymap("n", "<leader>dld", function()
 	require 'telescope.builtin'.diagnostics()
 end, opts, "Telescope diagnostics")
