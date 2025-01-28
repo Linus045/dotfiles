@@ -2,9 +2,15 @@ local function lsp_keymaps(_client, bufnr)
 	local keymap = require("custom_tools.keybindings_util").keymap
 	local opts = { noremap = true, silent = true }
 	-- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-	keymap("n", "gq", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts, "Type Defintions", nil, nil, bufnr)
-	keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts, "Goto Declaration", nil, nil, bufnr)
-	keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts, "Goto Definition", nil, nil, bufnr)
+	keymap("n", "gq", function()
+		vim.lsp.buf.type_definition({ reuse_win = true })
+	end, opts, "Type Defintions", nil, nil, bufnr)
+	keymap("n", "gD", function()
+		vim.lsp.buf.declaration({ reuse_win = true })
+	end, opts, "Goto Declaration", nil, nil, bufnr)
+	keymap("n", "gd", function()
+		vim.lsp.buf.definition({ reuse_win = true })
+	end, opts, "Goto Definition", nil, nil, bufnr)
 	-- TODO: Causes problems with :Man (jumping to references no longer works)
 	-- Workaround use Ctrl+] to jump
 
