@@ -6,9 +6,11 @@ M.disabled_filetypes = {}
 M.format_function = function()
 	vim.lsp.buf.format {
 		filter = function(client)
+			-- dont format with jsonls
 			if client.name == "jsonls" then
 				return false
 			end
+			vim.notify("Formatting with " .. client.name)
 			return true
 		end
 	}
@@ -66,6 +68,14 @@ M.setup = function()
 			M.disabled = true
 			vim.cmd("w")
 			M.disabled = old
+		end,
+		{}
+	)
+
+	vim.api.nvim_create_user_command(
+		"F",
+		function()
+			M.format_function()
 		end,
 		{}
 	)

@@ -517,4 +517,3 @@ vim.cmd [[smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-nex
 
 
 -- keymap("n", "<leader>F", "<cmd>lua vim.lsp.buf.format()<CR>", opts, "Format file", nil, nil, bufnr)
-vim.cmd([[:command! F lua require("formatter").format_function()]])
