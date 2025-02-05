@@ -8,9 +8,18 @@ DELAY=600
 # e.g. 'pkill -SIGUSR1 set_random_vide' (this file is called set_random_video_wallpaper.sh)
 
 change_wallpaper() {
-	wallpaper=$1
-	if [ -z $wallpaper ] || [ ! -f $wallpaper ]; then
-		wallpaper=$(ls $background_path | grep '\.mp4$' | shuf -n 1)
+	# disable trap until we are done
+	trap USR1
+
+	if [ ! -z $sleep_id ]; then
+		echo "Killing sleep process"
+		kill $sleep_id
+	fi
+
+	wallpaper="$1"
+	echo "$1"
+	if [ -z "$wallpaper" ] || [ ! -f "$wallpaper" ]; then
+		wallpaper="$(ls "$background_path" | grep -E '\.(mp4|mkv)$' | shuf -n 1)"
 		echo "Selected new random video"
 	else
 		background_path=""
@@ -22,7 +31,7 @@ change_wallpaper() {
 
 	# change background
 	if [[ $XDG_SESSION_TYPE = "wayland" ]]; then
-		current_id=$(pkill -f "mpvpaper.+$random_display")
+		pkill -f "mpvpaper.+$random_display" -KILL
 		mpvpaper -o "no-audio hwdec=auto --loop-playlist shuffle" $random_display "$background_path$wallpaper" &
 	else
 		notify-send "Failed to set live wallpaper. Not on wayland"
@@ -35,16 +44,20 @@ change_wallpaper() {
 	else
 		/usr/bin/notify-send --app-name="Wallpaper Changer" "Error setting wallpaper!"
 	fi
+
+	# enable trap again
+	trap change_wallpaper USR1
 }
 
 trap change_wallpaper USR1
 
 
 while true; do
-	change_wallpaper
+	change_wallpaper "$1"
 
 	sleep $DELAY &
-	wait $!
+	sleep_id=$!
+	wait $sleep_id
 done
 
 trap USR1
