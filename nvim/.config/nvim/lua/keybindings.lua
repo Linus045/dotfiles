@@ -464,6 +464,9 @@ keymap("n", "<leader>P", ":TransparentToggle | colorscheme<CR>", opts, "Transpar
 keymap("n", "<leader>l", nil, opts, "Search-Highlight Options", false, true)
 keymap("n", "<leader>lt", ":set hls!<CR>", opts, "Toggle highlighting (:set hls!)") --Toggle instead
 
+keymap("n", "<leader>lw", require("custom_tools.trailing_whitespace_highlighter").toggleHighlightTrailingWhiteSpace, opts,
+	"Toggle highlighting trailing whitespace")
+
 keymap("n", "<leader>ll", ":nohl<CR>:VMClear<CR>:lua print('Cleared search highlights')<CR>", opts,
 	"Clear highlighting (:nohl)")
 

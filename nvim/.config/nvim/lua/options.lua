@@ -110,8 +110,4 @@ vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 -- vim.g.prosession_dir = "~/.config/nvim/nvim_prosession/"
 
 
--- vim.cmd [[match errorMsg /\s\+$/]]
--- vim.cmd [[au BufEnter * highlight HIGHLIGHT_SPACES ctermbg=red guibg=red guifg=red]]
--- vim.cmd [[au BufEnter * match HIGHLIGHT_SPACES /\s\+$/]]
-
 require("custom_tools.load_project_config").store_current_options()
