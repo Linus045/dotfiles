@@ -70,6 +70,8 @@ vim.opt.splitkeep = "screen"   -- changes how the cursor behaves on split
 
 -- use / to represent deleted lines in diff mode (see: https://github.com/sindrets/diffview.nvim#tips-and-faq)
 vim.opt.fillchars:append { diff = "/" }
+vim.opt.fillchars:append { foldclose = "▸" }
+vim.opt.fillchars:append { foldopen = "▾" }
 
 -- Treesitter folding
 vim.wo.foldmethod = 'expr' -- use treesitter folding

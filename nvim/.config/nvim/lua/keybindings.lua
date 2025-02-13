@@ -435,12 +435,14 @@ keymap("n", "<leader>hgm", "<CMD>Git mergetool<CR>", opts, "[VIM-FUGITIVE] Git M
 --Vimwiki
 keymap("n", "<leader>w", nil, opts, "[VIMWIKI]", false, true)
 
-keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
+-- keymap("n", "<leader>v", ":Vista!!<CR>", opts, "Open/Close Vista")
+keymap("n", "<leader>v", ":Trouble symbols toggle focus=false<CR>", opts, "Open/Close Vista")
 keymap("n", "<leader>b", [[:lua require("nvim-navbuddy").open()<CR>]], opts, "Open NavBuddy")
 
 -- Zen mode
 keymap("n", "<leader><Space>", function()
-	require 'zen-mode'.toggle()
+	-- require 'zen-mode'.toggle()
+	Snacks.zen()
 end, opts, "Zen-Mode")
 
 
@@ -485,11 +487,9 @@ keymap("n", "gk", ":lua require('neogen').generate()<CR>", opts, "[NEOGEN] Inser
 
 -- trouble.nvim
 keymap("n", "<leader>t", nil, opts, "[TROUBLE|TERMINAL]", false, true)
-keymap("n", "<leader>tt", "<cmd>TroubleToggle<cr>", opts, "[TROUBLE] Toggle Trouble")
-keymap("n", "<leader>tw", "<cmd>Trouble workspace_diagnostics<cr>", opts, "[TROUBLE] Workspace diagnostics")
-keymap("n", "<leader>td", "<cmd>Trouble document_diagnostics<cr>", opts, "[TROUBLE] Document diagnostics")
+keymap("n", "<leader>tt", "<cmd>Trouble diagnostic_preview_float toggle focus=true<cr>", opts, "[TROUBLE] Diagnostics")
 keymap("n", "<leader>tl", "<cmd>Trouble loclist<cr>", opts, "[TROUBLE] Location list")
-keymap("n", "<leader>tq", "<cmd>Trouble quickfix<cr>", opts, "[TROUBLE] Quickfix list")
+keymap("n", "<leader>tq", "<cmd>Trouble quickfix_preview_float toggle focus=true<cr>", opts, "[TROUBLE] Quickfix list")
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")
 
 keymap("n", "[d", function()

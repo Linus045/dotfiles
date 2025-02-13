@@ -17,15 +17,16 @@ return {
 		end
 	},
 
+	-- Replaced with Trouble symbols
 	-- generates method/function list for the current file
 	-- use with :Vista
-	{
-		"liuchengxu/vista.vim",
-		cmd = "Vista",
-		config = function()
-			vim.g.vista_default_executive = 'nvim_lsp'
-		end
-	},
+	-- {
+	-- 	"liuchengxu/vista.vim",
+	-- 	cmd = "Vista",
+	-- 	config = function()
+	-- 		vim.g.vista_default_executive = 'nvim_lsp'
+	-- 	end
+	-- },
 
 	-- Vista alternative to list methods/functions in the file
 	{
@@ -48,7 +49,7 @@ return {
 	require("plugins.interface.which-key_nvim"),
 
 	-- smooth scrolling (eg. using PageUp/PageDown)
-	"psliwka/vim-smoothie",
+	-- "psliwka/vim-smoothie",
 
 	-- better file explorer sidebar
 	require("plugins.interface.nvim-tree"),
@@ -89,6 +90,80 @@ return {
 	-- rainbow brackets
 	{ "hiphish/rainbow-delimiters.nvim", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 
+
+	-- A collection of QoL plugins for Neovim
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		--@type snacks.Config
+		opts = {
+			bigfile = { enabled = true },
+			dashboard = { enabled = true },
+			explorer = { enabled = false },
+			indent = { enabled = true },
+			input = {
+				enabled = true,
+				icon = " ",
+				icon_hl = "SnacksInputIcon",
+				icon_pos = "left",
+				prompt_pos = "title",
+				win = {
+					style = "input",
+					relative = "cursor",
+				},
+				expand = true,
+			},
+			picker = { enabled = false },
+
+			notifier = { enabled = false },
+			quickfile = { enabled = false },
+			scope = { enabled = false },
+			scroll = { enabled = true },
+			statuscolumn = {
+				enabled = true,
+				folds = {
+					open = true,
+
+				},
+
+			},
+			words = { enabled = true },
+			zen = {
+				enabled = true,
+				toggles = {
+					dim = true,
+					git_signs = false,
+					mini_diff_signs = false,
+					diagnostics = true,
+					inlay_hints = true,
+				},
+				show = {
+					statusline = false, -- can only be shown when using the global statusline
+					tabline = false,
+				},
+				win = {
+					style = "zen",
+					enter = true,
+					fixbuf = false,
+					minimal = false,
+					width = 140,
+					height = 0,
+					backdrop = { transparent = true, blend = 40 },
+					keys = { q = false },
+					zindex = 40,
+					wo = {
+						winhighlight = "NormalFloat:Normal",
+					},
+					w = {
+						snacks_main = true,
+					},
+				},
+
+
+			},
+		},
+	},
 
 	-- -- If i ever use Sql
 	-- tools to manage SQL stuff
