@@ -9,7 +9,7 @@ return {
 		priority = 1000,
 		config = function()
 			-- local colorscheme = "nord"
-			local colorscheme = "tokyonight-moon"
+			local colorscheme = "tokyonight-night"
 
 			require("tokyonight").setup({
 				-- Change the "hint" color to the "orange" color, and make the "error" color bright red
@@ -58,6 +58,7 @@ return {
 					vim.cmd([[highlight DiffChange gui=none guifg=SlateBlue guibg=#06272e]])
 					vim.cmd([[highlight DiffText gui=none guifg=None guibg=#0b4a57]])
 
+					vim.cmd([[highlight Folded guifg=#82aaff guibg=#222436]])
 					-- vim.notify("Reloaded colorscheme: " .. colorscheme)
 				end
 			})
