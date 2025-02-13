@@ -5,7 +5,10 @@ M.enabled = false
 -- set to true to disable highlighting of trailing whitespace for specific filetypes
 M.disabled_filetypes = {
 	[""] = true,
-	TelescopePrompt = true
+	diff = true,
+	git = true,
+	TelescopePrompt = true,
+	TelescopeResults = true,
 }
 
 M.setup = function()
@@ -17,7 +20,7 @@ M.setup = function()
 	-- highlight trailing whitespace
 	vim.cmd [[highlight HIGHLIGHT_TRAILING_SPACES ctermbg=red guibg=red guifg=red]]
 
-	vim.api.nvim_create_autocmd({ "FileType" }, {
+	vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
 		pattern = "*",
 		group = vim.api.nvim_create_augroup("highlight_trailing_whitespace", { clear = true }),
 		callback = M.highlightTrailingWhitespace
