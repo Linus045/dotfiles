@@ -12,6 +12,15 @@ return {
 			trouble.setup {
 				position = "bottom", -- position of the list can be: bottom, top, left, right
 				modes = {
+					symbols = {
+						focus = true,
+						win = {
+							type = "split",
+							relative = "win",
+							position = "right",
+							size = 0.3,
+						},
+					},
 					diagnostic_preview_float = {
 						mode = "diagnostics",
 						preview = {
