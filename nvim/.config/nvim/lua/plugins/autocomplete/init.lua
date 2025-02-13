@@ -28,6 +28,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp-document-symbol",
 			"hrsh7th/cmp-omni",
 			"f3fora/cmp-spell",
+			"p00f/clangd_extensions.nvim",
 			{
 				"tamago324/cmp-zsh",
 				config = function()
@@ -74,6 +75,7 @@ return {
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
+				require("clangd_extensions.cmp_scores"),
 				cmp.config.compare.kind,
 				cmp.config.compare.sort_text,
 				cmp.config.compare.length,
