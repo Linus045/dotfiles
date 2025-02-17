@@ -16,15 +16,16 @@ funct! Exec(command)
     redir =>output
     silent exec a:command
     redir END
-    let @o = output
-    execute "put o"
+    " let @o = output
+    execute "put output"
     return ''
 endfunct!
 ]]
 
 
 local function Write_output(command)
-	vim.cmd(":call Exec('" .. command .. "')")
+	-- vim.cmd(":call Exec('" .. command .. "')")
+	vim.cmd(":put =execute('" .. command .. "')")
 end
 
 vim.api.nvim_create_user_command('PrintVimCommandOutput', function(args)
