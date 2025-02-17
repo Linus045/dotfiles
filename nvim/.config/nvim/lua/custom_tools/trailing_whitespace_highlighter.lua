@@ -9,6 +9,8 @@ M.disabled_filetypes = {
 	git = true,
 	TelescopePrompt = true,
 	TelescopeResults = true,
+	snacks_dashboard = true,
+	checkhealth = true,
 }
 
 M.setup = function()
