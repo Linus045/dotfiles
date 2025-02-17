@@ -28,12 +28,13 @@ case "$1" in
     else
 	  notify-send "Gromit" "Gromit is running (SUPER+H for keybindings)";
       gromit-mpx -v
-      gromit-mpx -t 0
+      # gromit-mpx -t 0
     fi
     ;;
   stop)
     notify-send "Gromit" "Stopping..."
     gromit-mpx -q
+    pkill gromit-mpx
     ;;
   undo)
     notify-send "Gromit" "Undo"
