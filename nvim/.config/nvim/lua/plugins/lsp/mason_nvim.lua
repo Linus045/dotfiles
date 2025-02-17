@@ -201,9 +201,9 @@ return {
 				"jsonls",
 				"yamlls",
 				"bashls",
-				"tsserver",
 				-- "gopls",
 				-- "volar",
+				-- "ts_ls",
 				-- "tsserver",
 
 				-- Installed but invalid names, need to install manually via mason (no lspconfig integration?! idk)
