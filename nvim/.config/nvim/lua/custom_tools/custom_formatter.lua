@@ -3,7 +3,21 @@ local M = {}
 M.disabled = false
 M.disabled_filetypes = {}
 
+M.is_formatting_disabled = function()
+	return M.disabled or M.disabled_filetypes[vim.bo.filetype] or
+		vim.b.format_saving
+end
+
+-- general format function
 M.format_function = function()
+	M.format_buffer()
+
+	-- also run mhartington/formatter.nvim formatter function
+	vim.cmd(":Format")
+end
+
+-- only formats the current buffer
+M.format_buffer = function()
 	vim.lsp.buf.format {
 		filter = function(client)
 			-- dont format with jsonls
@@ -16,14 +30,20 @@ M.format_function = function()
 	}
 end
 
-M.format = function()
-	local lspDisabled = M.disabled or M.disabled_filetypes[vim.bo.filetype] or
-		vim.b.format_saving
-	if lspDisabled then
-		return
+M.format_before_save = function()
+	if not M.is_formatting_disabled() then
+		M.format_buffer()
 	end
-	M.format_function()
 end
+
+
+M.format_after_save = function()
+	if not M.is_formatting_disabled() then
+		-- run mhartington/formatter.nvim formatter function
+		vim.cmd(":Format")
+	end
+end
+
 
 M.setup = function()
 	local augroup = vim.api.nvim_create_augroup("Formatter", {})
@@ -34,9 +54,16 @@ M.setup = function()
 
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		group = augroup,
-		desc = "Format on save",
+		desc = "Format before save",
 		pattern = "*",
-		callback = M.format,
+		callback = M.format_before_save,
+	})
+
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		group = augroup,
+		desc = "Format after save",
+		pattern = "*",
+		callback = M.format_after_save,
 	})
 
 	vim.api.nvim_create_user_command(

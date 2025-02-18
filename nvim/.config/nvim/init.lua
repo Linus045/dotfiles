@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 
-require("custom_tools.formatter").setup()
+require("custom_tools.custom_formatter").setup()
 require("custom_tools.termdebug_helper").setup()
 require("custom_tools.rust_cargo_checker").setup()
 require("custom_tools.load_project_config").load_custom_config_for_cwd()

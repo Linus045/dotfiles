@@ -4,7 +4,7 @@ return {
 		local lualine = require("lualine")
 
 		local function lsp_formatter_status()
-			local lspFormat = require "custom_tools.formatter"
+			local lspFormat = require "custom_tools.custom_formatter"
 
 			local get_string = function()
 				local lspDisabled = lspFormat.disabled or lspFormat.disabled_filetypes[vim.bo.filetype] or

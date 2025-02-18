@@ -45,7 +45,7 @@ return {
 			"lukas-reineke/cmp-under-comparator",
 
 			-- Snippets
-			require("plugins.autocomplete.luasnip"),
+			require("plugins.autocomplete.luasnip_stuff"),
 
 			"saadparwaiz1/cmp_luasnip",
 
@@ -54,6 +54,7 @@ return {
 			{
 				"L3MON4D3/LuaSnip",
 				version = "v2.*",
+				dependencies = { "rafamadriz/friendly-snippets" },
 			},
 			Copilot_Complete
 		},

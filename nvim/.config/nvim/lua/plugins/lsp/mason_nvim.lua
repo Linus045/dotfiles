@@ -158,6 +158,34 @@ local lsp_server_on_attach = function(client, bufnr)
 end
 
 
+-- quickly see the lsp configs
+vim.api.nvim_create_user_command(
+	"LspShowConfiguration",
+	function()
+		vim.cmd("tabnew")
+		local buf = vim.api.nvim_create_buf(false, true)
+		vim.api.nvim_win_set_buf(0, buf)
+		vim.keymap.set("n", "q", function()
+			vim.api.nvim_buf_delete(buf, {})
+		end, { buffer = buf, remap = false });
+
+		for _, client in ipairs(vim.lsp.get_clients()) do
+			vim.api.nvim_buf_set_lines(buf, -1, -1, false,
+				{ "Client: " .. client.name, "-------------------------------" })
+			local config = vim.inspect(client.config)
+			local lines  = vim.fn.split(config, '\n')
+			table.insert(lines, 1, "Config:")
+			table.insert(lines, "-------------------------------")
+			table.insert(lines, "")
+			table.insert(lines, "")
+			vim.api.nvim_buf_set_lines(buf, -1, -1, false, lines)
+		end
+
+		vim.api.nvim_set_option_value("readonly", true, { buf = buf })
+	end,
+	{}
+)
+
 -- autoinstall lsp server
 return {
 	"williamboman/mason.nvim",
@@ -166,7 +194,8 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		"nvim-lua/lsp-status.nvim",
-		"folke/which-key.nvim"
+		"folke/which-key.nvim",
+		"mhartington/formatter.nvim"
 	},
 	config = function()
 		local mason = require("mason")
@@ -177,6 +206,25 @@ return {
 					package_installed = "✓",
 					package_pending = "➜",
 					package_uninstalled = "✗"
+				}
+			}
+		})
+
+		require("formatter").setup({
+			silent = true,
+			filetype = {
+				tex = {
+					function()
+						local util = require "formatter.util"
+						return {
+							exe = "tex-fmt",
+							args = {
+								"--print",
+								"--stdin"
+							},
+							stdin = true,
+						}
+					end
 				}
 			}
 		})

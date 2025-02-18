@@ -1,6 +1,6 @@
 -- Remap space as leader key
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 
 -- disable netrw at the very start of your init.lua (strongly advised)
 -- set for nvim-tree
@@ -72,6 +72,12 @@ vim.opt.splitkeep = "screen"   -- changes how the cursor behaves on split
 vim.opt.fillchars:append { diff = "/" }
 vim.opt.fillchars:append { foldclose = "▸" }
 vim.opt.fillchars:append { foldopen = "▾" }
+
+-- allow to select past the end of the line (allows easier editing of columns)
+vim.opt.virtualedit = 'block'
+
+-- preview changes in a split (e.g. when using :substitute)
+vim.opt.inccommand = 'split'
 
 -- Treesitter folding
 vim.wo.foldmethod = 'expr' -- use treesitter folding
