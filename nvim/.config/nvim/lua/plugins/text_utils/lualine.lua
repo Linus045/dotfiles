@@ -133,16 +133,16 @@ return {
 					"%{FugitiveStatusline()}",
 					lsp_formatter_status(),
 					rust_cargo_checker_status(),
-					-- {
-					-- 	"fileformat",
-					-- 	icons_enabled = true,
-					-- 	symbols = {
-					-- 		unix = 'LF',
-					-- 		dos = 'CRLF',
-					-- 		mac = 'CR',
-					-- 	},
-					-- },
-					-- "filetype",
+					{
+						"fileformat",
+						icons_enabled = true,
+						symbols = {
+							unix = 'LF',
+							dos = 'CRLF',
+							mac = 'CR',
+						},
+					},
+					"filetype",
 				},
 				lualine_y = { --[[ null_ls_root_dir_status() ]] --[[ "progress" ]] },
 				lualine_z = { --[["location"]] },
