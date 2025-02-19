@@ -151,10 +151,13 @@ local lsp_server_on_attach = function(client, bufnr)
 	-- Attach nvim-navbuddy
 	local status_ok_navbuddy, navbuddy = pcall(require, 'nvim-navbuddy')
 	if not status_ok_navbuddy then
-		vim.notify('File handlers.lua: nvim-navbuddy not found.')
+		vim.notify('File mason_nvim.lua: nvim-navbuddy not found.')
 		return
 	end
-	navbuddy.attach(client, bufnr)
+
+	if client.server_capabilities.documentSymbolProvider then
+		navbuddy.attach(client, bufnr)
+	end
 end
 
 
