@@ -11,7 +11,8 @@
         "cpu",
         "memory",
 		"disk#root",
-		"disk#home"
+		"disk#home",
+		"custom/hyperland-keymap"
     ],
     "modules-center": [
 		"clock#clock",
@@ -197,6 +198,12 @@
         },
         "on-click": "pavucontrol"
     },
+	"custom/hyperland-keymap" : {
+		// only show if its not 'default'
+		"exec" : "hyprctl submap | grep -v default | awk '{ print $1 }'",
+		"format": "Mode: {}",
+		"interval": 1
+	},
     "custom/media": {
         "format": "{icon} {}",
         "return-type": "json",
