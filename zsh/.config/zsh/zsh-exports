@@ -7,6 +7,7 @@ export SAVEHIST=1000000
 export EDITOR="nvim"
 export VISUAL="nvim"
 export SUDO_EDITOR="nvim"
+export DIFFPROG='nvim -d'
 
 export PATH="$HOME/.local/bin":$PATH
 
