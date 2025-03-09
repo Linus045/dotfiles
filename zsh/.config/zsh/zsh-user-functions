@@ -61,6 +61,9 @@ bindkey '^[.' insert-last-word
 bindkey -s '^Z' 'fg\n'
 
 function remove_pacman_package() {
+  echo ""
+  echo "Parsing pacman log file..."
+
   local tmp_file="/tmp/old_packages_file.tmp"
   local tmp_file2="/tmp/old_packages_file_2.tmp"
   local tmp_file3="/tmp/old_packages_file_3.tmp"
