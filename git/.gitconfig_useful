@@ -1,0 +1,27 @@
+[core]
+	editor = nvim
+
+	# requires https://github.com/dandavison/delta
+    pager = delta
+
+[init]
+	defaultBranch = main
+
+[interactive]
+	# requires https://github.com/dandavison/delta
+    diffFilter = delta --color-only
+
+
+# requires https://github.com/dandavison/delta
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[merge]
+	# shows the ancestor commit when merging conflicts
+    conflictstyle = diff3
+
+[diff]
+	# TODO: figure out what the best mode is
+	#see https://git-scm.com/docs/git-diff#Documentation/git-diff.txt-code--color-movedltmodegtcode
+    colorMoved = default
