@@ -11,6 +11,7 @@ M.disabled_filetypes = {
 	TelescopeResults = true,
 	snacks_dashboard = true,
 	checkhealth = true,
+	markdown = true,
 }
 
 M.setup = function()
