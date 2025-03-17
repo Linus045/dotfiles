@@ -12,7 +12,7 @@
 # ~/dotfiles/polybar/.config/polybar/scripts/set_random_background.sh
 
 # set us layout with german umlauts, comma at the end is necessary to parse as list
-setxkbmap de,us -variant us,
+[[ $XDG_SESSION_TYPE == "x11" ]] && setxkbmap de,us -variant us, -option caps:escape
 TERMINAL=kitty
 
 [ -f ~/.xprofile.local ] && source ~/.xprofile.local
