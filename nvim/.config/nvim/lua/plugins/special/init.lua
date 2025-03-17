@@ -99,6 +99,13 @@ return {
 			vim.g.vimtex_compiler_latexmk = {
 				out_dir = 'build_latexmk',
 				aux_dir = 'build_latexmk',
+				options = {
+					'-verbose',
+					'-file-line-error',
+					'-synctex=1',
+					'-interaction=nonstopmode',
+					'-shell-escape',
+				}
 			}
 
 
