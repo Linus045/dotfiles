@@ -56,7 +56,7 @@ M.custom_selection_menu_files = function(title, cwd, fd_parameter, on_select_cal
 		on_select_callback(selected_entry)
 	end
 
-	local command = vim.tbl_flatten { "fd", fd_parameter }
+	local command = vim.iter({ "fd", fd_parameter }):flatten():totable()
 
 	local opts = {
 		cwd = cwd,
