@@ -40,7 +40,7 @@ change_wallpaper() {
 
 	if [[ $? == 0 ]]; then
 		echo "$background_path$wallpaper" > ~/.polybar_current_live_wallpaper_path
-		/usr/bin/notify-send --app-name="Wallpaper Changer" "Wallpaper: $wallpaper on $random_display"
+		# /usr/bin/notify-send --app-name="Wallpaper Changer" "Wallpaper: $wallpaper on $random_display"
 	else
 		/usr/bin/notify-send --app-name="Wallpaper Changer" "Error setting wallpaper!"
 	fi
