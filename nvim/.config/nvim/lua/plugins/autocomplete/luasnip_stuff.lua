@@ -63,7 +63,7 @@ return {
 			}
 		}
 
-		ls.add_snippets("all", {})
+		-- ls.add_snippets("all", {})
 
 		ls.add_snippets("lua", {
 			s("pcall_check_expand", {

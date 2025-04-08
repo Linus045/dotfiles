@@ -72,15 +72,19 @@ return {
 			-- 		vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			-- end
 
+			local compare = require('cmp.config.compare')
 			local cmp_comparators = {
-				cmp.config.compare.offset,
-				cmp.config.compare.exact,
-				cmp.config.compare.score,
 				require("clangd_extensions.cmp_scores"),
-				cmp.config.compare.kind,
-				cmp.config.compare.sort_text,
-				cmp.config.compare.length,
-				cmp.config.compare.order,
+				compare.offset,
+				compare.exact,
+				-- compare.scopes,
+				compare.score,
+				compare.recently_used,
+				compare.locality,
+				compare.kind,
+				compare.sort_text,
+				compare.length,
+				compare.order,
 				require "cmp-under-comparator".under,
 			}
 
@@ -146,74 +150,22 @@ return {
 					['<Down>'] = cmp.config.disable,
 					['<Up>'] = cmp.config.disable,
 					["<tab>"] = cmp.config.disable,
-					-- ["<Tab>"] = cmp.mapping(function(fallback)
-					-- 	if cmp.visible() then
-					-- 		cmp.select_next_item()
-					-- 	elseif luasnip.expand_or_jumpable() then
-					-- 		luasnip.expand_or_jump()
-					-- 	elseif has_words_before() then
-					-- 		cmp.complete()
-					-- 	else
-					-- 		fallback()
-					-- 	end
-					-- end, { "i", "s" }),
-					-- ["<S-Tab>"] = cmp.mapping(function(fallback)
-					-- 	if cmp.visible() then
-					-- 		cmp.select_prev_item()
-					-- 	elseif luasnip.jumpable(-1) then
-					-- 		luasnip.jump(-1)
-					-- 	else
-					-- 		fallback()
-					-- 	end
-					-- end, { "i", "s" }),
 				}),
-				completion = {
-					-- autocomplete = {
-					--   require("cmp.types").cmp.TriggerEvent.InsertEnter,
-					-- },
-					-- completeopt = 'menu,menuone,noselect,preview,noinsert',
-					keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
-					keyword_length = 1,
-				},
-				-- completion = {
-				--   keyword_length = -1,
-				--   completeopt = "menu,menuone,noselect,preview,noinsert",
+				-- confirmation = {
 				-- },
-				confirmation = {
-					-- default_behavior = require("cmp.types").cmp.ConfirmBehavior.Replace,
-				},
-				-- preselect = cmp.PreselectMode.Item,
-				view = {
-					entries = "custom", -- can be "custom", "wildmenu" or "native"
-					selection_order = "near_cursor",
-					docs = {
-						auto_open = true,
-					},
-				},
-				-- window = {
-				-- 	completion = cmp.config.window.bordered(),
-				-- 	documentation = cmp.config.window.bordered(),
-				-- },
-				-- formatting = {
-				--   fields = { 'menu', 'abbr', 'kind' },
-				--   format = function(entry, item)
-				--     local menu_icon = {
-				--       nvim_lsp = 'λ',
-				--       vsnip = '⋗',
-				--       buffer = 'Ω',
-				--       path = '🖫',
-				--     }
-				--     item.menu = menu_icon[entry.source.name]
-				--     return item
-				--   end,
+				-- view = {
+				-- 	entries = "custom", -- can be "custom", "wildmenu" or "native"
+				-- 	selection_order = "near_cursor",
+				-- 	docs = {
+				-- 		auto_open = true,
+				-- 	},
 				-- },
 				formatting = {
-					fields = { "kind", "abbr", "menu" },
+					fields = { "abbr", "kind", "menu" },
 					format = function(entry, vim_item)
 						local kind = require("lspkind").cmp_format({
 							mode = "symbol_text",
-							--maxwidth = 50,
-							menu = {
+							menu = ({
 								nvim_lsp = "[LSP]",
 								nvim_lsp_signature_help = "[Arg]",
 								luasnip = "[Snippet]",
@@ -224,14 +176,15 @@ return {
 								zsh = "[Zsh]",
 								latex_symbols = "[Latex]",
 								copilot = "[Copilot]",
-							},
+							}),
 							symbol_map = {
 								Copilot = "",
 							}
 						})(entry, vim_item)
+
 						local strings = vim.split(kind.kind, "%s", { trimempty = true })
 						if strings[1] ~= "" then
-							kind.kind = " " .. strings[1] .. " "
+							kind.kind = strings[1]
 						else
 							kind.kind = " UNKNOWN KIND "
 						end
@@ -246,13 +199,13 @@ return {
 				sources = cmp.config.sources({
 					{
 						name = 'omni',
-						priority = 100,
-						group_index = 1
+						-- priority = 100,
+						-- group_index = 1
 					},
 					{
 						name = "nvim_lsp",
-						priority = 100,
-						group_index = 1,
+						-- priority = 100,
+						-- group_index = 1,
 						-- workaround for clangd's missing functions/cached results
 						-- see: https://github.com/hrsh7th/nvim-cmp/issues/1176
 						trigger_characters = {
@@ -263,25 +216,25 @@ return {
 					},
 					{
 						name = "copilot",
-						priority = 101,
-						group_index = 1,
+						-- priority = 101,
+						-- group_index = 1,
 					},
 					{
 						name = "nvim_lsp_signature_help",
-						priority = 110,
-						group_index = 1,
+						-- priority = 110,
+						-- group_index = 1,
 						-- always show the signature help
 						keyword_length = 0
 					},
 					{
 						name = "nvim_lua",
-						priority = 100,
-						group_index = 1,
+						-- priority = 100,
+						-- group_index = 1,
 					},
 					{
 						name = "latex_symbols",
-						priority = 80,
-						group_index = 1,
+						-- priority = 80,
+						-- group_index = 1,
 						-- https://github.com/kdheepak/cmp-latex-symbols#options
 						option = {
 							strategy = 2,
@@ -289,14 +242,14 @@ return {
 					},
 					{
 						name = "luasnip",
-						priority = 90,
+						-- priority = 90,
+						-- group_index = 1,
 						max_item_count = 5,
-						group_index = 1,
 					},
 					{
 						name = "buffer",
-						priority = 80,
-						group_index = 1,
+						-- priority = 80,
+						-- group_index = 1,
 						max_item_count = 5,
 						option = {
 							keyword_pattern = [[\k\+]],
@@ -305,17 +258,17 @@ return {
 					},
 					{
 						name = "path",
-						priority = 80,
-						group_index = 1,
+						-- priority = 80,
+						-- group_index = 1,
 					},
 					{
 						name = "calc",
-						priority = 100,
-						group_index = 1,
+						-- priority = 100,
+						-- group_index = 1,
 					},
 					{
 						name = "lazydev",
-						group_index = 1,
+						-- group_index = 1,
 					},
 					-- {
 					--   name = "zsh",
@@ -330,6 +283,7 @@ return {
 					ghost_text = false,
 				},
 			})
+
 			-- Set configuration for specific filetype.
 			cmp.setup.filetype("gitcommit", {
 				sources = cmp.config.sources({
@@ -366,16 +320,16 @@ return {
 			--   end
 			-- })
 
-			-- cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-			--   sources = {
-			--     { name = "dap" },
-			--   },
-			-- })
+			cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+				sources = {
+					{ name = "dap" },
+				},
+			})
 		end
 	},
 
-	{
-		"evesdropper/luasnip-latex-snippets.nvim",
-	},
+	-- {
+	-- 	"evesdropper/luasnip-latex-snippets.nvim",
+	-- },
 
 }
