@@ -102,6 +102,11 @@ if vim.fn.executable("rg") then
 	vim.opt.grepprg = 'rg --vimgrep'
 end
 
+-- prepend error format for glsl shaders
+vim.cmd('set errorformat^=ERROR:\\ %f:%l:\\ %m')
+-- causes issues for some reason with other plugins (errorformat becomes invalid because '\,' is not escaped properly in some plugin I'm using)
+-- vim.opt.errorformat:prepend('ERROR: %f:%l: %m')
+
 -- vim.opt.viewoptions = "folds,cursor,curdir"
 vim.opt.viewoptions = "folds,cursor"
 
