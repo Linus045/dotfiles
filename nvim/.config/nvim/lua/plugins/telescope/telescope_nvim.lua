@@ -39,6 +39,7 @@ return {
 					"%.mkv",
 					"%.mp4",
 					"%.zip",
+					"^3rdparty/",
 				},
 				-- vimgrep_arguments = {
 				-- 	"rg",
