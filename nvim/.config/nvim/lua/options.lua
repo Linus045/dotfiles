@@ -89,7 +89,21 @@ vim.g.snippets = "luasnip"
 vim.opt.list = true -- show specials characters for tab, end-of-line etc.
 
 -- hide whitespace changes in diff
-vim.opt.diffopt:append("iwhite")
+-- vim.opt.diffopt:append("iwhite")
+vim.api.nvim_create_user_command(
+	"DiffToggleWhitespace",
+	function()
+		local current_diff_opts = vim.opt.diffopt:get()
+		if vim.list_contains(current_diff_opts, "iwhite") then
+			vim.opt.diffopt:remove("iwhite")
+			vim.notify("Whitespace changes are now visible in diff mode")
+		else
+			vim.opt.diffopt:append("iwhite")
+			vim.notify("Whitespace changes are now hidden in diff mode")
+		end
+	end,
+	{}
+)
 
 -- characters to show
 vim.opt.listchars = {
