@@ -47,10 +47,10 @@ return {
 					swap = {
 						enable = true,
 						swap_next = {
-							["<leader>mr"] = "@parameter.inner",
+							["<leader>ml"] = "@parameter.inner",
 						},
 						swap_previous = {
-							["<leader>ml"] = "@parameter.inner",
+							["<leader>mh"] = "@parameter.inner",
 						},
 					},
 					lsp_interop = {
