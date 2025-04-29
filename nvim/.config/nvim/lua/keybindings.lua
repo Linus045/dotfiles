@@ -295,6 +295,25 @@ keymap("n", "<F5>", function()
 end, opts, "[DEBUG] Continue / Run and break at current line")
 
 
+keymap('n', '<F2>', function()
+	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	if filetype == "cpp" then
+		if require 'dap'.session() then
+			-- if session is already running, just use the run to cursor method instead
+			require 'dap'.run_to_cursor()
+		else
+			-- manually add a breakpoint, start the program and then remove the breakpoint again
+			require 'dap'.toggle_breakpoint()
+			require 'dap'.my_custom_continue_function(filetype)
+			require 'dap'.toggle_breakpoint()
+		end
+	else
+		-- if session is already running, just use the run to cursor method instead
+		require 'dap'.run_to_cursor()
+	end
+end, opts, "[DEBUG] Run to Cursor")
+
+
 keymap("n", "<F11>", function()
 	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 	if filetype == "rust" then
@@ -381,8 +400,18 @@ keymap("n", "<F6>", function()
 	require 'dapui'.close()
 end, opts, "[DEBUG] Terminate debugging session and process")
 
+
+keymap("n", "<C-S-j>", function()
+	vim.notify("Moving down in callstack")
+	require 'dap'.down()
+end, opts, "[DEBUG] Move down in callstack")
+keymap("n", "<C-S-k>", function()
+	vim.notify("Moving up in callstack")
+	require 'dap'.up()
+end, opts, "[DEBUG] Move up in callstack")
 keymap("n", "<leader>dj", function() require 'dap'.down() end, opts, "[DEBUG] Move down in callstack")
 keymap("n", "<leader>dk", function() require 'dap'.up() end, opts, "[DEBUG] Move up in callstack")
+
 
 keymap("n", "<F4>", function() require 'dapui'.toggle() end, opts, "[DEBUG] Toggle UI")
 keymap("n", "<leader>dii", function() require 'dapui'.eval(nil, { enter = true }) end, opts, "[DEBUG] Evaluate")
@@ -391,6 +420,8 @@ keymap("n", "<leader>diw", function() require 'dap.ui.widgets'.hover('<cexpr', n
 keymap("v", "<leader>diw", function() require 'dap.ui.widgets'.hover('<cexpr>', nil) end, opts, "[DEBUG] Hover")
 keymap('n', '<Leader>die', function() require 'dapui'.eval(vim.fn.input('[Expression] > '), { enter = true }) end, opts,
 	"[DEBUG] Evaluate Expression")
+
+
 -- require("dapui").eval(<expression>)
 -- Cheatsheet
 -- keymap("n", "<leader>?", ":Cheatsheet<cr>", opts)
