@@ -3,6 +3,33 @@ return {
 	config = function()
 		local lualine = require("lualine")
 
+		local function git_diff_whitespace_status()
+			local get_string = function()
+				local in_diff_view = vim.opt.diff:get()
+				if in_diff_view then
+					return "[IgnoreWhitespace]"
+				else
+					return ""
+				end
+			end
+
+			local get_color = function()
+				local current_diff_opts = vim.opt.diffopt:get()
+				local whitespaceEnabled = not vim.list_contains(current_diff_opts, "iwhite")
+
+				if whitespaceEnabled then
+					return { fg = "#ff6666" }
+				else
+					return { fg = "#66ff66" }
+				end
+			end
+
+			return {
+				get_string,
+				color = get_color,
+			}
+		end
+
 		local function lsp_formatter_status()
 			local lspFormat = require "custom_tools.custom_formatter"
 
@@ -132,6 +159,7 @@ return {
 					-- "%{cmake#GetInfo().cmake_version.string}",
 					"%{FugitiveStatusline()}",
 					lsp_formatter_status(),
+					git_diff_whitespace_status(),
 					rust_cargo_checker_status(),
 					{
 						"fileformat",
