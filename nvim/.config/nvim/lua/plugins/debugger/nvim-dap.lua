@@ -147,6 +147,29 @@ return {
 			cb(adapter)
 		end
 
+		-- vscode-cpptools
+		dap.adapters.cppvsdbg = function(cb, config)
+			-- run custom command before launching debug session (similar to vscodes preLaunchTasks)
+			if config.nvim_preLaunchTask then
+				vim.notify("Running nvim_preLaunchTask: '" .. config.nvim_preLaunchTask .. "'")
+				vim.fn.system(config.nvim_preLaunchTask)
+			end
+
+			local adapter = {
+				id      = 'codelldb',
+				type    = "executable",
+				command = bin_locations .. 'codelldb', -- adjust as needed, must be absolute path
+				-- only for windows
+				-- options = {
+				-- 	detached = false,
+				-- }
+			}
+
+			cb(adapter)
+		end
+
+
+
 		-- https://github.com/mfussenegger/nvim-dap/discussions/93
 		-- https://marketplace.visualstudio.com/items?itemName=lanza.lldb-vscode#launch-configuration-settings
 		dap.adapters["lldb-dap"] = function(cb, config)
@@ -247,6 +270,16 @@ return {
 						description = 'enable pretty printing',
 						ignoreFailures = false
 					},
+					{
+						description = "Enable catch throw",
+						text = "catch throw",
+						ignoreFailures = true
+					},
+					{
+						description = "Catch segmentation faults",
+						text = "catch signal SIGSEGV",
+						ignoreFailures = true
+					}
 				},
 			},
 			{

@@ -78,9 +78,14 @@ return {
 						position = "left", -- Can be "left", "right", "top", "bottom"
 					},
 					{
-						elements = { "repl", "console" },
+						elements = { "repl" },
 						size = 10,
 						position = "bottom", -- Can be "left", "right", "top", "bottom"
+					},
+					{
+						elements = { "console" },
+						size = 90,
+						position = "right", -- Can be "left", "right", "top", "bottom"
 					},
 					{
 						elements = { "stacks", },
