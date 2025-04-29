@@ -116,6 +116,46 @@ if vim.fn.executable("rg") then
 	vim.opt.grepprg = 'rg --vimgrep'
 end
 
+-- intended to fix paths for WSL on linux
+-- since inside the wsl pathsa are /mnt/d/some/dir but Windows reports them as D:/some/dir
+-- TODO: needs further testing
+local function replace_paths_qflist()
+	local qflist = vim.fn.getqflist()
+
+	local new_list = {}
+	for _, entry in ipairs(qflist) do
+		-- ignore entries that are not files
+		if entry.bufnr == 0 then
+			-- copy entry
+			new_list[#new_list + 1] = entry
+		else
+			-- get file name from buffer number
+			local fname = vim.fn.fnamemodify(vim.fn.bufname(entry.bufnr), ':p')
+
+			-- insert drive letter for windows
+			-- TODO: do some testing here
+			fname = '/mnt/d' .. vim.fn.substitute(fname, '\\', '/', 'g')
+
+			-- remove bufnr
+			entry.bufnr = nil
+			-- add filename
+			entry.filename = fname
+
+			-- create new entry
+			new_list[#new_list + 1] = entry
+		end
+	end
+	vim.fn.setqflist(new_list)
+end
+
+vim.api.nvim_create_user_command('MyCustomMake', function(_)
+	vim.cmd("make")
+	replace_paths_qflist()
+end, {
+	desc = "Calls make and sets the qflist correctly",
+	nargs = '*',
+})
+
 -- prepend error format for glsl shaders
 vim.cmd('set errorformat^=ERROR:\\ %f:%l:\\ %m')
 -- causes issues for some reason with other plugins (errorformat becomes invalid because '\,' is not escaped properly in some plugin I'm using)
