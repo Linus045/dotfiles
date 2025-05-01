@@ -47,7 +47,7 @@ $character"""
 command_timeout = 2000
 
 [character]
-success_symbol = "[](bold green)"
+success_symbol = "[🐶](bold)"
 error_symbol = "[](bold red)"
 vimcmd_symbol = "[](bold purple)"
 
@@ -92,3 +92,19 @@ style = "bold yellow"
 [[battery.display]]
 threshold = 90
 style = "bold green"
+
+
+[git_status]
+format = '([\[$ahead_behind\]](bold blue)[$all_status]($style) )'
+conflicted = "C"
+style = "bold white"
+ahead = "Ahead"
+behind = "Behind"
+up_to_date = ""
+ignore_submodules = true
+
+diverged = "DIVERGED"
+deleted = "|Deleted|"
+staged = "|Staged|"
+modified = "|Modified|"
+stashed = ""
