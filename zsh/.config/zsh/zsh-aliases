@@ -47,7 +47,7 @@ alias neofetch='echo "Using fastfetch instead!" && fastfetch'
 # Sort entries when using ls
 alias ls='ls --group-directories-first --color=auto'
 
-alias make="make -j 4"
+alias make="make -j $(nproc)"
 
 # This only works with kitty and only when its not inside TMUX
 alias viu="/bin/viu -h 25"
