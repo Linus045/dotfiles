@@ -17,7 +17,8 @@ convert ~/.wallpapers/$background2 -resize "$SCREEN_RESOLUTION2" -background bla
 convert ~/.lockscreen_1.png ~/.lockscreen_2.png +append ~/.lockscreen.png
 
 # feh ~/.lockscreen.png
-i3lock -i ~/.lockscreen.png -f -e --greeter-text "Enter Password to Unlock" -k --indicator --pass-media --pass-screen --greeter-color="ffffffff" --time-color="ffffffff" --date-color="dddddddd"
+# i3lock -i ~/.lockscreen.png -f -e --greeter-text "Enter Password to Unlock" -k --indicator --pass-media --pass-screen --greeter-color="ffffffff" --time-color="ffffffff" --date-color="dddddddd"
+i3lock -i ~/.lockscreen.png
 
  # convert ~/.wallpapers/$background -gravity Center -background $BGCOLOR -extent "$SCREEN_RESOLUTION" RGB:- | i3lock -i /dev/stdin 
 
