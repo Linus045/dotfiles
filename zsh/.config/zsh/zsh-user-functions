@@ -53,11 +53,10 @@ bindkey '^p' install_package
 
 # List and remove packages with C-i
 function remove_pacman_package_explicitly_installed() {
-  cmd="pacman -Qetq | fzf --multi --print0 --preview='pacman -Si {} || { echo "'"'"\nInterpreting as group name and listing packages::"'"'" && pacman -Sg {}; }'"
-  selected=$(eval $cmd)
+	selected=$(pacman -Qetq | xargs -I{} -P$(nproc) bash -c 'pacman -Qi "$1" | awk -F: "/Installed Size/ { gsub(/ /,\"\", \$2); print \"$1\"\" \"\$2 }"' _ {} | sort -r -h -t' ' -k2 | fzf --multi --print0 --preview='echo {} | awk "{ print \$1 }" | xargs paru -Si || { echo "\nInterpreting as group name and listing packages::" && pacman -Sg {}; }')
   if [ -n "$selected" ]; then
     # insert spaces and remove trailing whitespace
-    selected=$(echo $selected | tr "\0" " " | sed 's/ $//')
+    selected=$(echo $selected | awk '{ print $1 }'| tr "\0" " " | sed 's/ $//')
     zle -U "sudo pacman -Runs $selected"
   fi
 }
