@@ -283,7 +283,6 @@ return {
 
 
 		local lsp_status = require("lsp-status")
-		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -313,8 +312,7 @@ return {
 				opts.capabilities.offsetEncoding = 'utf-16'
 			end
 
-			lspconfig[server].setup(opts)
-			-- vim.notify("[LSP-Installer] " .. server .. " loaded")
+			vim.lsp.enable(server)
 		end
 
 
