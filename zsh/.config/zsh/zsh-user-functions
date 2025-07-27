@@ -56,7 +56,8 @@ function remove_pacman_package_explicitly_installed() {
 	selected=$(pacman -Qetq | xargs -I{} -P$(nproc) bash -c 'pacman -Qi "$1" | awk -F: "/Installed Size/ { gsub(/ /,\"\", \$2); print \"$1\"\" \"\$2 }"' _ {} | sort -r -h -t' ' -k2 | fzf --multi --print0 --preview='echo {} | awk "{ print \$1 }" | xargs paru -Si || { echo "\nInterpreting as group name and listing packages::" && pacman -Sg {}; }')
   if [ -n "$selected" ]; then
     # insert spaces and remove trailing whitespace
-    selected=$(echo $selected | awk '{ print $1 }'| tr "\0" " " | sed 's/ $//')
+	echo $selected
+    selected=$(printf $selected | xargs -I{} -0 bash -c 'printf \$1 | awk { print \$1 }' _ {})
     zle -U "sudo pacman -Runs $selected"
   fi
 }
