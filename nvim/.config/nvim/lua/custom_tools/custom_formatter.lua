@@ -24,6 +24,9 @@ M.format_buffer = function()
 			if client.name == "jsonls" then
 				return false
 			end
+			if client.name == "vtsls" then
+				return false
+			end
 			vim.notify("Formatting with " .. client.name)
 			return true
 		end

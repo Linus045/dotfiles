@@ -298,6 +298,26 @@ return {
 			}
 			opts.capabilities = vim.tbl_extend('keep', opts.capabilities or {}, lsp_status.capabilities)
 
+			-- make vue work with ts_ls
+			if server == "ts_ls" then
+				opts.init_options = {
+					plugins = { -- I think this was my breakthrough that made it work
+						{
+							name = "@vue/typescript-plugin",
+							location = vim.fn.stdpath("data") ..
+								"/mason/packages/vue-language-server/node_modules/@vue/language-server",
+							languages = { "vue" },
+						},
+					},
+				}
+				opts.filetypes = {
+					"typescript",
+					"javascript",
+					"javascriptreact",
+					"typescriptreact",
+				}
+			end
+
 			local has_custom_opts, server_custom_opts = pcall(require, "plugins.lsp.settings." .. server)
 			if has_custom_opts then
 				opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
@@ -311,7 +331,6 @@ return {
 				-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
 				opts.capabilities.offsetEncoding = 'utf-16'
 			end
-
 			vim.lsp.config(server, opts)
 			vim.lsp.enable(server)
 		end
