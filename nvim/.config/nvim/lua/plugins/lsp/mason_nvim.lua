@@ -312,6 +312,7 @@ return {
 				opts.capabilities.offsetEncoding = 'utf-16'
 			end
 
+			vim.lsp.config(server, opts)
 			vim.lsp.enable(server)
 		end
 
