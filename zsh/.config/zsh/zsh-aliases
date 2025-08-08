@@ -25,7 +25,17 @@ alias feh='feh -d --scale-down'
 # e.g.
 # pwd | clip
 # echo "test" | clip
-alias clip="xclip -selection clipboard"
+
+
+clip() {
+  if [ -n "$WAYLAND_DISPLAY" ]; then
+    wl-copy
+  else
+    xclip -selection clipboard
+  fi
+}
+
+alias pwdcopy="pwd | tr -d '\n' | clip"
 
 # Tmux alias
 # alias tn='tmux new-session'
