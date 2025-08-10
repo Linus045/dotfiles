@@ -53,15 +53,15 @@ return {
 		local types = require("luasnip.util.types")
 		local conds = require("luasnip.extras.expand_conditions")
 
-		ls.snippets = {
-			lua = {
-				s("myreq", { c(1, {
-					fmt("require('{}')", { r(1, 'module') }),
-					fmt("local {} = require('{}')", { rep(1), r(1, 'module') })
-				}
-				) }, { stored = { module = i(1, "module") } })
-			}
-		}
+		-- ls.snippets = {
+		-- 	lua = {
+		-- 		s("myreq", { c(1, {
+		-- 			fmt("require('{}')", { r(1, 'module') }),
+		-- 			fmt("local {} = require('{}')", { rep(1), r(1, 'module') })
+		-- 		}
+		-- 		) }, { stored = { module = i(1, "module") } })
+		-- 	}
+		-- }
 
 		-- ls.add_snippets("all", {})
 

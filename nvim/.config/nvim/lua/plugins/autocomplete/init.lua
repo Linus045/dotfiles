@@ -101,6 +101,23 @@ return {
 				table.insert(cmp_comparators, 1, require("copilot_cmp.comparators").prioritize)
 			end
 
+			local lspkind = require('lspkind')
+			local cmp_types = require("cmp.types")
+			local cmp_str = require("cmp.utils.str")
+
+			local menu_map = {
+				nvim_lsp = "[LSP]",
+				nvim_lsp_signature_help = "[Arg]",
+				luasnip = "[Snippet]",
+				buffer = "[Buffer]",
+				path = "[Path]",
+				nvim_lua = "[Lua]",
+				calc = "[Calc]",
+				zsh = "[Zsh]",
+				latex_symbols = "[Latex]",
+				copilot = "[Copilot]",
+			}
+
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -160,41 +177,34 @@ return {
 				-- 		auto_open = true,
 				-- 	},
 				-- },
+
 				formatting = {
-					fields = { "abbr", "kind", "menu" },
-					format = function(entry, vim_item)
-						local kind = require("lspkind").cmp_format({
-							mode = "symbol_text",
-							menu = ({
-								nvim_lsp = "[LSP]",
-								nvim_lsp_signature_help = "[Arg]",
-								luasnip = "[Snippet]",
-								buffer = "[Buffer]",
-								path = "[Path]",
-								nvim_lua = "[Lua]",
-								calc = "[Calc]",
-								zsh = "[Zsh]",
-								latex_symbols = "[Latex]",
-								copilot = "[Copilot]",
-							}),
-							symbol_map = {
-								Copilot = "",
-							}
-						})(entry, vim_item)
+					format = lspkind.cmp_format({
+						mode = 'text_symbol', -- show only symbol annotations
+						symbol_map = {
+							Copilot = "",
+						},
+						menu = menu_map,
+						maxwidth = {
+							-- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+							-- can also be a function to dynamically calculate max width such as
+							-- menu = function() return math.floor(0.45 * vim.o.columns) end,
+							menu = 50, -- leading text (labelDetails)
+							abbr = 50, -- actual suggestion item
+						},
+						ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+						show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
-						local strings = vim.split(kind.kind, "%s", { trimempty = true })
-						if strings[1] ~= "" then
-							kind.kind = strings[1]
-						else
-							kind.kind = " UNKNOWN KIND "
+						-- The function below will be called before any actual modifications from lspkind
+						-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+						before = function(entry, vim_item)
+							local menu = menu_map[entry.source.name]
+							if menu then
+								vim_item.kind = vim_item.kind .. " " .. menu
+							end
+							return vim_item
 						end
-
-						if kind.menu == nil then
-							kind.menu = "[" .. entry.source.name .. "]"
-						end
-						-- kind.menu = "    (" .. strings[2] .. ")"
-						return kind
-					end,
+					})
 				},
 				sources = cmp.config.sources({
 					{

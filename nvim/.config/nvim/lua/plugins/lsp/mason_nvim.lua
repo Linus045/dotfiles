@@ -298,7 +298,8 @@ return {
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = vim.tbl_deep_extend("keep", capabilities, lsp_status.capabilities)
 		capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-
+		capabilities.textDocument.completion.completionItem.detailSupport = true
+		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		local lsps = mason_lspconfig.get_installed_servers()
 		for _, server in pairs(lsps) do
@@ -306,7 +307,6 @@ return {
 				on_attach = lsp_server_on_attach,
 				capabilities = capabilities,
 			}
-			opts.capabilities = vim.tbl_extend('keep', opts.capabilities or {}, lsp_status.capabilities)
 
 			-- make vue work with ts_ls
 			if server == "ts_ls" then
@@ -340,6 +340,29 @@ return {
 				-- Fixes annoying warning
 				-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
 				opts.capabilities.offsetEncoding = 'utf-16'
+
+				-- clangd needs some extra options
+				opts.cmd = {
+					"clangd",
+					"--background-index",
+					"--clang-tidy",
+					"--header-insertion=iwyu",
+					"--all-scopes-completion",
+					"--completion-style=detailed",
+					"--function-arg-placeholders",
+					"--fallback-style=llvm",
+				}
+				opts.init_options = {
+					completeUnimported = true,
+					clangdFileStatus = true,
+					usePlaceholders = true,
+					inlayHints = {
+						variableTypes = true,
+						functionReturnTypes = true,
+						parameterNames = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				}
 			end
 			vim.lsp.config(server, opts)
 			vim.lsp.enable(server)
