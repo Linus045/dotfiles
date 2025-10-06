@@ -74,5 +74,14 @@ return {
 		end,
 	},
 
-	"rust-lang/rust.vim"
+	"rust-lang/rust.vim",
+
+	{
+		'nvim-flutter/flutter-tools.nvim',
+		lazy = false,
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+		},
+		config = true,
+	}
 }

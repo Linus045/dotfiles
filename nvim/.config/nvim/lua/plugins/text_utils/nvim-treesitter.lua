@@ -25,6 +25,7 @@ return {
 					enable = true, -- false will disable the whole extension
 					disable = { 'latex' },
 				},
+				fold = { enable = true },
 				rainbow = {
 					enable = true,
 					-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for

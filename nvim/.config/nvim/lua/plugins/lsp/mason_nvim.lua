@@ -1,3 +1,15 @@
+local function flash_cursorline()
+	local ns = vim.api.nvim_create_namespace("JumpFlash")
+	local line = vim.fn.line(".") - 1                            -- 0-indexed
+
+	vim.api.nvim_buf_add_highlight(0, ns, "IncSearch", line, 0, -1) -- highlight whole line
+	vim.defer_fn(function()
+		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+			vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+		end
+	end, 400)
+end
+
 local function lsp_keymaps(_client, bufnr)
 	local keymap = require("custom_tools.keybindings_util").keymap
 	local opts = { noremap = true, silent = true }
@@ -68,32 +80,6 @@ local function lsp_keymaps(_client, bufnr)
 	vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
-local function lsp_highlight_document(client, bufnr)
-	-- Set autocommands conditional on server_capabilities
-	if client and client.server_capabilities.documentHighlightProvider then
-		local highlight_augroup = vim.api.nvim_create_augroup('custom-lsp-highlight', { clear = false })
-		vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-			buffer = bufnr,
-			group = highlight_augroup,
-			callback = vim.lsp.buf.document_highlight,
-		})
-
-		vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-			buffer = bufnr,
-			group = highlight_augroup,
-			callback = vim.lsp.buf.clear_references,
-		})
-
-		vim.api.nvim_create_autocmd('LspDetach', {
-			group = vim.api.nvim_create_augroup('custom-lsp-detach-codelens-highlight', { clear = true }),
-			callback = function(event)
-				vim.lsp.buf.clear_references()
-				vim.api.nvim_clear_autocmds { group = 'custom-lsp-highlight', buffer = event.buf }
-			end,
-		})
-	end
-end
-
 local function lsp_codelens(client, bufnr)
 	if client.server_capabilities.codeLensProvider then
 		local codelens_augroup = vim.api.nvim_create_augroup('custom-lsp-codelens', { clear = false })
@@ -122,7 +108,6 @@ end
 local lsp_server_on_attach = function(client, bufnr)
 	-- vim.notify("Attaching LSP Client: " .. client.name .. " to buffer")
 	lsp_keymaps(client, bufnr)
-	lsp_highlight_document(client, bufnr)
 	lsp_codelens(client, bufnr)
 
 	require("lsp-status").on_attach(client)
@@ -188,6 +173,14 @@ vim.api.nvim_create_user_command(
 	end,
 	{}
 )
+
+
+vim.api.nvim_create_autocmd({ "FocusGained", "WinEnter", "BufEnter" }, {
+	pattern = "*",
+	callback = function()
+		flash_cursorline()
+	end,
+})
 
 -- autoinstall lsp server
 return {

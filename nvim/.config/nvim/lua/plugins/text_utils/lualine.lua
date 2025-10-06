@@ -3,6 +3,59 @@ return {
 	config = function()
 		local lualine = require("lualine")
 
+
+		-- copied from: https://github.com/mcauley-penney/nvim/blob/main/lua/ui/statusline.lua
+		-- file/selection info -------------------------------------
+		local function fileinfo_widget()
+			-- insert grouping separators in numbers
+			-- viml regex: https://stackoverflow.com/a/42911668
+			-- lua pattern: stolen from Akinsho
+			local group_number = function(num, sep)
+				if num < 999 then return tostring(num) end
+
+				num = tostring(num)
+				return num:reverse():gsub("(%d%d%d)", "%1" .. sep):reverse():gsub("^,", "")
+			end
+
+
+			local get_info = function()
+				local ft = vim.api.nvim_get_option_value("filetype", {})
+				local lines = group_number(vim.api.nvim_buf_line_count(0), ",")
+				local str = "[≡ "
+
+				-- Always show lines and words for all filetypes
+				-- local nonprog_modes = {
+				-- 	["markdown"] = true,
+				-- 	["org"] = true,
+				-- 	["orgagenda"] = true,
+				-- 	["text"] = true,
+				-- }
+
+				-- if not nonprog_modes[ft] then
+				-- 	return str .. string.format("%3s lines", lines)
+				-- end
+
+				local wc = vim.fn.wordcount()
+				if not wc.visual_words then
+					return str .. string.format("%3s lines  %3s words]", lines, group_number(wc.words, ","))
+				end
+
+				local vlines = math.abs(vim.fn.line(".") - vim.fn.line("v")) + 1
+				local info = str .. string.format(
+					"%3s lines %3s words  %3s chars]",
+					group_number(vlines, ","),
+					group_number(wc.visual_words, ","),
+					group_number(wc.visual_chars, ",")
+				)
+				return info
+			end
+
+			return {
+				get_info,
+				{ fg = "#ff6666" }
+			}
+		end
+
 		local function git_diff_whitespace_status()
 			local get_string = function()
 				local in_diff_view = vim.opt.diff:get()
@@ -28,6 +81,16 @@ return {
 				get_string,
 				color = get_color,
 			}
+		end
+
+		local function scrollbar_widget()
+			local SBAR = { "▔", "🮂", "🬂", "🮃", "▀", "▄", "▃", "🬭", "▂", "▁" }
+			local hl_str = function(hl, str) return "%#" .. hl .. "#" .. str .. "%*" end
+
+			local cur = vim.api.nvim_win_get_cursor(0)[1]
+			local total = vim.api.nvim_buf_line_count(0)
+			local idx = math.floor((cur - 1) / total * #SBAR) + 1
+			return SBAR[idx]:rep(1)
 		end
 
 		local function lsp_formatter_status()
@@ -126,6 +189,7 @@ return {
 			}
 		end
 
+
 		lualine.setup({
 			options = {
 				icons_enabled = true,
@@ -154,10 +218,12 @@ return {
 					'filename',
 					file_status = true, -- displays file status (readonly status, modified status)
 					path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
-				} },
+				},
+				},
 				lualine_x = {
 					-- "%{cmake#GetInfo().cmake_version.string}",
 					"%{FugitiveStatusline()}",
+					fileinfo_widget(),
 					lsp_formatter_status(),
 					git_diff_whitespace_status(),
 					rust_cargo_checker_status(),
@@ -171,9 +237,25 @@ return {
 						},
 					},
 					"filetype",
+					-- Ruler to show current cursor position
+					{
+						"%7([Ln:%4l|Col:%2c] (%0P)%)",
+						color = {
+							fg = "#ff6666",
+						}
+					},
+					{
+						scrollbar_widget,
+						color = {
+							fg = "Cyan",
+						}
+					}
 				},
-				lualine_y = { --[[ null_ls_root_dir_status() ]] --[[ "progress" ]] },
-				lualine_z = { --[["location"]] },
+				lualine_y = {
+					--[[ null_ls_root_dir_status() ]] --[[ "progress" ]] },
+				lualine_z = {
+
+					--[["location"]] },
 			},
 			inactive_sections = {
 				lualine_a = {},

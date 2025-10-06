@@ -13,17 +13,18 @@ vim.g.termdebug_wide = 1
 vim.g.termdebugger = "rust-gdb"
 -- vim.g.termdebug_useFloatingHover = 0
 
-vim.opt.backup = false            -- creates a backup file
-vim.opt.hidden = true             -- allow hidden buffers and don't unload them
-vim.opt.clipboard = "unnamed"     -- allow neovim to access the system clipboard
-vim.opt.cmdheight = 2             -- more space in the neovim command line for displaying messages
+vim.opt.backup = false         -- creates a backup file
+vim.opt.hidden = true          -- allow hidden buffers and don't unload them
+vim.opt.clipboard = "unnamed"  -- allow neovim to access the system clipboard
+vim.opt.cmdheight = 2          -- more space in the neovim command line for displaying messages
 -- vim.opt.completeopt = { "menuone", "noselect" }      -- autocomplete in popup menu with default selection
-vim.opt.conceallevel = 2          -- so that `` is visible in markdown files
-vim.opt.fileencoding = "utf-8"    -- the encoding written to a file
-vim.opt.hlsearch = true           -- hightlight all matches on previous search pattern
-vim.opt.ignorecase = true         -- ignore case in search pattern
-vim.opt.mouse = "a"               -- allow mouse to be used in neovim
+vim.opt.conceallevel = 2       -- so that `` is visible in markdown files
+vim.opt.fileencoding = "utf-8" -- the encoding written to a file
+vim.opt.hlsearch = true        -- hightlight all matches on previous search pattern
+vim.opt.ignorecase = true      -- ignore case in search pattern
+vim.opt.mouse = "a"            -- allow mouse to be used in neovim
 -- vim.opt.pumheight = 20       -- pop up menu height
+vim.opt.showcmd = false
 vim.opt.showmode = false          -- show/hide the current used mode e.g. -- INSERT --
 vim.opt.showtabline = 1           -- always show tabs
 vim.opt.smartcase = true          -- enables case sensitive search smartly (when an uppercase character is used)
@@ -43,7 +44,7 @@ vim.opt.cursorline = true         -- hightlight the current line
 vim.opt.number = true             -- show numbered lines
 vim.opt.relativenumber = true     -- set relative numbered lines
 vim.opt.numberwidth = 4           -- set number column width
-vim.opt.signcolumn = "yes"        -- always show the sign column, otherwise it would shift the text each time
+vim.opt.signcolumn = "yes:3"      -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = false              -- DON'T wrap if lines get too long
 vim.opt.scrolloff = 4             -- always keep 8 lines above and below the cursor (unless at the beginning/end of file)
 vim.opt.inccommand = "nosplit"    -- Show substitutions in a preview buffer e.g. when using :%s/test/hello
@@ -82,8 +83,8 @@ vim.opt.inccommand = 'split'
 -- Treesitter folding
 vim.wo.foldmethod = 'expr' -- use treesitter folding
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
--- always use 3 columns to show folds
-vim.wo.foldcolumn = '3'
+-- automatically size the fold column
+vim.wo.foldcolumn = 'auto'
 
 vim.g.snippets = "luasnip"
 vim.opt.list = true -- show specials characters for tab, end-of-line etc.
@@ -107,10 +108,22 @@ vim.api.nvim_create_user_command(
 
 -- characters to show
 vim.opt.listchars = {
-	tab = "\\uf523 ",
-	eol = "\\uebea",
-	nbsp = "+"
+	-- tab = "\\uf523 ",
+	-- eol = "\\u2B92",
+	-- nbsp = "+"
+
+	-- space = '␣',
+	eol = '↲',
+	tab = '» ',
+	trail = '·',
+	extends = '<',
+	precedes = '>',
+	conceal = '┊',
+	nbsp = '␣',
+
 }
+
+
 
 if vim.fn.executable("rg") then
 	vim.opt.grepprg = 'rg --vimgrep'
