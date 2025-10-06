@@ -6,12 +6,10 @@ return {
 				path = vim.split(package.path, ";")
 			},
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "require" },
 			},
 			workspace = {
-				library = {
-					vim.api.nvim_get_runtime_file("", true),
-				},
+				library = vim.api.nvim_get_runtime_file("", true),
 			},
 		},
 	},

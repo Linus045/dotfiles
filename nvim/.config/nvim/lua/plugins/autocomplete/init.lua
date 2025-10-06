@@ -10,7 +10,7 @@ if ENABLE_COPILOT then
 end
 
 return {
-	require("plugins.autocomplete.neogen"),
+	-- require("plugins.autocomplete.neogen"),
 	-- Faster autocompletion
 	require("plugins.autocomplete.copilot_vim"),
 	{
