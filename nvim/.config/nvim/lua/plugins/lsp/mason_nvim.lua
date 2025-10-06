@@ -336,6 +336,11 @@ return {
 				-- print("[LSP-Installer] NO custom options for " .. server .. " found")
 			end
 
+			if server == "rust_analyzer" then
+				-- TODO: for some reason setting capabilities breaks LSP
+				opts.capabilities = {}
+			end
+
 			if server == "clangd" then
 				-- Fixes annoying warning
 				-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
