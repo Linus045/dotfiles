@@ -1,6 +1,6 @@
 local M = {}
 
-M.enabled = false
+M.enabled = true
 
 -- set to true to disable highlighting of trailing whitespace for specific filetypes
 M.disabled_filetypes = {
