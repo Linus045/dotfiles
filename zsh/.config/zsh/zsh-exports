@@ -35,3 +35,5 @@ export ANSIBLE_NOCOWS=1
 # eval "`pip completion --zsh`"
 
 [ -f "$ZDOTDIR/zsh-exports.local" ] && source "$ZDOTDIR/zsh-exports.local"
+[ -f "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
+
