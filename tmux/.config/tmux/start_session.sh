@@ -20,6 +20,13 @@ tmux select-window -t dev:nvim
 tmux send-keys -t dev:nvim "nvim" Enter
 tmux move-window -t 1
 
+
+# nvim in project directory
+tmux new-window -da -c "$HOME" -n "weechat" -t dev
+tmux select-window -t dev:weechat
+tmux send-keys -t dev:weechat "weechat" Enter
+tmux move-window -t 3
+
 # bachelorarbeit
 # dotfiles
 # tmux new-window -t dev -da -n "dotfiles" "cd ~/dotfiles && nvim"
@@ -32,7 +39,7 @@ tmux move-window -t 1
 # tmux send-keys -t dev:nvim_journal "z nvim_journal && nvim" Enter
 # tmux move-window -t 9
 
-tmux select-window -t dev:nvim
+tmux select-window -t dev:weechat
 
 tmux attach -t dev
 # tmux kill-session -t dev
