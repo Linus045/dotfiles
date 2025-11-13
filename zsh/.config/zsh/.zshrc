@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything and return early
+# prevents issues with non-interactive shells (e.g. scp, sftp, git commands over ssh)
+[[ -o interactive ]] || return
 
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -6,7 +9,6 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
-#!/bin/sh
 
 # Use powerline
 #USE_POWERLINE="true"
