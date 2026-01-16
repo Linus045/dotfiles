@@ -11,7 +11,7 @@ return {
 	depends = { "nvim-lua/plenary.nvim" },
 	opts = {
 		highlight = {
-			multiline = false,
+			multiline = true,
 		},
 	},
 }
