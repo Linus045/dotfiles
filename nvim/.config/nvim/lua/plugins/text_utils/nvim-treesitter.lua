@@ -6,7 +6,7 @@ return {
 			vim.cmd(":TSUpdate")
 		end,
 		config = function()
-			local configs = require("nvim-treesitter.configs")
+			local configs = require("nvim-treesitter.config")
 			configs.setup {
 				-- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
 				-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
@@ -43,7 +43,7 @@ return {
 		after = "nvim-treesitter",
 		requires = "nvim-treesitter/nvim-treesitter",
 		config = function()
-			require 'nvim-treesitter.configs'.setup {
+			require 'nvim-treesitter.config'.setup {
 				textobjects = {
 					swap = {
 						enable = true,

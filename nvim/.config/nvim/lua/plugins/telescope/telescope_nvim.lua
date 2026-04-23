@@ -22,6 +22,7 @@ return {
 		local actions = require("telescope.actions")
 		local trouble = require("trouble.sources.telescope")
 
+
 		telescope.setup({
 			defaults = {
 				prompt_prefix = " ",
@@ -175,7 +176,7 @@ return {
 						winblend = 15
 					}
 				},
-				require("telescope").load_extension("refactoring"),
+				-- require("telescope").load_extension("refactoring"),
 				fzf = {
 					fuzzy = true,    -- false will only do exact matching
 					override_generic_sorter = true, -- override the generic sorter
