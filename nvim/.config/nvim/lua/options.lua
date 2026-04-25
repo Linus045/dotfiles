@@ -129,6 +129,9 @@ if vim.fn.executable("rg") then
 	vim.opt.grepprg = 'rg --vimgrep'
 end
 
+
+
+
 -- intended to fix paths for WSL on linux
 -- since inside the wsl pathsa are /mnt/d/some/dir but Windows reports them as D:/some/dir
 -- TODO: needs further testing

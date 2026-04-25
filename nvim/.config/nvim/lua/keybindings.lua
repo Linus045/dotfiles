@@ -5,22 +5,23 @@ local term_opts = { silent = true }
 
 
 
--- Register keymaps to legendary.nvim
--- this needs to be done before all keybindings are defined via require"which-key".register(...)
-local legendary = require('legendary')
-legendary.setup({
-	extensions = {
-		-- load keymaps and commands from nvim-tree.lua
-		nvim_tree = true,
-		-- load keymaps from diffview.nvim
-		diffview = true,
-		which_key = {
-			auto_register = true,
-			do_binding = false,
-		},
-	},
-})
+-- -- Register keymaps to legendary.nvim
+-- -- this needs to be done before all keybindings are defined via require"which-key".register(...)
+-- local legendary = require('legendary')
+-- legendary.setup({
+-- 	extensions = {
+-- 		-- load keymaps and commands from nvim-tree.lua
+-- 		nvim_tree = true,
+-- 		-- load keymaps from diffview.nvim
+-- 		diffview = true,
+-- 		which_key = {
+-- 			auto_register = true,
+-- 			do_binding = false,
+-- 		},
+-- 	},
+-- })
 
+-- TODO: see https://github.com/mrjones2014/legendary.nvim/issues/505
 
 
 
@@ -49,19 +50,19 @@ keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts, "NVIM Tree")
 -- show legendary.nvim palette
 keymap("n", "<leader>p",
 	function()
-		require('legendary').find({ filters = { require('legendary.filters').current_mode() } })
+		Snacks.picker.keymaps()
 	end,
-	opts, "Open Legendary Command Palette")
+	opts, "Open Command Palette")
 keymap("v", "<leader>p",
 	function()
-		require('legendary').find({ filters = { require('legendary.filters').current_mode() } })
+		Snacks.picker.keymaps()
 	end, opts,
-	"Open Legendary Command Palette")
+	"Open Command Palette")
 keymap("x", "<leader>p",
 	function()
-		require('legendary').find({ filters = { require('legendary.filters').current_mode() } })
+		Snacks.picker.keymaps()
 	end, opts,
-	"Open Legendary Command Palette")
+	"Open Command Palette")
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<cr>", opts, "Resize up")
@@ -487,8 +488,8 @@ keymap("n", "<leader>hh", "<Plug>(git-messenger)", opts, "[GIT-MESSENGER] Git Me
 	false)
 
 -- Undotree
-keymap("n", "<leader>u", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
-keymap("n", "<leader>U", ":UndotreeToggle<CR>", opts, "Undotree Toggle")
+keymap("n", "<leader>u", ":Undotree<CR>", opts, "Undotree Toggle")
+keymap("n", "<leader>U", ":Undotree<CR>", opts, "Undotree Toggle")
 
 -- Turn editor transparent
 keymap("n", "<leader>P", ":TransparentToggle | colorscheme<CR>", opts, "Transparent Toggle")

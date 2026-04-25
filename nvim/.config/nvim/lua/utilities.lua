@@ -37,7 +37,6 @@ end, {
 })
 
 
-
 vim.api.nvim_create_user_command('PrintRustOutput', function(args)
 	Write_output("RustRun")
 end, {

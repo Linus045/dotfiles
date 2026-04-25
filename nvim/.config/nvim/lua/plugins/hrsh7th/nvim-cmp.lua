@@ -1,0 +1,344 @@
+local Copilot_Complete = {}
+
+-- Copilot (Disable due to high cpu for some reason)
+if ENABLE_COPILOT then
+	Copilot_Complete = {
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		dependencies = { "copilot.lua" },
+		opts = {
+			suggestion = { enabled = false },
+			panel = { enabled = false },
+		}
+	}
+end
+
+return {
+	-- require("plugins.autocomplete.neogen"),
+	-- Faster autocompletion
+	{
+		"hrsh7th/nvim-cmp",
+		-- lost just before insert mode is entered, see :h InsertEnter
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-calc",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"hrsh7th/cmp-omni",
+			"f3fora/cmp-spell",
+			"p00f/clangd_extensions.nvim",
+			{
+				"tamago324/cmp-zsh",
+				opts = {
+					zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+					filetypes = { "sh", "zsh" } -- Filetypes to enable cmp_zsh source. default: {"*"}
+				}
+			},
+			"kdheepak/cmp-latex-symbols",
+			-- TODO: Add this back in and test it
+			-- "rcarriga/cmp-dap",
+			-- fix cmp ordering for dunder elements e.g. __main__ for python files
+			"lukas-reineke/cmp-under-comparator",
+
+			"saadparwaiz1/cmp_luasnip",
+
+			-- show icons for entries in autocomplete menu
+			"onsails/lspkind.nvim",
+			{
+				"L3MON4D3/LuaSnip",
+				version = "v2.*",
+				dependencies = { "rafamadriz/friendly-snippets" },
+			},
+			Copilot_Complete
+		},
+		config = function()
+			local cmp = require("cmp")
+
+			local luasnip = require("luasnip")
+			-- local lspkind = require("lspkind")
+
+			-- Used for the TAB key mapping
+			-- See: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
+			-- local has_words_before = function()
+			-- 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+			-- 	return col ~= 0 and
+			-- 		vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+			-- end
+
+			local compare = require('cmp.config.compare')
+			local cmp_comparators = {
+				require("clangd_extensions.cmp_scores"),
+				compare.offset,
+				compare.exact,
+				-- compare.scopes,
+				compare.score,
+				compare.recently_used,
+				compare.locality,
+				compare.kind,
+				compare.sort_text,
+				compare.length,
+				compare.order,
+				require "cmp-under-comparator".under,
+			}
+
+
+			if ENABLE_COPILOT then
+				cmp.event:on("menu_opened", function()
+					vim.b.copilot_suggestion_hidden = true
+				end)
+
+				cmp.event:on("menu_closed", function()
+					vim.b.copilot_suggestion_hidden = false
+				end)
+
+				table.insert(cmp_comparators, 1, require("copilot_cmp.comparators").prioritize)
+			end
+
+			local lspkind = require('lspkind')
+			local cmp_types = require("cmp.types")
+			local cmp_str = require("cmp.utils.str")
+
+			local menu_map = {
+				nvim_lsp = "[LSP]",
+				nvim_lsp_signature_help = "[Arg]",
+				luasnip = "[Snippet]",
+				buffer = "[Buffer]",
+				path = "[Path]",
+				nvim_lua = "[Lua]",
+				calc = "[Calc]",
+				zsh = "[Zsh]",
+				latex_symbols = "[Latex]",
+				copilot = "[Copilot]",
+			}
+
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
+				},
+				mapping = cmp.mapping.preset.insert({
+					["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+					["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+					["<C-u>"] = cmp.mapping.scroll_docs(-4),
+					["<C-d>"] = cmp.mapping.scroll_docs(4),
+					["<C-e>"] = cmp.mapping.abort(),
+					["<Esc>"] = cmp.mapping(function(fallback)
+						cmp.mapping.abort()
+						fallback()
+					end),
+					-- ["<Esc>"] = cmp.abort(),
+					["<c-y>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.confirm({ select = true })
+							-- elseif luasnip.expandable() then
+							-- print("Expanding snippet...")
+							-- luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { "i", "c" }),
+					["<c-space>"] = cmp.mapping {
+						i = function(_fallback)
+							if not cmp.visible() then
+								cmp.complete()
+							else
+								-- ignore the keypress
+								--fallback()
+							end
+						end,
+						c = function(_ --[[fallback]])
+							if cmp.visible() then
+								if not cmp.confirm { select = true } then
+									return
+								end
+							else
+								cmp.complete()
+							end
+						end,
+					},
+					['<Down>'] = cmp.config.disable,
+					['<Up>'] = cmp.config.disable,
+					["<tab>"] = cmp.config.disable,
+				}),
+				-- confirmation = {
+				-- },
+				-- view = {
+				-- 	entries = "custom", -- can be "custom", "wildmenu" or "native"
+				-- 	selection_order = "near_cursor",
+				-- 	docs = {
+				-- 		auto_open = true,
+				-- 	},
+				-- },
+
+				formatting = {
+					format = lspkind.cmp_format({
+						mode = 'text_symbol', -- show only symbol annotations
+						symbol_map = {
+							Copilot = "",
+						},
+						menu = menu_map,
+						maxwidth = {
+							-- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+							-- can also be a function to dynamically calculate max width such as
+							-- menu = function() return math.floor(0.45 * vim.o.columns) end,
+							menu = 50, -- leading text (labelDetails)
+							abbr = 50, -- actual suggestion item
+						},
+						ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+						show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+						-- The function below will be called before any actual modifications from lspkind
+						-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+						before = function(entry, vim_item)
+							local menu = menu_map[entry.source.name]
+							if menu then
+								vim_item.kind = vim_item.kind .. " " .. menu
+							end
+							return vim_item
+						end
+					})
+				},
+				sources = cmp.config.sources({
+					{
+						name = 'omni',
+						-- priority = 100,
+						-- group_index = 1
+					},
+					{
+						name = "nvim_lsp",
+						-- priority = 100,
+						-- group_index = 1,
+						-- workaround for clangd's missing functions/cached results
+						-- see: https://github.com/hrsh7th/nvim-cmp/issues/1176
+						trigger_characters = {
+							'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+							's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+							'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_'
+						}
+					},
+					{
+						name = "copilot",
+						-- priority = 101,
+						-- group_index = 1,
+					},
+					{
+						name = "nvim_lsp_signature_help",
+						-- priority = 110,
+						-- group_index = 1,
+						-- always show the signature help
+						keyword_length = 0
+					},
+					{
+						name = "nvim_lua",
+						-- priority = 100,
+						-- group_index = 1,
+					},
+					{
+						name = "latex_symbols",
+						-- priority = 80,
+						-- group_index = 1,
+						-- https://github.com/kdheepak/cmp-latex-symbols#options
+						option = {
+							strategy = 2,
+						},
+					},
+					{
+						name = "luasnip",
+						-- priority = 90,
+						-- group_index = 1,
+						max_item_count = 5,
+					},
+					{
+						name = "buffer",
+						-- priority = 80,
+						-- group_index = 1,
+						max_item_count = 5,
+						option = {
+							keyword_pattern = [[\k\+]],
+						}
+						--keyword_length = 3,
+					},
+					{
+						name = "path",
+						-- priority = 80,
+						-- group_index = 1,
+					},
+					{
+						name = "calc",
+						-- priority = 100,
+						-- group_index = 1,
+					},
+					{
+						name = "lazydev",
+						-- group_index = 1,
+					},
+					-- {
+					--   name = "zsh",
+					--   group_index = 3,
+					-- },
+				}),
+				sorting = {
+					priority_weight = 2,
+					comparators = cmp_comparators,
+				},
+				experimental = {
+					ghost_text = false,
+				},
+			})
+
+			-- Set configuration for specific filetype.
+			cmp.setup.filetype("gitcommit", {
+				sources = cmp.config.sources({
+					{ name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+				}, {
+					{ name = "buffer" },
+				}),
+			})
+
+			-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+			cmp.setup.cmdline("/", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp_document_symbol" },
+				}, {
+					{ name = "buffer" },
+				}),
+			})
+
+			-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources(
+					{ { name = "path" }, },
+					{ { name = "cmdline" }, }
+				),
+			})
+
+			-- cmp.setup({
+			--   enabled = function()
+			--     return (vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()) and
+			--         require("dap").session() and require("dap").session().capabilities and
+			--         require("dap").session().capabilities.supportsCompletionsRequest
+			--   end
+			-- })
+
+			cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+				sources = {
+					{ name = "dap" },
+				},
+			})
+		end
+	},
+
+	-- {
+	-- 	"evesdropper/luasnip-latex-snippets.nvim",
+	-- },
+
+}

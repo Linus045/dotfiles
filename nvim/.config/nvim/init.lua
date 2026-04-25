@@ -16,12 +16,21 @@ ENABLE_COPILOT = true
 require("options")
 require("utilities")
 
-require("lazy").setup("plugins")
+require("lazy").setup({
+	spec = {
+		import = "plugins"
+	}
+})
 
 vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",
 	callback = function()
 		-- do stuff after lazy initialized
+		vim.cmd("packadd nvim.undotree")
+		vim.cmd("packadd nvim.tohtml")
+
+		-- prefer manually clearing with <leader>ll
+		--vim.cmd("packadd nohlsearch")
 	end
 })
 
