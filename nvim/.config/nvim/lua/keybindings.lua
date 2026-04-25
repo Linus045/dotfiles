@@ -47,22 +47,36 @@ keymap("", "<Space>", "<Nop>", opts)
 --keymap("n", "<leader>e", ":Lexplore 20<cr>", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts, "NVIM Tree")
 
--- show legendary.nvim palette
-keymap("n", "<leader>p",
+keymap("n", "<leader>pp",
+	function()
+		Snacks.picker()
+	end,
+	opts, "Open Command Palette")
+keymap("n", "<leader>pk",
 	function()
 		Snacks.picker.keymaps()
 	end,
-	opts, "Open Command Palette")
-keymap("v", "<leader>p",
+	opts, "Open Keybindings Palette")
+keymap("n", "<leader>pcc",
 	function()
-		Snacks.picker.keymaps()
-	end, opts,
-	"Open Command Palette")
-keymap("x", "<leader>p",
+		Snacks.picker.commands()
+	end,
+	opts, "Open Commands Palette")
+keymap("n", "<leader>pch",
 	function()
-		Snacks.picker.keymaps()
-	end, opts,
-	"Open Command Palette")
+		Snacks.picker.command_history()
+	end,
+	opts, "Open Commands history Palette")
+keymap("n", "<leader>pgb",
+	function()
+		Snacks.git.blame_line()
+	end,
+	opts, "Open Commands history Palette")
+keymap("n", "<leader>pgfhistory Palette",
+	function()
+		Snacks.gitbrowse()
+	end,
+	opts, "Open file online on Github/Gitlab/Bitbucket/etc..")
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<cr>", opts, "Resize up")
