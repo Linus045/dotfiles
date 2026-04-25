@@ -147,7 +147,7 @@ keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", opts, "Telescope dia
 keymap("n", "<leader>fq", "<cmd>Telescope quickfix<CR>", opts, "Telescope quickfix")
 keymap("n", "<leader>fw", "<cmd>Telescope git_worktree git_worktree<CR>", opts, "Telescope git worktrees")
 keymap("n", "<leader>fp", function()
-		require 'plugins.telescope.telescope_custom'.list_projects()
+		require 'custom_tools.telescope_custom'.list_projects()
 	end, opts,
 	"Telescope list project directories")
 
@@ -202,7 +202,7 @@ keymap("n", "<leader>gs",
 
 keymap("n", "<leader>gl",
 	function()
-		require 'plugins.telescope.telescope_custom'.live_grep_in_glob()
+		require 'custom_tools.telescope_custom'.live_grep_in_glob()
 	end,
 	opts,
 	"Telescope live_grep_in_glob")
@@ -211,7 +211,7 @@ keymap(
 	"n",
 	"<leader>0",
 	function()
-		require 'plugins.telescope.telescope_custom'.dot_files()
+		require 'custom_tools.telescope_custom'.dot_files()
 	end,
 	opts,
 	"Telescope find_files (Dotfiles)"
@@ -284,7 +284,8 @@ keymap("n", "<leader>dlv", ":Telescope dap variables<CR>", opts, "List variables
 keymap("n", "<leader>dlf", ":Telescope dap frames<CR>", opts, "List frames")
 
 keymap("n", "<F10>", function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+
 	if filetype == "rust" then
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Over")
@@ -297,7 +298,7 @@ keymap("n", "<F10>", function()
 end, opts, "[DEBUG] Step Over")
 
 keymap("n", "<F5>", function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype == "rust" then
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Continue")
@@ -311,7 +312,7 @@ end, opts, "[DEBUG] Continue / Run and break at current line")
 
 
 keymap('n', '<F2>', function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype == "cpp" then
 		if require 'dap'.session() then
 			-- if session is already running, just use the run to cursor method instead
@@ -330,7 +331,7 @@ end, opts, "[DEBUG] Run to Cursor")
 
 
 keymap("n", "<F11>", function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype == "rust" then
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Step")
@@ -344,7 +345,7 @@ end, opts, "[DEBUG] Step Into")
 
 
 keymap("n", "<F12>", function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype == "rust" then
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Finish")
@@ -357,7 +358,7 @@ keymap("n", "<F12>", function()
 end, opts, "[DEBUG] Step Out")
 
 keymap("n", "<leader>db", function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype == "rust" then
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Break")
@@ -370,7 +371,7 @@ keymap("n", "<leader>db", function()
 end, opts, "[DEBUG] Toggle Breakpoint")
 
 keymap("n", "<leader>dd", function()
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype == "rust" then
 		if require("termdebug_helper").in_debug_session then
 			vim.cmd("Clear")
@@ -383,7 +384,7 @@ keymap("n", "<leader>dd", function()
 end, opts, "[DEBUG] Clear Breakpoint")
 
 keymap("n", "<leader>dB", function()
-		local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+		local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 		if filetype == "rust" then
 			if require("termdebug_helper").in_debug_session then
 				vim.cmd("Break")
@@ -397,7 +398,7 @@ keymap("n", "<leader>dB", function()
 	"[DEBUG] Toggle Breakpoint (Conditioned)")
 
 keymap("n", "<leader>dp", function()
-		local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+		local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 		if filetype == "rust" then
 			if require("termdebug_helper").in_debug_session then
 				vim.cmd("Break")
@@ -539,11 +540,11 @@ keymap("n", "<leader>tq", "<cmd>Trouble quickfix_preview_float toggle focus=true
 keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts, "[TROUBLE] LSP References")
 
 keymap("n", "[d", function()
-		vim.diagnostic.goto_prev({ border = "rounded" })
+		vim.diagnostic.jump({ count = -1, border = "rounded" })
 	end, opts,
 	"Goto previous diagnostic result", nil, nil)
 keymap("n", "]d", function()
-	vim.diagnostic.goto_next({ border = "rounded" })
+	vim.diagnostic.jump({ count = 1, border = "rounded" })
 end, opts, "Goto next diagnostic result"
 , nil, nil)
 keymap("n", "[q", '<cmd>cprevious<CR>', opts, "Jump to previous quickfix entry", nil, nil)

@@ -3,7 +3,7 @@ local M = {}
 
 M.RunCurrentCFile = function(argsString)
 	-- make sure this is a c file
-	local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
 	if filetype ~= "c" then
 		return
 	end

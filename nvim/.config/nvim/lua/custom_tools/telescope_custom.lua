@@ -18,7 +18,7 @@ end
 
 M.custom_selection_menu = function(title, options, on_select_callback)
 	local enter = function(prompt_bufnr)
-		local selected = action_state.get_selected_entry(prompt_bufnr)
+		local selected = action_state.get_selected_entry()
 		local selected_entry = selected[1]
 		actions.close(prompt_bufnr)
 
@@ -43,13 +43,13 @@ M.custom_selection_menu = function(title, options, on_select_callback)
 		end,
 	}
 
-	local project_picker = pickers.new(opts)
+	local project_picker = pickers.new(opts, {})
 	project_picker:find()
 end
 
 M.custom_selection_menu_files = function(title, cwd, fd_parameter, on_select_callback)
 	local enter = function(prompt_bufnr)
-		local selected = action_state.get_selected_entry(prompt_bufnr)
+		local selected = action_state.get_selected_entry()
 		local selected_entry = selected[1]
 		actions.close(prompt_bufnr)
 
@@ -77,7 +77,7 @@ M.custom_selection_menu_files = function(title, cwd, fd_parameter, on_select_cal
 		end,
 	}
 
-	local project_picker = pickers.new(opts)
+	local project_picker = pickers.new(opts, {})
 	project_picker:find()
 end
 
