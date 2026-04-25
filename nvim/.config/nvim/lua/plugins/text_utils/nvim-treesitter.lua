@@ -2,12 +2,13 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = function()
-			vim.cmd(":TSUpdate")
-		end,
+		lazy = false,
+		build = ':TSUpdate',
 		config = function()
 			local configs = require("nvim-treesitter.config")
 			configs.setup {
+				install_dir = vim.fn.stdpath('data') .. '/site',
+
 				-- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
 				-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
 				-- the name of the parser)
@@ -34,16 +35,27 @@ return {
 					-- colors = {}, -- table of hex strings
 					-- termcolors = {} -- table of colour name strings
 				},
+
 			}
 		end
 	},
 
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		after = "nvim-treesitter",
-		requires = "nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		init = function()
+			-- Disable entire built-in ftplugin mappings to avoid conflicts.
+			-- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+			vim.g.no_plugin_maps = true
+
+			-- Or, disable per filetype (add as you like)
+			-- vim.g.no_python_maps = true
+			-- vim.g.no_ruby_maps = true
+			-- vim.g.no_rust_maps = true
+			-- vim.g.no_go_maps = true
+		end,
 		config = function()
-			require 'nvim-treesitter.config'.setup {
+			require("nvim-treesitter-textobjects").setup {
 				textobjects = {
 					swap = {
 						enable = true,
@@ -68,6 +80,20 @@ return {
 					},
 				},
 			}
-		end
-	},
+		end,
+	}
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter-textobjects",
+	-- 	branch = "main",
+	-- 	after = "nvim-treesitter",
+	-- 	requires = "nvim-treesitter/nvim-treesitter",
+	-- 	init = function()
+	-- 		vim.g.no_plugin_maps = true
+	-- 	end,
+	-- 	config = function()
+	-- 		local config = require 'nvim-treesitter.config'
+	-- 		config.setup {
+	-- 		}
+	-- 	end
+	-- },
 }

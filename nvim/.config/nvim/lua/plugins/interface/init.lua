@@ -88,7 +88,7 @@ return {
 	},
 
 	-- rainbow brackets
-	{ "hiphish/rainbow-delimiters.nvim", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+	-- { "hiphish/rainbow-delimiters.nvim" },
 
 
 	-- A collection of QoL plugins for Neovim
