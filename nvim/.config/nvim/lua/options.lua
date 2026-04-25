@@ -130,6 +130,9 @@ if vim.fn.executable("rg") then
 end
 
 
+vim.diagnostic.config({
+	jump = { float = true }
+})
 
 
 -- intended to fix paths for WSL on linux
