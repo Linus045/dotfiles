@@ -25,7 +25,7 @@ return {
 	{ import = "plugins.nanotee" },
 	{ import = "plugins.neovim" },
 	{ import = "plugins.norcalli" },
-	{ import = "plugins.numToStr" },
+	-- { import = "plugins.numToStr" },
 	{ import = "plugins.nvim-flutter" },
 	{ import = "plugins.nvim-lua" },
 	{ import = "plugins.nvim-lualine" },
