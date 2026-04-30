@@ -73,18 +73,18 @@ return {
 
 			local compare = require('cmp.config.compare')
 			local cmp_comparators = {
-				require("clangd_extensions.cmp_scores"),
+				-- require("clangd_extensions.cmp_scores"),
 				compare.offset,
 				compare.exact,
+				require "cmp-under-comparator".under,
+				compare.kind,
 				-- compare.scopes,
-				compare.score,
 				compare.recently_used,
 				compare.locality,
-				compare.kind,
+				compare.score,
 				compare.sort_text,
 				compare.length,
 				compare.order,
-				require "cmp-under-comparator".under,
 			}
 
 
