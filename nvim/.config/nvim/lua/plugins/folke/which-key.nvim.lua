@@ -1,5 +1,8 @@
 return {
 	"folke/which-key.nvim",
+	dependencies = {
+		"mason-org/mason.nvim"
+	},
 	config = function()
 		local which_key = require("which-key")
 		which_key.setup({

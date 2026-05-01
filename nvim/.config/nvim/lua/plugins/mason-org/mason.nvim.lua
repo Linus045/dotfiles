@@ -41,7 +41,11 @@ local function lsp_keymaps(_client, bufnr)
 				context = "hover",
 			})
 		else
-			vim.lsp.buf.hover()
+			vim.lsp.buf.hover({
+				max_width = 80,
+				max_height = 20,
+				border = 'rounded', -- or 'single', 'double', 'solid', 'shadow', none'
+			})
 		end
 	end
 
@@ -182,82 +186,212 @@ vim.api.nvim_create_autocmd({ "FocusGained", "WinEnter", "BufEnter" }, {
 	end,
 })
 
--- autoinstall lsp server
 return {
-	"williamboman/mason.nvim",
-	dependencies = {
-		-- mason lsp config extension
-		"williamboman/mason-lspconfig.nvim",
-		"hrsh7th/cmp-nvim-lsp",
-		"nvim-lua/lsp-status.nvim",
-		"folke/which-key.nvim",
-		"mhartington/formatter.nvim"
-	},
-	config = function()
-		local mason = require("mason")
-
-		mason.setup({
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗"
+	{
+		"mason-org/mason.nvim",
+		dependencies = {
+			"mhartington/formatter.nvim",
+			"nvim-lua/lsp-status.nvim",
+			"hrsh7th/nvim-cmp",
+		},
+		config = function()
+			local mason = require("mason")
+			mason.setup({
+				ui = {
+					icons = {
+						package_installed = "✓",
+						package_pending = "➜",
+						package_uninstalled = "✗"
+					}
 				}
-			}
-		})
+			})
 
-		require("formatter").setup({
-			silent = true,
-			filetype = {
-				tex = {
-					function()
+			require("formatter").setup({
+				silent = true,
+				filetype = {
+					tex = {
+						function()
+							local util = require "formatter.util"
+							return {
+								exe = "tex-fmt",
+								args = {
+									"--print",
+									"--stdin"
+								},
+								stdin = true,
+							}
+						end
+					},
+					glsl = function()
 						local util = require "formatter.util"
 						return {
-							exe = "tex-fmt",
+							exe = "clang-format",
 							args = {
-								"--print",
-								"--stdin"
+								util.escape_path(util.get_current_buffer_file_path()),
+							},
+							stdin = true,
+						}
+					end,
+					cmake = function()
+						local util = require "formatter.util"
+						return {
+							exe = "cmake-format",
+							args = {
+								util.escape_path(util.get_current_buffer_file_path()),
 							},
 							stdin = true,
 						}
 					end
-				},
-				glsl = function()
-					local util = require "formatter.util"
-					return {
-						exe = "clang-format",
-						args = {
-							util.escape_path(util.get_current_buffer_file_path()),
+				}
+			})
+
+			local lsp_status = require("lsp-status")
+			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities = vim.tbl_deep_extend("keep", capabilities, lsp_status.capabilities)
+			capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+			capabilities.textDocument.completion.completionItem.detailSupport = true
+			capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+			local mason_lspconfig = require("mason-lspconfig")
+			local lsps = mason_lspconfig.get_installed_servers()
+			for _, server in pairs(lsps) do
+				local opts = {
+					on_attach = lsp_server_on_attach,
+					capabilities = capabilities,
+				}
+
+				-- make vue work with ts_ls
+				if server == "ts_ls" then
+					opts.init_options = {
+						plugins = { -- I think this was my breakthrough that made it work
+							{
+								name = "@vue/typescript-plugin",
+								location = vim.fn.stdpath("data") ..
+									"/mason/packages/vue-language-server/node_modules/@vue/language-server",
+								languages = { "vue" },
+							},
 						},
-						stdin = true,
 					}
-				end,
-				cmake = function()
-					local util = require "formatter.util"
-					return {
-						exe = "cmake-format",
-						args = {
-							util.escape_path(util.get_current_buffer_file_path()),
-						},
-						stdin = true,
+					opts.filetypes = {
+						"typescript",
+						"javascript",
+						"javascriptreact",
+						"typescriptreact",
 					}
 				end
-			}
-		})
 
-		local mason_lspconfig = require("mason-lspconfig")
-		--[[
-		Installed
-		✓ clang-format
-		✓ clangd
-		✓ cmake-language-server
-		✓ gopls
-		✓ lua-language-server
-		✓ rust-analyzer
-		✓ typescript-language-server
-		✓ vue-language-server
-		]]
-		mason_lspconfig.setup({
+				local has_custom_opts, server_custom_opts = pcall(require, "lsp.settings." .. server)
+				if has_custom_opts then
+					opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
+					-- vim.notify("[LSP-Installer] Custom options for " .. server .. " loaded")
+				else
+					-- print("[LSP-Installer] NO custom options for " .. server .. " found")
+				end
+
+
+				if server == "rust_analyzer" then
+					-- TODO: for some reason setting capabilities breaks LSP
+					opts.capabilities = {
+						offsetEncoding = "utf-16",
+						-- general = { positionEncodings = { 'utf-16' } },
+					}
+				end
+
+				if server == "bacon-ls" then
+					-- TODO: for some reason setting capabilities breaks LSP
+					opts.capabilities = {
+						offsetEncoding = "utf-16",
+					}
+				end
+
+				if server == "clangd" then
+					-- Fixes annoying warning
+					-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
+					opts.capabilities.offsetEncoding = 'utf-16'
+
+					-- clangd needs some extra options
+					opts.cmd = {
+						"clangd",
+						"--background-index",
+						"--clang-tidy",
+						"--header-insertion=iwyu",
+						"--all-scopes-completion",
+						"--completion-style=detailed",
+						"--function-arg-placeholders",
+						"--fallback-style=llvm",
+					}
+					opts.init_options = {
+						completeUnimported = true,
+						clangdFileStatus = true,
+						usePlaceholders = true,
+						inlayHints = {
+							variableTypes = true,
+							functionReturnTypes = true,
+							parameterNames = true,
+							includeInlayEnumMemberValueHints = true,
+						},
+					}
+				end
+				vim.lsp.config(server, opts)
+				vim.lsp.enable(server)
+			end
+
+
+			local signs = {
+				{ name = "DiagnosticSignError", text = "" },
+				{ name = "DiagnosticSignWarn", text = "" },
+				{ name = "DiagnosticSignHint", text = "" },
+				{ name = "DiagnosticSignInfo", text = "" },
+			}
+
+			for _, sign in ipairs(signs) do
+				vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+			end
+
+			local config = {
+				-- disable virtual text
+				virtual_text = {
+					virt_text_pos = "eol",
+				},
+
+				-- show signs
+				signs = {
+					active = signs,
+				},
+				update_in_insert = true,
+				underline = true,
+				severity_sort = true,
+				float = {
+					focusable = true,
+					style = "minimal",
+					border = "none",
+					source = "always",
+					header = "",
+					prefix = "",
+				},
+			}
+
+			vim.diagnostic.config(config)
+
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+				border = "rounded",
+			})
+
+			vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+				border = "rounded",
+			})
+
+			vim.lsp.inlay_hint.enable(true);
+		end
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = {
+			"mason-org/mason.nvim",
+		},
+		opts = {
 			ensure_installed = {
 				"lua_ls",
 				"rust_analyzer",
@@ -265,152 +399,15 @@ return {
 				"jsonls",
 				"yamlls",
 				"bashls",
-				-- "gopls",
-				-- "volar",
-				-- "ts_ls",
-				-- "tsserver",
-
-				-- Installed but invalid names, need to install manually via mason (no lspconfig integration?! idk)
-				-- "clang-format",
-				-- "cmake-language-server",
-				-- "debugpy",
-				-- "ltex-ls",
-				-- "mypy",
-				-- "python-lsp-server",
-				-- "typescript-language-server",
-				-- "vue-language-server",
-
-				-- "codelldb"
 			}
-		})
-
-
-		local lsp_status = require("lsp-status")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("keep", capabilities, lsp_status.capabilities)
-		capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-		capabilities.textDocument.completion.completionItem.detailSupport = true
-		capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-		local lsps = mason_lspconfig.get_installed_servers()
-		for _, server in pairs(lsps) do
-			local opts = {
-				on_attach = lsp_server_on_attach,
-				capabilities = capabilities,
-			}
-
-			-- make vue work with ts_ls
-			if server == "ts_ls" then
-				opts.init_options = {
-					plugins = { -- I think this was my breakthrough that made it work
-						{
-							name = "@vue/typescript-plugin",
-							location = vim.fn.stdpath("data") ..
-								"/mason/packages/vue-language-server/node_modules/@vue/language-server",
-							languages = { "vue" },
-						},
-					},
-				}
-				opts.filetypes = {
-					"typescript",
-					"javascript",
-					"javascriptreact",
-					"typescriptreact",
-				}
-			end
-
-			local has_custom_opts, server_custom_opts = pcall(require, "lsp.settings." .. server)
-			if has_custom_opts then
-				opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
-				-- vim.notify("[LSP-Installer] Custom options for " .. server .. " loaded")
-			else
-				-- print("[LSP-Installer] NO custom options for " .. server .. " found")
-			end
-
-			if server == "rust_analyzer" then
-				-- TODO: for some reason setting capabilities breaks LSP
-				opts.capabilities = {}
-			end
-
-			if server == "clangd" then
-				-- Fixes annoying warning
-				-- See: https://github.com/neovim/nvim-lspconfig/issues/2184#issuecomment-1273705335
-				opts.capabilities.offsetEncoding = 'utf-16'
-
-				-- clangd needs some extra options
-				opts.cmd = {
-					"clangd",
-					"--background-index",
-					"--clang-tidy",
-					"--header-insertion=iwyu",
-					"--all-scopes-completion",
-					"--completion-style=detailed",
-					"--function-arg-placeholders",
-					"--fallback-style=llvm",
-				}
-				opts.init_options = {
-					completeUnimported = true,
-					clangdFileStatus = true,
-					usePlaceholders = true,
-					inlayHints = {
-						variableTypes = true,
-						functionReturnTypes = true,
-						parameterNames = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				}
-			end
-			vim.lsp.config(server, opts)
-			vim.lsp.enable(server)
-		end
-
-
-		local signs = {
-			{ name = "DiagnosticSignError", text = "" },
-			{ name = "DiagnosticSignWarn", text = "" },
-			{ name = "DiagnosticSignHint", text = "" },
-			{ name = "DiagnosticSignInfo", text = "" },
 		}
-
-		for _, sign in ipairs(signs) do
-			vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-		end
-
-		local config = {
-			-- disable virtual text
-			virtual_text = {
-				virt_text_pos = "eol",
-			},
-
-			-- show signs
-			signs = {
-				active = signs,
-			},
-			update_in_insert = true,
-			underline = true,
-			severity_sort = true,
-			float = {
-				focusable = true,
-				style = "minimal",
-				border = "none",
-				source = "always",
-				header = "",
-				prefix = "",
-			},
-		}
-
-		vim.diagnostic.config(config)
-
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			border = "rounded",
-		})
-
-		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-			border = "rounded",
-		})
-
-		vim.lsp.inlay_hint.enable(true);
-	end
+	}
 }
+
+
+-- -- autoinstall lsp server
+-- return {
+-- 	{
+-- 		"mhartington/formatter.nvim"
+-- 	}
+-- }

@@ -44,7 +44,9 @@ return {
 	{ import = "plugins.TimUntersberger" },
 	{ import = "plugins.tpope" },
 	{ import = "plugins.vimwiki" },
-	{ import = "plugins.williamboman" },
+	{ import = "plugins.mason-org" },
 	{ import = "plugins.xiyaowong" },
 	{ import = "plugins.zbirenbaum" },
+	{ import = "plugins.mhartington" },
+
 }
